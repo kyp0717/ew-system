@@ -7,6 +7,7 @@
     <script src="https://unpkg.com/htmx.org"></script>
 </head>
 
+
 <table>
     <thead>
         <tr>
@@ -42,7 +43,7 @@
         {{range .Items}}
 
         <tr>
-            <td><a href="/views/components/item.html" class="sku-link" target="_blank">{{.SKU}}</a></td>
+            <td><a href="#" class="sku-link" onclick="openBarebonesPage('/views/components/item.html'); return false;">{{.SKU}}</a></td>
             <td>{{.ItemName}}</td>
             <td>{{.UPC}}</td>
             <td>{{.Type}}</td>
@@ -71,3 +72,13 @@
         {{end}}
     </tbody>
 </table>
+
+<script>
+    function openBarebonesPage(url) {
+        window.open(
+            url,
+            '_blank',
+            'toolbar=no, location=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=800, height=600'
+        );
+    }
+</script>
