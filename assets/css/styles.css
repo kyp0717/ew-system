@@ -43,3 +43,319 @@ body {
 .sample-transition {
     view-transition-name: slide-it;
 }
+
+--earthy-green-dark: #556B2F;  /* Dark Olive Green */
+--earthy-green-light: #8FBC8F; /* Dark Sea Green */
+--earthy-brown: #A0522D;       /* Sienna */
+--earthy-background: #F5F5DC;  /* Beige */
+--earthy-text: #2F4F4F;        /* Dark Slate Gray */
+--Sage Green - #9CAF88
+--Olive Green - #556B2F
+---Terracotta - #E2725B
+--Burnt Sienna - #EA7E5D
+--Sand - #C2B280
+--Clay - #B66A50
+--Warm Taupe - #A5978B
+--Rust - #B7410E
+--Moss Green - #8A9A5B
+--Ochre - #CC7722
+--Desert Beige - #D9C2AD
+--Umber - #635147
+
+.space10 {
+    margin-right: 40px; /* Adjust this value to control the amount of space */
+}
+.logo {
+    top: 0;
+    left: 0;
+    width: 100px;
+    height: auto;
+}
+  
+.logo-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px; /* Add some space below the logo */
+}
+/* Logo Container for company name and navbar */
+.navbar-container {
+    position: fixed; /* Keeps the navbar fixed at the top */
+    top: 0;
+    left: 0;
+    background-color: whitesmoke;
+}
+
+.navbar-background {
+    position: relative; /* Or absolute depending on the design */
+    background-color: whitesmoke;
+  }
+  
+  
+.search-container {
+    clear: both;
+    position: relative;
+    margin-top: 50px; 
+    color: #A0522D; /* Optional: Change color if needed */    
+    font-size: auto; /* Increase icon size */
+    gap: 40px; /* Space between the search fields */
+    background-color: #d9cbb5; /* Earthy beige background */
+}
+
+   /* Optionally, you can explicitly set the height if needed */
+.navbar-background, .navbar-container, .search-container{
+    display: flex;      /* To align content horizontally */
+    max-height: 50px; /* Example height, adjust as necessary */
+    justify-content: space-between;
+    box-sizing: border-box; 
+    padding: 8px;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Container for center-aligned navbar */
+.navbar-links {
+    display: flex;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+/* Style for the links in the navbar */
+.navbar {
+    color:  #556B2F;
+    padding: 14px 20px;
+    text-decoration: none;
+    font-size: 17px;
+    display: inline-block;
+}
+
+/* Change link color on hover */
+.navbar:hover {
+    color:#2F4F4F;
+}
+
+.navbar.active {
+    background-color: #4CAF50; /* Highlight the active tab */
+    color: white;
+}
+
+/* Right section for notification and username */
+.right-section {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    color: #A0522D;
+}
+
+.admin-icon {
+    display: inline-block;
+    margin-right: 40px;
+}
+
+.admin-icon i {
+    font-size: 16px; /* Adjust as needed */
+    cursor: pointer;
+    color: #A0522D; /* Default color */
+    transition: color 0.3s ease;
+}
+
+.admin-icon i:hover {
+    color:#EA7E5D; /* Hover color for interactivity */
+}
+  
+.search-icons i {
+    display: flex;
+    align-items: right;
+    font-weight: bold; /* Bolder icon */ 
+    font-size: 20px; /* Adjust icon size if needed */
+    cursor: pointer; /* Show the pointer on hover */
+}
+  
+.search-icons {
+    display: flex;
+    align-items: center; /* Vertically align the icon */
+    margin-left: 10px; /* Add some space between the form and the icon */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-weight: normal; /* Set font weight to normal */
+}
+
+table tr:nth-child(even) {
+    background-color: #f2f2f2; /* Light shade for even rows */
+}
+
+table tr:nth-child(odd) {
+    background-color: #ffffff; /* White or default for odd rows */
+}
+th, td , tr {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+    font-weight: normal;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+/* Link styling for clickable SKU */
+a.sku-link {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a.sku-link:hover {
+    text-decoration: underline;
+}
+    /* Link styling for clickable SKU */
+a.sku-link {
+      color: #007bff;
+      text-decoration: none;
+}
+
+a.sku-link:hover {
+      text-decoration: underline;
+}
+
+  /* Default color for active (green) */
+.color-variable {
+    color: green;
+}
+
+/* Color for inactive (red) */
+.color-variable.inactive {
+    color: red;
+}
+
+    /* Set the exact size for the textboxes */
+.SKU-input {
+      width: 22ch; /* Set width to hold exactly 22 characters */
+      padding: 5px; /* Optional: Add some padding for better aesthetics */
+      box-sizing: border-box; /* Ensure padding and border don't affect the width */
+      font-family: inherit; /* Make sure the font matches the rest of the page */
+      font-size: 1rem; /* Ensure the font size is consistent */
+      background-color: #f4f4f4;
+      border: 1px solid #ccc;
+      pointer-events: none;
+}
+
+.collapsible-container {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 20px 0;
+}
+.collapsible-header {
+    cursor: pointer;
+    background-color: #ccc;
+    padding: 10px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.collapsible-content {
+    display: none;
+    padding: 10px;
+    transition: max-height 0.2s ease-out;
+    flex-wrap: wrap;
+}
+.collapsible-content.show {
+    display: flex;
+}
+.arrow {
+    font-size: 18px;
+}
+.header-title {
+    flex-grow: 1;
+    text-align: center;
+}
+
+
+.form-group {
+  margin-bottom: 15px;
+  white-space: nowrap;
+}
+
+.readonly-input {
+  background-color: #f4f4f4;
+  border: 1px solid #ccc;
+  pointer-events: none;
+}
+label {
+  display: inline-block;
+  font-weight: bold;
+}
+input {
+  padding: 5px;
+  width: 300px;
+}
+
+.item-icons i {
+align-items: right;
+font-size: 26px; /* Increase icon size */
+font-weight: bold; /* Bolder icon */
+color: red; /* Optional: Change color if needed */   
+}
+
+/* Default color for active (green) */
+.color-variable {
+color: green;
+}
+
+/* Color for inactive (red) */
+.color-variable.inactive {
+color: red;
+}
+
+
+
+
+
+
+.Char5-input {
+width: 5ch; /* Set width to hold exactly 22 characters */
+padding: 5px; /* Optional: Add some padding for better aesthetics */
+box-sizing: border-box; /* Ensure padding and border don't affect the width */
+font-family: inherit; /* Make sure the font matches the rest of the page */
+font-size: 1rem; /* Ensure the font size is consistent */
+background-color: #f4f4f4;
+border: 1px solid #ccc;
+pointer-events: none;
+}
+
+.Char10-input {
+width: 10ch; /* Set width to hold exactly 22 characters */
+padding: 5px; /* Optional: Add some padding for better aesthetics */
+box-sizing: border-box; /* Ensure padding and border don't affect the width */
+font-family: inherit; /* Make sure the font matches the rest of the page */
+font-size: 1rem; /* Ensure the font size is consistent */
+background-color: #f4f4f4;
+border: 1px solid #ccc;
+pointer-events: none;
+}
+.Char12-input {
+width: 12ch; /* Set width to hold exactly 22 characters */
+padding: 5px; /* Optional: Add some padding for better aesthetics */
+box-sizing: border-box; /* Ensure padding and border don't affect the width */
+font-family: inherit; /* Make sure the font matches the rest of the page */
+font-size: 1rem; /* Ensure the font size is consistent */
+background-color: #f4f4f4;
+border: 1px solid #ccc;
+pointer-events: none;
+}
+
+    /* Add spacing to the right of the input field */
+.space10 {
+    margin-right: 40px; /* Adjust this value to control the amount of space */
+}
+.space15 {
+    margin-right: 60px; /* Adjust this value to control the amount of space */
+}
+.space20 {
+    margin-right: 80px; /* Adjust this value to control the amount of space */
+}
+
