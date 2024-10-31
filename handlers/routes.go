@@ -47,6 +47,10 @@ func Setup(app *fiber.App) {
 	todoApp.Delete("/delete/:id", HandleDeleteTodo)
 	todoApp.Post("/logout", HandleLogout)
 
+	/* Views protected with session middleware */
+	inventoryApp := app.Group("/inventory", AuthMiddleware)
+	inventoryApp.Get("/inventorylist", HandleInventoryList)
+
 	/* ↓ Not Found Management - Fallback Page ↓ */
 	app.Get("/*", flagsMiddleware, func(c *fiber.Ctx) error {
 
