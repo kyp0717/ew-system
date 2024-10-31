@@ -5,8 +5,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/kyp0717/ewxback/data/load"
-	"github.com/kyp0717/ewxback/webapp/model"
+	"github.com/kyp0717/ew-system/controllers"
 
 	// "gorm.io/gorm/logger"
 
@@ -55,24 +54,24 @@ func PgConnectDB() {
 			// Check which table does not exist and generate table respectively
 			switch table {
 			case "login":
-				db.AutoMigrate(&model.Login{})
+				db.AutoMigrate(&controllers.Login{})
 				load.Login(db)
 			case "category":
-				db.AutoMigrate(&model.Category{})
+				db.AutoMigrate(&controllers.Category{})
 				load.Category(db)
 			case "item":
-				db.AutoMigrate(&model.Item{})
+				db.AutoMigrate(&controllers.Item{})
 				load.Item(db)
 
 				/*
 					case "product":
-						db.AutoMigrate(	&model.Product{}, )
+						db.AutoMigrate(	&controllers.Product{}, )
 						load.Product(db)
 					case "product_group":
-						db.AutoMigrate(	&model.ProductGroup{},	)
+						db.AutoMigrate(	&controllers.ProductGroup{},	)
 						load.ProductGroup(db)
 					case "product_detail":
-						db.AutoMigrate(	&model.ProductDetail{}, )
+						db.AutoMigrate(	&controllers.ProductDetail{}, )
 						load.ProductDetail(db)
 				*/
 			}
@@ -81,12 +80,12 @@ func PgConnectDB() {
 
 	// Migrate your models
 	err = db.AutoMigrate(
-		&model.Login{},
-		&model.Item{},
-		&model.Product{},
-		&model.ProductGroup{},
-		&model.ProductDetail{},
-		&model.Todo{},
+		&controllers.Login{},
+		&controllers.Item{},
+		&controllers.Product{},
+		&controllers.ProductGroup{},
+		&controllers.ProductDetail{},
+		&controllers.Todo{},
 	)
 	if err != nil {
 		log.Fatal("failed to migrate models: ", err)
