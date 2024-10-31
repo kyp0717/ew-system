@@ -1,4 +1,4 @@
-module github.com/emarifer/gofiber-templ-htmx
+module github.com/kyp0717/ew-system
 
 go 1.21.0
 

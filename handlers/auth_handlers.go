@@ -6,9 +6,9 @@ import (
 	"strings"
 
 	"github.com/a-h/templ"
-	"github.com/emarifer/gofiber-templ-htmx/models"
-	"github.com/emarifer/gofiber-templ-htmx/views"
-	"github.com/emarifer/gofiber-templ-htmx/views/auth_views"
+	"github.com/kyp0717/ew-system/models"
+	"github.com/kyp0717/ew-system/views"
+	"github.com/kyp0717/ew-system/views/auth_views"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/adaptor"
 	"github.com/sujit-baniya/flash"

@@ -11,8 +11,8 @@ import templruntime "github.com/a-h/templ/runtime"
 import (
 	"strconv"
 
-	"github.com/emarifer/gofiber-templ-htmx/models"
-	"github.com/emarifer/gofiber-templ-htmx/views"
+	"github.com/kyp0717/ew-system/models"
+	"github.com/kyp0717/ew-system/views"
 
 	"github.com/gofiber/fiber/v2"
 )

@@ -9,7 +9,7 @@ import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
 import (
-	"github.com/emarifer/gofiber-templ-htmx/views/partials"
+	"github.com/kyp0717/ew-system/views/partials"
 
 	"github.com/gofiber/fiber/v2"
 )
