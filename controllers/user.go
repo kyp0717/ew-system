@@ -27,7 +27,7 @@ func (t *User) GetAllUsers() ([]User, error) {
 func LoadUserTable() error {
 
 	// Load CSV data
-	csvFile, err := os.Open("data/csv/data_login.csv") // Replace with your CSV file path
+	csvFile, err := os.Open("./controllers/data/users.csv") // Replace with your CSV file path
 	if err != nil {
 		log.Fatalf("Failed to open CSV file: %v", err)
 		return err
