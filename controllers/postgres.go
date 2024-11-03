@@ -5,8 +5,6 @@ import (
 	"log"
 	"os"
 
-	"github.com/kyp0717/ew-system/controllers"
-
 	// "gorm.io/gorm/logger"
 
 	"gorm.io/driver/postgres"
@@ -42,65 +40,8 @@ func PgConnectDB() {
 
 	PgDBConn = db
 
-	// Check if tables exist
-	tablesToCheck := []string{"login", "category", "item", "product", "product_group", "product_detail"}
-
-	for _, table := range tablesToCheck {
-		if TableExists(db, table) {
-			fmt.Printf("Table %s exists.\n", table)
-		} else {
-			fmt.Printf("Table %s does not exist.\n", table)
-
-			// Check which table does not exist and generate table respectively
-			switch table {
-			case "login":
-				db.AutoMigrate(&controllers.Login{})
-				load.Login(db)
-			case "category":
-				db.AutoMigrate(&controllers.Category{})
-				load.Category(db)
-			case "item":
-				db.AutoMigrate(&controllers.Item{})
-				load.Item(db)
-
-				/*
-					case "product":
-						db.AutoMigrate(	&controllers.Product{}, )
-						load.Product(db)
-					case "product_group":
-						db.AutoMigrate(	&controllers.ProductGroup{},	)
-						load.ProductGroup(db)
-					case "product_detail":
-						db.AutoMigrate(	&controllers.ProductDetail{}, )
-						load.ProductDetail(db)
-				*/
-			}
-		}
-	}
-
-	// Migrate your models
-	err = db.AutoMigrate(
-		&controllers.Login{},
-		&controllers.Item{},
-		&controllers.Product{},
-		&controllers.ProductGroup{},
-		&controllers.ProductDetail{},
-		&controllers.Todo{},
-	)
-	if err != nil {
-		log.Fatal("failed to migrate models: ", err)
-	}
+	db.AutoMigrate(&User{})
+	LoadUserTable()
 
 	fmt.Println("Data Migration complete.")
-}
-
-func TableExists(db *gorm.DB, tableName string) bool {
-	var exists bool
-	query := fmt.Sprintf("SELECT EXISTS (SELECT FROM information_schema.tables WHERE table_name = '%s')", tableName)
-	err := db.Raw(query).Scan(&exists).Error
-	if err != nil {
-		log.Printf("Error checking if table %s exists: %v", tableName, err)
-		return false
-	}
-	return exists
 }
