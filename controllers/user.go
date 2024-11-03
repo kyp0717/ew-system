@@ -1,8 +1,10 @@
 package controllers
 
 import (
-	"errors"
-	"time"
+	"encoding/csv"
+	"log"
+	"os"
+	"strconv"
 	//"golang.org/x/crypto/bcrypt"
 )
 
@@ -14,149 +16,8 @@ type User struct {
 	Permission string `json:"permission"`
 }
 
-func (t *User) GetAllUsers() ([]User, error) {
-	// Sleep to add some delay in API response
-	time.Sleep(time.Millisecond * 1500)
-
-	var records []User
-
-	PgDBConn.Find(&records)
-
-	return records, nil
-}
-
-func (t *User) GetUserbySKU() (User, error) {
-
-	query := `SELECT ID, Email, Password, Username, Permission FROM Users
-		WHERE ID=t.SKU`
-
-	stmt, err := PgDBConn.Prepare(query)
-	if err != nil {
-		return User{}, err
-	}
-
-	defer stmt.Close()
-
-	var recoveredUser User
-	err = stmt.QueryRow(
-		t.ID,
-	).Scan(
-		&recoveredUser.ID,
-		&recoveredUser.Email,
-		&recoveredUser.Username,
-		&recoveredUser.Password,
-		&recoveredUser.Permission,
-	if err != nil {
-		return User{}, err
-	}
-
-	return recoveredUser, nil
-}
-
-func (t *User) CreateUser() (User, error) {
-
-	query := `INSERT INTO Users (ID, Email, Password, Username, Permission FROM Users)
-		VALUES(?, ?, ?) RETURNING *`
-
-	stmt, err := PgDBConn.Prepare(query)
-	if err != nil {
-		return User{}, err
-	}
-
-	defer stmt.Close()
-
-	var newUser User
-	err = stmt.QueryRow(
-		t.ID,
-		t.Email,
-		t.Username,
-		t.Password,
-		t.Permission,
-	).Scan(
-		&newUser.ID,
-		&newUser.Email,
-		&newUser.Username,
-		&newUser.Password,
-		&newUser.Permission,
-		&newUser.Cost,
-	)
-	if err != nil {
-		return User{}, err
-	}
-
-	/* if i, err := result.RowsAffected(); err != nil || i != 1 {
-		return errors.New("error: an affected row was expected")
-	} */
-
-	return newUser, nil
-}
-func (t *User) UpdateUser() (User, error) {
-
-	query := `UPDATE Users SET title = ?,  description = ?, status = ?
-		WHERE created_by = ? AND id=? RETURNING id, title, description, status`
-
-	stmt, err := PgDBConn.Prepare(query)
-	if err != nil {
-		return User{}, err
-	}
-
-	defer stmt.Close()
-
-	var updatedUser User
-	err = stmt.QueryRow(
-		t.ID,
-		t.Email,
-		t.Username,
-		t.Password,
-		t.Permission,
-	).Scan(
-		&updatedUser.ID,
-		&updatedUser.Email,
-		&updatedUser.Username,
-		&updatedUser.Password,
-		&updatedUser.Permission,
-
-	)
-	if err != nil {
-		return User{}, err
-	}
-
-	return updatedUser, nil
-}
-
-func (t *User) DeleteUser() error {
-
-	query := `DELETE FROM Users
-		WHERE created_by = ? AND id=?`
-
-	stmt, err := PgDBConn.Prepare(query)
-	if err != nil {
-		return err
-	}
-
-	defer stmt.Close()
-	//	//(	//( ID,Email,Password,Username,Permission ))
-	result, err := stmt.Exec(t.UserName, t.SKU)
-	if err != nil {
-		return err
-	}
-
-	if i, err := result.RowsAffected(); err != nil || i != 1 {
-		return errors.New("an affected row was expected")
-	}
-
-	return nil
-}
-
-func ConvertDateTime(tz string, dt time.Time) string {
-	loc, _ := time.LoadLocation(tz)
-
-	return dt.In(loc).Format(time.RFC822Z)
-}
-
-
-//****************  Table Load ***********************
-func (t *User) UserLoad() error {
+// ****************  Table Load ***********************
+func (t *User) UserLoad(PgDBConn) error {
 
 	// Load CSV data
 	csvFile, err := os.Open("data/csv/data_login.csv") // Replace with your CSV file path
@@ -190,7 +51,7 @@ func (t *User) UserLoad() error {
 			continue // Skip this record if conversion fails
 		}
 
-		test := &controllers.Users{
+		test := &User{
 			ID:         iID,
 			email:      record[1],
 			UserName:   record[3],
@@ -199,7 +60,7 @@ func (t *User) UserLoad() error {
 		}
 
 		// Save item to the database
-		err = db.Create(&test).Error
+		err = PgDBConn.Create(&test).Error
 		if err != nil {
 			log.Printf("Failed to insert test record: %v", err)
 		}

@@ -54,7 +54,7 @@ func PgConnectDB() {
 			switch table {
 			case "user":
 				PgDBConn.AutoMigrate(&User{})
-				err := controller.UserLoad(PgDBConn)
+				err := UserLoad(PgDBConn)
 				if err != nil {
 					log.Fatal("AutoMigrate failed to migrate login: ", err)
 				}
