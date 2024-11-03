@@ -1,4 +1,4 @@
-package controllers
+package load
 
 import (
 	"fmt"
@@ -13,35 +13,9 @@ import (
 	"gorm.io/gorm/schema"
 )
 
-var PgDBConn *gorm.DB
 
-func PgConnectDB() {
+func DB_LoadData(db) {
 
-	// Access DB credentials from environment
-	host := os.Getenv("db_host")
-	user := os.Getenv("db_user")
-	password := os.Getenv("db_password")
-	dbname := os.Getenv("db_name")
-	dbport := os.Getenv("db_port")
-
-	fmt.Println("Starting connection with Postgres Db")
-	dsn := user + "://postgres:" + password + "@" + host + ":" + dbport + "/" + dbname + "?sslmode=disable"
-
-	//db, err := gorm.Open(postgres.Open(dsn) , &gorm.Config{})
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{
-		NamingStrategy: schema.NamingStrategy{
-			SingularTable: true,
-		}})
-
-	if err != nil {
-		panic("Database connection failed.")
-	}
-
-	log.Println("Connection successful.")
-
-	PgDBConn = db
-
-	// Check if tables exist
 	tablesToCheck := []string{"login", "category", "item", "product", "product_group", "product_detail"}
 
 	for _, table := range tablesToCheck {

@@ -1,0 +1,79 @@
+1Adis,Discontinue,0.010,0
+1ATBD,,0.000,50
+1B,Dining Bench,0.040,50
+1BC,,0.020,50
+1BL,,0.020,50
+1BT,,0.030,20
+1CB,,0.040,200
+1CC,Dining Chairs,0.040,200
+1CL,,0.040,200
+1CP,Parson Chairs,0.040,200
+1CS,Counter Height Chair,0.040,200
+1CT,Coffee Table,0.050,50
+1OAC,,0.050,50
+1OB,Wooden Outdoor-Furniture Bench,0.000,50
+1OC,Wooden Outdoor-Furniture Chair,0.000,50
+1OCA5,Wooden Outdoor-Furniture Chair,0.040,200
+1OCS,Wooden Outdoor-Furniture Chair,0.040,200
+1OCS,Wooden Outdoor Sunlounger Chair,0.040,200
+1OCS,Outdoor Relaxing Chair,0.040,200
+1ODC,,0.020,50
+1OSC,,0.030,200
+1OT,Wooden Outdoor-Furniture Table,0.050,80
+1OT,Outdoor Dining Table,0.050,80
+1OWC,Wicker Outdoor-Furniture Chair,0.040,200
+1OWT,Wicker Outdoor-Furniture Table,0.050,80
+1P,,0.040,200
+1T,Dining Table,0.040,80
+1TC,,0.050,50
+1TH,Counter Height Table,0.040,80
+1TL,,0.040,80
+1TTop,,0.040,80
+1WC,,0.030,200
+1WT,,0.030,50
+BedC,Chest,0.050,50
+BedD,,0.050,50
+BedF,,0.000,50
+BedFF,Full Platform Bed,0.020,20
+BedFK,King Platform Bed,0.020,20
+BedFP,Full Platform bed ,0.050,50
+BedFQ,Queen Platform Bed,0.020,20
+BedK,,0.000,50
+BedKF,,0.050,50
+BedKH,,0.050,50
+BedKP,King Platform bed,0.050,50
+BedKR,,0.050,50
+BedM,,0.050,50
+BedMF,Metal Bed,0.030,20
+BedMF,Full Bed,0.030,20
+BedMK,King Bed,0.030,20
+BedMQ,Queen Bed,0.030,20
+BedMQ,Metal Queen Bed,0.030,20
+BedMT,Twin Bed,0.030,20
+BedN,Nightstand,0.050,50
+BedN,End Table,0.050,50
+BedNE,Nightstand,0.020,40
+BedQ,,0.000,50
+BedQF,,0.050,50
+BedQH,,0.050,50
+BedQP,Queen Platform bed,0.050,50
+BedQR,,0.050,50
+BedT,,0.000,50
+BedWF,Platform bed,0.020,20
+BedWK,Platform bed,0.020,20
+BedWQ,Platform bed,0.020,20
+BunkD,,0.050,50
+BunkHF,,0.050,50
+BunkMT,,0.030,20
+BunkR,,0.050,50
+BunkT,Bunkbed,0.030,50
+BunkTr,,0.050,50
+FL,Flooring,0.050,50
+SB024,Backless Stool,0.050,50
+SB030,Backless Stool,0.050,50
+Set3,Dining Set,0.050,50
+Set5,Dining Set,0.050,50
+SetH4,Counter Height Set,0.020,20
+SetO3,Outdoor Dining Set,0.000,50
+SetO5,Outdoor Dining Table,0.050,50
+SetW3,Wicker Outdoor-Furniture Table,0.050,50

@@ -8,13 +8,13 @@ import (
 	"github.com/a-h/templ"
 	"github.com/emarifer/gofiber-templ-htmx/controllers"
 	"github.com/emarifer/gofiber-templ-htmx/models"
-	"github.com/emarifer/gofiber-templ-htmx/views/todo_views"
+	"github.com/emarifer/gofiber-templ-htmx/views/item_views"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/adaptor"
 	"github.com/sujit-baniya/flash"
 )
 
-/********** Handlers for Todo Views **********/
+/********** Handlers for item Views **********/
 
 // Render List Page with success/error messages
 func HandleInventoryList(c *fiber.Ctx) error {
@@ -41,11 +41,11 @@ func HandleInventoryList(c *fiber.Ctx) error {
 		}
 		// fm["message"] = fmt.Sprintf("something went wrong: %s", err)
 
-		// return flash.WithError(c, fm).Redirect("/todo/list")
+		// return flash.WithError(c, fm).Redirect("/item/list")
 	}
 
-	tindex := todo_views.TodoIndex(todosSlice)
-	tlist := todo_views.TodoList(
+	tindex := item_views.itemIndex(itemsSlice)
+	tlist := item_views.itemList(
 		" | Tasks List",
 		fromProtected,
 		false,
@@ -59,26 +59,26 @@ func HandleInventoryList(c *fiber.Ctx) error {
 	return handler(c)
 }
 
-// Render Create Todo Page with success/error messages
+// Render Create item Page with success/error messages
 func HandleViewCreatePage(c *fiber.Ctx) error {
 	fromProtected := c.Locals(FROM_PROTECTED).(bool)
 
 	if c.Method() == "POST" {
-		newTodo := new(models.Todo)
-		newTodo.CreatedBy = c.Locals("userId").(uint64)
-		newTodo.Title = strings.Trim(c.FormValue("title"), " ")
-		newTodo.Description = strings.Trim(c.FormValue("description"), " ")
+		newitem := new(controllers.Item)
+		newitem.CreatedBy = c.Locals("userId").(uint64)
+		newitem.SKU = strings.Trim(c.FormValue("SKU"), " ")
+		newitem.Description = strings.Trim(c.FormValue("description"), " ")
 
 		fm := fiber.Map{
 			"type":    "error",
 			"message": "Task title empty!!",
 		}
-		if newTodo.Title == "" {
+		if newitem.SKU == "" {
 
-			return flash.WithError(c, fm).Redirect("/todo/list")
+			return flash.WithError(c, fm).Redirect("/item/list")
 		}
 
-		if _, err := newTodo.CreateTodo(); err != nil {
+		if _, err := newitem.Createitem(); err != nil {
 			if strings.Contains(err.Error(), "no such table") ||
 				strings.Contains(err.Error(), "database is locked") {
 				// "no such table" is the error that SQLite3 produces
@@ -98,12 +98,12 @@ func HandleViewCreatePage(c *fiber.Ctx) error {
 			"message": "Task successfully created!!",
 		}
 
-		return flash.WithSuccess(c, fm).Redirect("/todo/list")
+		return flash.WithSuccess(c, fm).Redirect("/item/list")
 	}
 
-	cindex := todo_views.CreateIndex()
-	create := todo_views.Create(
-		" | Create Todo",
+	cindex := item_views.CreateIndex()
+	create := item_views.Create(
+		" | Create item",
 		fromProtected,
 		false,
 		flash.Get(c),
@@ -116,22 +116,22 @@ func HandleViewCreatePage(c *fiber.Ctx) error {
 	return handler(c)
 }
 
-// Render Edit Todo Page with success/error messages
+// Render Edit item Page with success/error messages
 func HandleViewEditPage(c *fiber.Ctx) error {
 	fromProtected := c.Locals(FROM_PROTECTED).(bool)
 	session, _ := store.Get(c)
 	tzone := session.Get(TZONE_KEY).(string)
 
 	idParams, _ := strconv.Atoi(c.Params("id"))
-	todoId := uint64(idParams)
+	itemId := uint64(idParams)
 
-	todo := new(models.Todo)
-	todo.ID = todoId
-	todo.CreatedBy = c.Locals("userId").(uint64)
+	item := new(controllers.Item)
+	item.SKU = itemId
+	item.CreatedBy = c.Locals("userId").(uint64)
 
 	fm := fiber.Map{"type": "error"}
 
-	recoveredTodo, err := todo.GetNoteById()
+	recovereditem, err := item.GetNoteById()
 
 	if err != nil {
 		if strings.Contains(err.Error(), "no such table") ||
@@ -149,28 +149,28 @@ func HandleViewEditPage(c *fiber.Ctx) error {
 
 		fm["message"] = fmt.Sprintf("something went wrong: %s", err)
 
-		return flash.WithError(c, fm).Redirect("/todo/list")
+		return flash.WithError(c, fm).Redirect("/item/list")
 	}
 
 	if c.Method() == "POST" {
-		todo.Title = strings.Trim(c.FormValue("title"), " ")
-		todo.Description = strings.Trim(c.FormValue("description"), " ")
+		item.Title = strings.Trim(c.FormValue("title"), " ")
+		item.Description = strings.Trim(c.FormValue("description"), " ")
 		if c.FormValue("status") == "on" {
-			todo.Status = true
+			item.Status = true
 		} else {
-			todo.Status = false
+			item.Status = false
 		}
 
 		fm = fiber.Map{
 			"type":    "error",
 			"message": "Task title empty!!",
 		}
-		if todo.Title == "" {
+		if item.Title == "" {
 
-			return flash.WithError(c, fm).Redirect("/todo/list")
+			return flash.WithError(c, fm).Redirect("/item/list")
 		}
 
-		_, err := todo.UpdateTodo()
+		_, err := item.Updateitem()
 		if err != nil {
 			if strings.Contains(err.Error(), "no such table") ||
 				strings.Contains(err.Error(), "database is locked") {
@@ -187,7 +187,7 @@ func HandleViewEditPage(c *fiber.Ctx) error {
 
 			fm["message"] = fmt.Sprintf("something went wrong: %s", err)
 
-			return flash.WithError(c, fm).Redirect("/todo/list")
+			return flash.WithError(c, fm).Redirect("/item/list")
 		}
 
 		fm = fiber.Map{
@@ -195,12 +195,12 @@ func HandleViewEditPage(c *fiber.Ctx) error {
 			"message": "Task successfully updated!!",
 		}
 
-		return flash.WithSuccess(c, fm).Redirect("/todo/list")
+		return flash.WithSuccess(c, fm).Redirect("/item/list")
 	}
 
-	uindex := todo_views.UpdateIndex(recoveredTodo, tzone)
-	update := todo_views.Update(
-		fmt.Sprintf(" | Edit Todo #%d", recoveredTodo.ID),
+	uindex := item_views.UpdateIndex(recovereditem, tzone)
+	update := item_views.Update(
+		fmt.Sprintf(" | Edit item #%d", recovereditem.ID),
 		fromProtected,
 		false,
 		flash.Get(c),
@@ -213,18 +213,18 @@ func HandleViewEditPage(c *fiber.Ctx) error {
 	return handler(c)
 }
 
-// Handler Remove Todo
-func HandleDeleteTodo(c *fiber.Ctx) error {
+// Handler Remove item
+func HandleDeleteitem(c *fiber.Ctx) error {
 	idParams, _ := strconv.Atoi(c.Params("id"))
-	todoId := uint64(idParams)
+	itemId := uint64(idParams)
 
-	todo := new(models.Todo)
-	todo.ID = todoId
-	todo.CreatedBy = c.Locals("userId").(uint64)
+	item := new(models.item)
+	item.ID = itemId
+	item.CreatedBy = c.Locals("userId").(uint64)
 
 	fm := fiber.Map{"type": "error"}
 
-	if err := todo.DeleteTodo(); err != nil {
+	if err := item.Deleteitem(); err != nil {
 		if strings.Contains(err.Error(), "no such table") ||
 			strings.Contains(err.Error(), "database is locked") {
 			// "no such table" is the error that SQLite3 produces
@@ -240,7 +240,7 @@ func HandleDeleteTodo(c *fiber.Ctx) error {
 		fm["message"] = fmt.Sprintf("something went wrong: %s", err)
 
 		return flash.WithError(c, fm).Redirect(
-			"/todo/list",
+			"/item/list",
 			fiber.StatusSeeOther,
 		)
 	}
@@ -250,5 +250,5 @@ func HandleDeleteTodo(c *fiber.Ctx) error {
 		"message": "Task successfully deleted!!",
 	}
 
-	return flash.WithSuccess(c, fm).Redirect("/todo/list", fiber.StatusSeeOther)
+	return flash.WithSuccess(c, fm).Redirect("/item/list", fiber.StatusSeeOther)
 }

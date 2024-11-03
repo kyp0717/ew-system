@@ -22,7 +22,9 @@ const (
 	TZONE_KEY      string = "time_zone"
 )
 
-func Setup(app *fiber.App) {
+func 
+
+Setup(app *fiber.App) {
 	/* Sessions Config */
 	store = session.New(session.Config{
 		CookieHTTPOnly: true,
