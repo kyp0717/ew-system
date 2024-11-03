@@ -6,10 +6,10 @@ import (
 	"time"
 
 	"github.com/a-h/templ"
-	"github.com/emarifer/gofiber-templ-htmx/views"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/adaptor"
 	"github.com/gofiber/fiber/v2/middleware/session"
+	"github.com/kyp0717/ew-system/views"
 	"github.com/sujit-baniya/flash"
 )
 
@@ -46,6 +46,10 @@ func Setup(app *fiber.App) {
 	todoApp.Post("/edit/:id", HandleViewEditPage)
 	todoApp.Delete("/delete/:id", HandleDeleteTodo)
 	todoApp.Post("/logout", HandleLogout)
+
+	/* Views protected with session middleware */
+	// inventoryApp := app.Group("/inventory", AuthMiddleware)
+	// inventoryApp.Get("/inventorylist", HandleInventoryList)
 
 	/* ↓ Not Found Management - Fallback Page ↓ */
 	app.Get("/*", flagsMiddleware, func(c *fiber.Ctx) error {
