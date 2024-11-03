@@ -2,7 +2,6 @@ package views
 
 import (
 	"github.com/emarifer/gofiber-templ-htmx/views/partials"
-
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -22,6 +21,7 @@ templ Layout(
 			<meta name="google" content="notranslate"/>
 			<link rel="shortcut icon" href="/img/gopher-svgrepo-com.svg" type="image/svg+xml"/>
 			<link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.10/dist/full.min.css" rel="stylesheet" type="text/css"/>
+			<link rel="stylesheet" href="https://cdn.xeiaso.net/static/pkg/iosevka/family.css"/>
 			<script src="https://cdn.tailwindcss.com"></script>
 			<link rel="stylesheet" href="/css/styles.css"/>
 			<title>Todo List{ page }</title>
@@ -29,10 +29,7 @@ templ Layout(
 			<script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
 			<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.1/dist/sweetalert2.all.min.js"></script>
 		</head>
-		<body
-			class="sample-transition"
-			hx-boost="true"
-		>
+		<body class="sample-transition" hx-boost="true">
 			<header>
 				if !isError {
 					@partials.Navbar(fromProtected, username)

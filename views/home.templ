@@ -33,10 +33,10 @@ templ HomeIndex(fromProtected bool) {
 
 templ Home(
 	page string,
-	fromProtected, isError bool,
+	fromProtected, 
+	isError bool,
 	msg fiber.Map,
-	cmp templ.Component,
-) {
+	cmp templ.Component,) {
 	@Layout(page, fromProtected, isError, msg, "") {
 		@cmp
 	}
