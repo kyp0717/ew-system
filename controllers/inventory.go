@@ -39,7 +39,7 @@ type Item struct {
 	Supplier        string          `json:"Supplier" gorm:"column:Supplier;type:text;null"`
 	ShippingCost    decimal.Decimal `json:"ShippingCost" gorm:"column:ShippingCost;type:decimal(10,2);null"`
 	Active          string          `json:"Active" gorm:"column:Active;;type:text;size:1;null"`
-	UserName        string          `json:"UserName" gorm:"column:UserName;type:text;size:20;null"`
+	CreatedBy       string          `json:"UserName" gorm:"column:UserName;type:text;size:20;null"`
 	UpdateStamp     string          `json:"UpdateStamp" gorm:"column:UpdateStamp;type:date;null"`
 }
 
@@ -54,115 +54,119 @@ func (t *Item) GetAllItems() ([]Item, error) {
 	return records, nil
 }
 
-func (t *Item) GetNoteById() (Item, error) {
+func (t *Item) GetItembySKU() (Item, error) {
 
-	query := `SELECT id, title, description, status, created_at FROM todos
-		WHERE created_by = ? AND id=?`
+	query := `SELECT SKU, ItemName, UPC, Type, Category, Description, Inventory , Cost FROM Items
+		WHERE SKU=t.SKU`
 
-	stmt, err := db.Prepare(query)
+	stmt, err := PgDBConn.Prepare(query)
 	if err != nil {
-		return Todo{}, err
+		return Item{}, err
 	}
 
 	defer stmt.Close()
 
-	var recoveredTodo Todo
+	var recoveredItem Item
 	err = stmt.QueryRow(
-		t.CreatedBy, t.ID,
+		t.SKU,
 	).Scan(
-		&recoveredTodo.ID,
-		&recoveredTodo.Title,
-		&recoveredTodo.Description,
-		&recoveredTodo.Status,
-		&recoveredTodo.CreatedAt,
+		&recoveredItem.SKU,
+		&recoveredItem.ItemName,
+		&recoveredItem.UPC,
+		&recoveredItem.Category,
+		&recoveredItem.Description,
+		&recoveredItem.Inventory,
+		&recoveredItem.Cost,
 	)
 	if err != nil {
-		return Todo{}, err
+		return Item{}, err
 	}
 
-	return recoveredTodo, nil
+	return recoveredItem, nil
 }
 
-func (t *Todo) CreateTodo() (Todo, error) {
+func (t *Item) CreateItem() (Item, error) {
 
-	query := `INSERT INTO todos (created_by, title, description)
+	query := `INSERT INTO Items (SKU, ItemName, UPC, Type, Category, Description, Inventory , Cost)
 		VALUES(?, ?, ?) RETURNING *`
 
-	stmt, err := db.Prepare(query)
+	stmt, err := PgDBConn.Prepare(query)
 	if err != nil {
-		return Todo{}, err
+		return Item{}, err
 	}
 
 	defer stmt.Close()
 
-	var newTodo Todo
+	var newItem Item
 	err = stmt.QueryRow(
-		t.CreatedBy,
-		t.Title,
+		t.SKU,
+		t.UPC,
 		t.Description,
 	).Scan(
-		&newTodo.ID,
-		&newTodo.CreatedBy,
-		&newTodo.Title,
-		&newTodo.Description,
-		&newTodo.Status,
-		&newTodo.CreatedAt,
+		&newItem.SKU,
+		&newItem.ItemName,
+		&newItem.UPC,
+		&newItem.Description,
+		&newItem.Inventory,
+		&newItem.Cost,
 	)
 	if err != nil {
-		return Todo{}, err
+		return Item{}, err
 	}
 
 	/* if i, err := result.RowsAffected(); err != nil || i != 1 {
 		return errors.New("error: an affected row was expected")
 	} */
 
-	return newTodo, nil
+	return newItem, nil
 }
-func (t *Todo) UpdateTodo() (Todo, error) {
+func (t *Item) UpdateItem() (Item, error) {
 
-	query := `UPDATE todos SET title = ?,  description = ?, status = ?
+	query := `UPDATE Items SET title = ?,  description = ?, status = ?
 		WHERE created_by = ? AND id=? RETURNING id, title, description, status`
 
-	stmt, err := db.Prepare(query)
+	stmt, err := PgDBConn.Prepare(query)
 	if err != nil {
-		return Todo{}, err
+		return Item{}, err
 	}
 
 	defer stmt.Close()
-
-	var updatedTodo Todo
+//(SKU, ItemName, UPC, Type, Category, Description, Inventory , Cost)
+	var updatedItem Item
 	err = stmt.QueryRow(
-		t.Title,
-		t.Description,
-		t.Status,
-		t.CreatedBy,
-		t.ID,
+		t.SKU,
+		t.ItemName,
+		t.UPC,
+		t.Category,
+		t.Cost,
 	).Scan(
-		&updatedTodo.ID,
-		&updatedTodo.Title,
-		&updatedTodo.Description,
-		&updatedTodo.Status,
+		&updatedItem.SKU,
+		&updatedItem.ItemName,
+		&updatedItem.UPC,
+		&updatedItem.Category,
+		&updatedItem.Inventory,
+		&updatedItem.Cost,
 	)
 	if err != nil {
-		return Todo{}, err
+		return Item{}, err
 	}
 
-	return updatedTodo, nil
+	return updatedItem, nil
 }
 
-func (t *Todo) DeleteTodo() error {
+func (t *Item) DeleteItem() error {
 
-	query := `DELETE FROM todos
+	query := `DELETE FROM Items
 		WHERE created_by = ? AND id=?`
 
-	stmt, err := db.Prepare(query)
+	stmt, err := PgDBConn.Prepare(query)
 	if err != nil {
 		return err
 	}
 
 	defer stmt.Close()
-
-	result, err := stmt.Exec(t.CreatedBy, t.ID)
+//(SKU, ItemName, UPC, Type, Category, Description, Inventory , Cost)
+	result, err := stmt.Exec(t.ItemName, t.SKU)
 	if err != nil {
 		return err
 	}

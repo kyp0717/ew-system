@@ -5,9 +5,8 @@ import (
 	"log"
 	"os"
 
-	"github.com/kyp0717/ew-system/controllers"
-
 	// "gorm.io/gorm/logger"
+	//"github.com/emarifer/gofiber-templ-htmx/data/load"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -43,52 +42,48 @@ func PgConnectDB() {
 	PgDBConn = db
 
 	// Check if tables exist
-	tablesToCheck := []string{"login", "category", "item", "product", "product_group", "product_detail"}
+	tablesToCheck := []string{"user", "category", "item", "product", "product_group", "product_detail"}
 
 	for _, table := range tablesToCheck {
-		if TableExists(db, table) {
+		if TableExists(PgDBConn, table) {
 			fmt.Printf("Table %s exists.\n", table)
 		} else {
 			fmt.Printf("Table %s does not exist.\n", table)
 
 			// Check which table does not exist and generate table respectively
 			switch table {
-			case "login":
-				db.AutoMigrate(&controllers.Login{})
-				load.Login(db)
-			case "category":
-				db.AutoMigrate(&controllers.Category{})
-				load.Category(db)
-			case "item":
-				db.AutoMigrate(&controllers.Item{})
-				load.Item(db)
+			case "user":
+				PgDBConn.AutoMigrate(&User{})
+				err := controller.UserLoad(PgDBConn)
+				if err != nil {
+					log.Fatal("AutoMigrate failed to migrate login: ", err)
+				}
 
+			case "category":
+				PgDBConn.AutoMigrate(&Category{})
+				err := controllers.Category(PgDBConn)
+				if err != nil {
+					log.Fatal("AutoMigrate failed to migrate category: ", err)
+				}
+			case "item":
+				PgDBConn.AutoMigrate(&Item{})
+				err := controllers.Item(PgDBConn)
+				if err != nil {
+					log.Fatal("AutoMigrate failed to migrate item: ", err)
+				}
 				/*
 					case "product":
-						db.AutoMigrate(	&controllers.Product{}, )
-						load.Product(db)
+						db.AutoMigrate(	&Product{}, )
+						controllers..Product(PgDBConn)
 					case "product_group":
-						db.AutoMigrate(	&controllers.ProductGroup{},	)
-						load.ProductGroup(db)
+						db.AutoMigrate(	&ProductGroup{},	)
+						controllers..ProductGroup(PgDBConn)
 					case "product_detail":
-						db.AutoMigrate(	&controllers.ProductDetail{}, )
-						load.ProductDetail(db)
+						db.AutoMigrate(	&ProductDetail{}, )
+						controllers..ProductDetail(PgDBConn)
 				*/
 			}
 		}
-	}
-
-	// Migrate your models
-	err = db.AutoMigrate(
-		&controllers.Login{},
-		&controllers.Item{},
-		&controllers.Product{},
-		&controllers.ProductGroup{},
-		&controllers.ProductDetail{},
-		&controllers.Todo{},
-	)
-	if err != nil {
-		log.Fatal("failed to migrate models: ", err)
 	}
 
 	fmt.Println("Data Migration complete.")
