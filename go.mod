@@ -7,6 +7,8 @@ require (
 	github.com/gofiber/fiber/v2 v2.51.0
 )
 
+require github.com/joho/godotenv v1.5.1 // indirect
+
 require (
 	github.com/andybalholm/brotli v1.1.0 // indirect
 	github.com/google/uuid v1.4.0 // indirect
