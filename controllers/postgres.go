@@ -43,5 +43,8 @@ func PgConnectDB() {
 	db.AutoMigrate(&User{})
 	LoadUserTable()
 
+	db.AutoMigrate(&Item{})
+	LoadItemTable()
+	
 	fmt.Println("Data Migration complete.")
 }

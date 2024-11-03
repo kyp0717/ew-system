@@ -2,8 +2,10 @@ package controllers
 
 import (
 	"encoding/csv"
+	"fmt"
 	"log"
 	"os"
+	"strconv"
 
 	"github.com/shopspring/decimal"
 )
@@ -40,7 +42,7 @@ type Item struct {
 	Supplier        string          `json:"Supplier" gorm:"column:Supplier;type:text;null"`
 	ShippingCost    decimal.Decimal `json:"ShippingCost" gorm:"column:ShippingCost;type:decimal(10,2);null"`
 	Active          string          `json:"Active" gorm:"column:Active;;type:text;size:1;null"`
-	CreatedBy       string          `json:"UserName" gorm:"column:UserName;type:text;size:20;null"`
+	CreatedBy       string          `json:"CreatedBy" gorm:"column:CreatedBy;type:text;size:20;null"`
 	UpdateStamp     string          `json:"UpdateStamp" gorm:"column:UpdateStamp;type:date;null"`
 }
 
@@ -50,7 +52,6 @@ func LoadItemTable() error {
 	csvFile, err := os.Open("./controllers/data/item.csv") // Replace with your CSV file path
 	if err != nil {
 		log.Fatalf("Failed to open CSV file: %v", err)
-		return err
 	}
 	defer csvFile.Close()
 
@@ -61,23 +62,145 @@ func LoadItemTable() error {
 	records, err := reader.ReadAll()
 	if err != nil {
 		log.Fatalf("Failed to read CSV test file: %v", err)
-		return err
 	}
 
 	// Loop through the records and create Category
 	for _, record := range records {
 
-		test := &User{
-			Email:    record[0],
-			Username: record[1],
-			Password: record[2],
+		iInventory, err := strconv.Atoi(record[6])
+		if err != nil {
+			log.Printf("Failed to convert to int - Inventory: %v", err)
+			continue // Skip this record if conversion fails
+		}
+		iQtyPerBox, err := strconv.Atoi(record[7])
+		if err != nil {
+			log.Printf("Failed to convert to int - QtyPerBox: %v", err)
+			continue // Skip this record if conversion fails
+		}
+		iLength, err := strconv.Atoi(record[16])
+		if err != nil {
+			log.Printf("Failed to convert to int - Length: %v", err)
+			continue // Skip this record if conversion fails
+		}
+		iWidth, err := strconv.Atoi(record[17])
+		if err != nil {
+			log.Printf("Failed to convert to int - Width: %v", err)
+			continue // Skip this record if conversion fails
+		}
+		iHeight, err := strconv.Atoi(record[18])
+		if err != nil {
+			log.Printf("Failed to convert to int - Height: %v", err)
+			continue // Skip this record if conversion fails
+		}
+		iBoxLength, err := strconv.Atoi(record[20])
+		if err != nil {
+			log.Printf("Failed to convert to int - BoxLength: %v", err)
+			continue // Skip this record if conversion fails
+		}
+		iBoxWidth, err := strconv.Atoi(record[21])
+		if err != nil {
+			log.Printf("Failed to convert to int - BoxWidth: %v", err)
+			continue // Skip this record if conversion fails
+		}
+		iBoxHeight, err := strconv.Atoi(record[22])
+		if err != nil {
+			log.Printf("Failed to convert to int - BoxHeight: %v", err)
+			continue // Skip this record if conversion fails
+		}
+		iBoxWeight, err := strconv.Atoi(record[23])
+		if err != nil {
+			log.Printf("Failed to convert to int - BoxWeight: %v", err)
+			continue // Skip this record if conversion fails
+		}
+		iPiecesContainer, err := strconv.Atoi(record[26])
+		if err != nil {
+			log.Printf("Failed to convert to int - PiecesContainer: %v", err)
+			continue // Skip this record if conversion fails
+		}
+		dCost, err := decimal.NewFromString(record[8])
+		if err != nil {
+			log.Printf("Failed to convert to decimal - Cost: %v", err)
+			continue // Skip this record if conversion fails
+		}
+		dShippingCost, err := decimal.NewFromString(record[28])
+		if err != nil {
+			log.Printf("Failed to convert to decimal - dShippingCost: %v", err)
+			continue // Skip this record if conversion fails
+		}
+		dPrice, err := decimal.NewFromString(record[9])
+		if err != nil {
+			log.Printf("Failed to convert to decimal - Price: %v", err)
+			continue // Skip this record if conversion fails
+		}
+		dPrice5, err := decimal.NewFromString(record[10])
+		if err != nil {
+			log.Printf("Failed to convert to decimal - Price5: %v", err)
+			continue // Skip this record if conversion fails
+		}
+		dPrice7, err := decimal.NewFromString(record[11])
+		if err != nil {
+			log.Printf("Failed to convert to decimal - Price7: %v", err)
+			continue // Skip this record if conversion fails
+		}
+		dPrice10, err := decimal.NewFromString(record[12])
+		if err != nil {
+			log.Printf("Failed to convert to decimal - Price10: %v", err)
+			continue // Skip this record if conversion fails
+		}
+		dPrice15, err := decimal.NewFromString(record[13])
+		if err != nil {
+			log.Printf("Failed to convert to decimal - Price15: %v", err)
+			continue // Skip this record if conversion fails
+		}
+		dPrice19, err := decimal.NewFromString(record[14])
+		if err != nil {
+			log.Printf("Failed to convert to decimal - Price19: %v", err)
+			continue // Skip this record if conversion fails
+		}
+
+		itemrecord := &Item{
+			SKU:             record[0],
+			ItemName:        record[1],
+			UPC:             record[2],
+			Type:            record[3],
+			Category:        record[4],
+			Description:     record[5],
+			Inventory:       iInventory,
+			QtyPerBox:       iQtyPerBox,
+			Cost:            dCost,
+			Price:           dPrice,
+			Price5:          dPrice5,
+			Price7:          dPrice7,
+			Price10:         dPrice10,
+			Price15:         dPrice15,
+			Price19:         dPrice19,
+			ItemDimension:   record[15],
+			Length:          iLength,
+			Width:           iWidth,
+			Height:          iHeight,
+			BoxDimension:    record[19],
+			BoxLength:       iBoxLength,
+			BoxWidth:        iBoxWidth,
+			BoxHeight:       iBoxHeight,
+			BoxWeight:       iBoxWeight,
+			AvailableDate:   record[24],
+			ShippingMethod:  record[25],
+			PiecesContainer: iPiecesContainer,
+			Supplier:        record[27],
+			ShippingCost:    dShippingCost,
+			Active:          record[29],
+			CreatedBy:        record[30],
+			UpdateStamp:     record[31],
 		}
 
 		// Save item to the database
-		err = PgDBConn.Create(&test).Error
+		err = PgDBConn.Create(&itemrecord).Error
 		if err != nil {
-			log.Printf("Failed to insert user record: %v", err)
+			log.Printf("Failed to insert test record: %v", err)
 		}
 	}
+
+	fmt.Println("....Item Data imported successfully!")
+
 	return nil
 }
