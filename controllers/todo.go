@@ -27,7 +27,7 @@ func (t *TodoPG) CreateTodo() (TodoPG, error) {
 
 }
 
-func InsertTodoPG(t TodoPG) error {
+func InsertTodoPG(t *TodoPG) error {
 
 	if err := PgDBConn.Create(t).Error; err != nil {
 		log.Fatal("failed to create TodoPG:", err)

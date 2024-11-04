@@ -11,7 +11,7 @@ import templruntime "github.com/a-h/templ/runtime"
 import (
 	"github.com/gofiber/fiber/v2"
 
-	"github.com/emarifer/gofiber-templ-htmx/views"
+	"github.com/kyp0717/ew-system/views"
 )
 
 func CreateIndex() templ.Component {

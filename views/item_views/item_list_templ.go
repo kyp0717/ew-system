@@ -12,10 +12,10 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/emarifer/gofiber-templ-htmx/models"
-	"github.com/emarifer/gofiber-templ-htmx/views"
+	"github.com/kyp0717/ew-system/models"
+	"github.com/kyp0717/ew-system/views"
 
-	"github.com/emarifer/gofiber-templ-htmx/controllers"
+	"github.com/kyp0717/ew-system/controllers"
 	"github.com/gofiber/fiber/v2"
 )
 
