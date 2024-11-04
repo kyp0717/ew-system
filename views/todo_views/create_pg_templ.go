@@ -11,10 +11,10 @@ import templruntime "github.com/a-h/templ/runtime"
 import (
 	"github.com/gofiber/fiber/v2"
 
-	"github.com/emarifer/gofiber-templ-htmx/views"
+	"github.com/kyp0717/ew-system/views"
 )
 
-func CreateIndex() templ.Component {
+func CreateIndexPG() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -43,7 +43,7 @@ func CreateIndex() templ.Component {
 	})
 }
 
-func Create(
+func CreatePG(
 	page string,
 	fromProtected, isError bool,
 	msg fiber.Map,

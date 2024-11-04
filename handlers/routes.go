@@ -41,7 +41,7 @@ func Setup(app *fiber.App) {
 	todoApp := app.Group("/todo", AuthMiddleware)
 	todoApp.Get("/list", HandleViewList)
 	todoApp.Get("/create", HandleViewCreatePage)
-	todoApp.Post("/create", HandleViewCreatePage)
+	todoApp.Post("/create", HandleViewCreatePagePG)
 	todoApp.Get("/edit/:id", HandleViewEditPage)
 	todoApp.Post("/edit/:id", HandleViewEditPage)
 	todoApp.Delete("/delete/:id", HandleDeleteTodo)
