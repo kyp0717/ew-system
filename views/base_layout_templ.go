@@ -10,7 +10,6 @@ import templruntime "github.com/a-h/templ/runtime"
 
 import (
 	"github.com/kyp0717/ew-system/views/partials"
-
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -37,7 +36,7 @@ func Layout(
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<!doctype html><html lang=\"en\" data-theme=\"dark\"><head><meta charset=\"UTF-8\"><meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><meta name=\"description\" content=\"Full stack application using Golang&#39;s Fiber framework &amp; Templ templating language with user session management + CRUD to a SQLite database (To Do List) and HTMX in the frontend\"><meta name=\"google\" content=\"notranslate\"><link rel=\"shortcut icon\" href=\"/img/gopher-svgrepo-com.svg\" type=\"image/svg+xml\"><link href=\"https://cdn.jsdelivr.net/npm/daisyui@4.4.10/dist/full.min.css\" rel=\"stylesheet\" type=\"text/css\"><script src=\"https://cdn.tailwindcss.com\"></script><link rel=\"stylesheet\" href=\"/css/styles.css\"><title>Todo List")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<!doctype html><html lang=\"en\" data-theme=\"dark\"><head><meta charset=\"UTF-8\"><meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><meta name=\"description\" content=\"Full stack application using Golang&#39;s Fiber framework &amp; Templ templating language with user session management + CRUD to a SQLite database (To Do List) and HTMX in the frontend\"><meta name=\"google\" content=\"notranslate\"><link rel=\"shortcut icon\" href=\"/img/gopher-svgrepo-com.svg\" type=\"image/svg+xml\"><link href=\"https://cdn.jsdelivr.net/npm/daisyui@4.4.10/dist/full.min.css\" rel=\"stylesheet\" type=\"text/css\"><link rel=\"stylesheet\" href=\"https://cdn.xeiaso.net/static/pkg/iosevka/family.css\"><script src=\"https://cdn.tailwindcss.com\"></script><link rel=\"stylesheet\" href=\"/css/styles.css\"><title>Todo List")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
