@@ -4,13 +4,12 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/emarifer/gofiber-templ-htmx/models"
-	"github.com/emarifer/gofiber-templ-htmx/views"
-
+	"github.com/kyp0717/ew-system/controllers"
+	"github.com/kyp0717/ew-system/views"
 	"github.com/gofiber/fiber/v2"
 )
 
-templ TodoIndex(todos []models.Todo) {
+templ TodoIndexPG(todosPG []controllers.TodoPG) {
 	<div class="flex justify-between max-w-2xl mx-auto border-b border-b-slate-600 mb-8 pb-2">
 		<h1 class="text-2xl font-bold text-center">
 			My Tasks List
@@ -30,9 +29,9 @@ templ TodoIndex(todos []models.Todo) {
 					<th class="text-center">Options</th>
 				</tr>
 			</thead>
-			if len(todos) != 0 {
+			if len(todosPG) != 0 {
 				<tbody>
-					for _, todo := range todos {
+					for _, todo := range todosPG {
 						<tr>
 							<th>{ strconv.Itoa(int(todo.ID)) }</th>
 							<td>{ todo.Title }</td>
@@ -93,7 +92,7 @@ templ TodoIndex(todos []models.Todo) {
 	</section>
 }
 
-templ TodoList(
+templ TodoListPG(
 	page string,
 	fromProtected, isError bool,
 	msg fiber.Map,

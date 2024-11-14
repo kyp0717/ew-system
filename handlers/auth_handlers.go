@@ -6,18 +6,19 @@ import (
 	"strings"
 
 	"github.com/a-h/templ"
-	"github.com/kyp0717/ew-system/models"
-	"github.com/kyp0717/ew-system/views"
-	"github.com/kyp0717/ew-system/views/auth_views"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/adaptor"
+	"github.com/kyp0717/ew-system/controllers"
+
+	"github.com/kyp0717/ew-system/views"
+	"github.com/kyp0717/ew-system/views/auth_views"
 	"github.com/sujit-baniya/flash"
 	"golang.org/x/crypto/bcrypt"
 )
 
 /********** Handlers for Auth Views **********/
 
-// Render Home Page 
+// Render Home Page
 func HandleViewHome(c *fiber.Ctx) error {
 	fromProtected := c.Locals(FROM_PROTECTED).(bool)
 
@@ -49,7 +50,7 @@ func HandleViewLogin(c *fiber.Ctx) error {
 		}
 
 		var (
-			user models.User
+			user controllers.User
 			err  error
 		)
 		fm := fiber.Map{
@@ -58,22 +59,15 @@ func HandleViewLogin(c *fiber.Ctx) error {
 
 		// notice: in production you should not inform the user
 		// with detailed messages about login failures
-		if user, err = models.CheckEmail(c.FormValue("email")); err != nil {
-			// fmt.Println(err)
-			if strings.Contains(err.Error(), "no such table") ||
-				strings.Contains(err.Error(), "database is locked") {
-				// "no such table" is the error that SQLite3 produces
-				// when some table does not exist, and we have only
-				// used it as an example of the errors that can be caught.
-				// Here you can add the errors that you are interested
-				// in throwing as `500` codes.
+		if user, err = controllers.CheckEmail(c.FormValue("email")); err != nil {
+			if strings.Contains(err.Error(), "connection refused") ||
+				strings.Contains(err.Error(), "connection reset by peer") {
 				return fiber.NewError(
 					fiber.StatusServiceUnavailable,
 					"database temporarily out of service",
 				)
 			}
 			fm["message"] = "There is no user with that email"
-
 			return flash.WithError(c, fm).Redirect("/login")
 		}
 
@@ -110,7 +104,11 @@ func HandleViewLogin(c *fiber.Ctx) error {
 			"message": "You have successfully logged in!!",
 		}
 
-		return flash.WithSuccess(c, fm).Redirect("/todo/list")
+		fmt.Printf("Session before redirect: %+v\n", session)
+		fmt.Printf("AUTH_KEY: %v\n", session.Get(AUTH_KEY))
+		fmt.Printf("USER_ID: %v\n", session.Get(USER_ID))
+
+		return flash.WithSuccess(c, fm).Redirect("/todo/listpg")
 	}
 
 	return handler(c)
@@ -128,34 +126,29 @@ func HandleViewRegister(c *fiber.Ctx) error {
 	handler := adaptor.HTTPHandler(templ.Handler(register))
 
 	if c.Method() == "POST" {
-		user := models.User{
+		user := controllers.User{
 			Email:    c.FormValue("email"),
 			Password: c.FormValue("password"),
 			Username: c.FormValue("username"),
 		}
 
-		err := models.CreateUser(user)
+		//err := models.CreateUser(user)
+		err := controllers.CreateUser(&user)
 		if err != nil {
-			if strings.Contains(err.Error(), "no such table") ||
-				strings.Contains(err.Error(), "database is locked") {
-				// "no such table" is the error that SQLite3 produces
-				// when some table does not exist, and we have only
-				// used it as an example of the errors that can be caught.
-				// Here you can add the errors that you are interested
-				// in throwing as `500` codes.
+			if strings.Contains(err.Error(), "connection refused") ||
+				strings.Contains(err.Error(), "connection reset by peer") {
 				return fiber.NewError(
 					fiber.StatusServiceUnavailable,
 					"database temporarily out of service",
 				)
 			}
-			if strings.Contains(err.Error(), "UNIQUE constraint failed") {
+			if strings.Contains(err.Error(), "duplicate key value") {
 				err = errors.New("the email is already in use")
 			}
 			fm := fiber.Map{
 				"type":    "error",
 				"message": fmt.Sprintf("something went wrong: %s", err),
 			}
-
 			return flash.WithError(c, fm).Redirect("/register")
 		}
 
@@ -177,6 +170,8 @@ func AuthMiddleware(c *fiber.Ctx) error {
 	}
 
 	session, err := store.Get(c)
+	fmt.Printf("Session: %+v\n", session)
+	fmt.Printf("Error: %v\n", err)
 	if err != nil {
 		fm["message"] = "You are not authorized"
 
@@ -196,7 +191,7 @@ func AuthMiddleware(c *fiber.Ctx) error {
 		return flash.WithError(c, fm).Redirect("/login")
 	}
 
-	user, err := models.GetUserById(fmt.Sprint(userId.(uint64)))
+	user, err := controllers.GetUserById(fmt.Sprint(userId.(uint64)))
 	if err != nil {
 		fm["message"] = "You are not authorized"
 

@@ -5,13 +5,15 @@ import (
 	"log"
 	"os"
 	"time"
-	//"golang.org/x/crypto/bcrypt"
+
+	"golang.org/x/crypto/bcrypt"
 )
 
 type User struct {
-	Email    string `gorm:"column:email;size:50;unique;not null" json:"email"`
-	Username string `gorm:"column:username;size:20;unique;not null" json:"username"`
-	Password string `gorm:"column:password;size:30;not null" json:"password"`
+	ID       uint64 `gorm:"primaryKey;autoIncrement:true;type:bigserial" json:"id"`
+	Email    string `gorm:"column:email;type:varchar(50);unique;not null" json:"email"`
+	Username string `gorm:"column:username;type:varchar(20);unique;not null" json:"username"`
+	Password string `gorm:"column:password;type:varchar(100);not null" json:"password"`
 }
 
 func (t *User) GetAllUsers() ([]User, error) {
@@ -52,7 +54,6 @@ func LoadUserTable() error {
 			Username: record[1],
 			Password: record[2],
 		}
-
 		// Save item to the database
 		err = PgDBConn.Create(&test).Error
 		if err != nil {
@@ -60,4 +61,39 @@ func LoadUserTable() error {
 		}
 	}
 	return nil
+}
+
+func CreateUser(user *User) error {
+	//Hash the password before saving
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), 8)
+	if err != nil {
+		return err
+	}
+	user.Password = string(hashedPassword)
+
+	// Use GORM to create the user in the database
+	if err := PgDBConn.Create(&user).Error; err != nil {
+		return err
+	}
+	return nil
+}
+
+func GetUserById(id string) (User, error) {
+	var user User
+
+	err := PgDBConn.First(&user, "id = ?", id).Error
+	if err != nil {
+		return User{}, err
+	}
+	return user, nil
+}
+
+func CheckEmail(email string) (User, error) {
+	var user User
+
+	err := PgDBConn.Where("email = ?", email).First(&user).Error
+	if err != nil {
+		return User{}, err
+	}
+	return user, nil
 }

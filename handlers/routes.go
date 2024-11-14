@@ -9,6 +9,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/adaptor"
 	"github.com/gofiber/fiber/v2/middleware/session"
+	"github.com/gofiber/storage/memory"
 	"github.com/kyp0717/ew-system/views"
 	"github.com/sujit-baniya/flash"
 )
@@ -22,11 +23,20 @@ const (
 	TZONE_KEY      string = "time_zone"
 )
 
+func init() {
+	store = session.New(session.Config{
+		Storage:        memory.New(), // or your preferred storage
+		Expiration:     24 * time.Hour,
+		KeyLookup:      "cookie:session_id",
+		CookieHTTPOnly: true,
+	})
+}
+
 func Setup(app *fiber.App) {
 	/* Sessions Config */
 	store = session.New(session.Config{
 		CookieHTTPOnly: true,
-		// CookieSecure: true, for https
+		// CookieSecure: true, // for https
 		Expiration: time.Hour * 1,
 	})
 
@@ -39,12 +49,12 @@ func Setup(app *fiber.App) {
 
 	/* Views protected with session middleware */
 	todoApp := app.Group("/todo", AuthMiddleware)
-	todoApp.Get("/list", HandleViewList)
-	todoApp.Get("/create", HandleViewCreatePage)
+	todoApp.Get("/listpg", HandleViewListPG)
+	todoApp.Get("/create", HandleViewCreatePagePG)
 	todoApp.Post("/create", HandleViewCreatePagePG)
-	todoApp.Get("/edit/:id", HandleViewEditPage)
-	todoApp.Post("/edit/:id", HandleViewEditPage)
-	todoApp.Delete("/delete/:id", HandleDeleteTodo)
+	todoApp.Get("/edit/:id", HandleViewEditPagePG)
+	todoApp.Post("/edit/:id", HandleViewEditPagePG)
+	todoApp.Delete("/delete/:id", HandleDeleteTodoPG)
 	todoApp.Post("/logout", HandleLogout)
 
 	/* Views protected with session middleware */
