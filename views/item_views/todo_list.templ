@@ -11,14 +11,16 @@ import (
 	"github.com/emarifer/gofiber-templ-htmx/controllers"
 )
 
-templ ItemIndex(items []controllers.Item) {
+templ ToDoIndex(todos []controllers.Todo) {
 	<div class="flex justify-between max-w-2xl mx-auto border-b border-b-slate-600 mb-8 pb-2">
 		<h1 class="text-2xl font-bold text-center">
 			My Tasks List
 		</h1>
-		<a hx-swap="transition:true" class="badge badge-info p-4 hover:scale-[1.1]" href="/todo/create">
-			New
-		</a>
+		<div class="flex gap-2">
+			<a hx-swap="transition:true" class="badge badge-info p-4 hover:scale-[1.1]" href="/todo/create">
+				New
+			</a>
+		</div>
 	</div>
 	<section class="overflow-auto max-w-2xl max-h-96 mx-auto bg-slate-600 rounded-lg shadow-xl">
 		<table class="table table-zebra">
@@ -31,11 +33,11 @@ templ ItemIndex(items []controllers.Item) {
 					<th class="text-center">Options</th>
 				</tr>
 			</thead>
-			if len(items) != 0 {
+			if len(todos) != 0 {
 				<tbody>
-					for _, item := range items {
+					for _, todo := range todos {
 						<tr>
-							<th>{ strconv.Itoa(int(item.ID)) }</th>
+							<th>{ strconv.Itoa(int(todo.ID)) }</th>
 							<td>{ todo.Title }</td>
 							<td>
 								if todo.Status {
