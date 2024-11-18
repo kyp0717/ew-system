@@ -16,12 +16,11 @@ func init() {
 		log.Fatal("Error in loading .env file.")
 	}
 	controllers.PgConnectDB()
-
 }
 
 func main() {
 	app := fiber.New(fiber.Config{
-		// Setting centralized error hanling.
+		// Setting centralized error handling.
 		ErrorHandler: handlers.CustomErrorHandler,
 	})
 
@@ -31,5 +30,5 @@ func main() {
 
 	handlers.Setup(app)
 
-	log.Fatal(app.Listen(":3006"))
+	log.Fatal(app.Listen(":3000"))
 }

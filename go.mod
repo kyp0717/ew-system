@@ -8,6 +8,7 @@ require (
 )
 
 require (
+	github.com/emarifer/gofiber-templ-htmx v0.0.0-20240707103447-7a3153fa7837 // indirect
 	github.com/gofiber/storage/memory v1.3.4 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20221227161230-091c0ba34f0a // indirect

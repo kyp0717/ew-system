@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 	"strconv"
+	"time"
 
 	"github.com/shopspring/decimal"
 )
@@ -43,7 +44,7 @@ type Item struct {
 	ShippingCost    decimal.Decimal `json:"ShippingCost" gorm:"column:ShippingCost;type:decimal(10,2);null"`
 	Active          string          `json:"Active" gorm:"column:Active;;type:text;size:1;null"`
 	CreatedBy       string          `json:"CreatedBy" gorm:"column:CreatedBy;type:text;size:20;null"`
-	UpdateStamp     string          `json:"UpdateStamp" gorm:"column:UpdateStamp;type:date;null"`
+	CreatedAt       time.Time       `gorm:"autoCreateTime" json:"created_at"`
 }
 
 func LoadItemTable() error {
@@ -189,8 +190,8 @@ func LoadItemTable() error {
 			Supplier:        record[27],
 			ShippingCost:    dShippingCost,
 			Active:          record[29],
-			CreatedBy:        record[30],
-			UpdateStamp:     record[31],
+			CreatedBy:       record[30],
+			CreatedAt:       time.Now(),
 		}
 
 		// Save item to the database
@@ -203,4 +204,70 @@ func LoadItemTable() error {
 	fmt.Println("....Item Data imported successfully!")
 
 	return nil
+}
+
+// CreateItem adds a new item to the database
+func CreateItem(item *Item) error {
+	err := PgDBConn.Create(item).Error
+	if err != nil {
+		log.Printf("Failed to create item: %v", err)
+		return err
+	}
+	return nil
+}
+
+// GetItem retrieves an item by SKU
+func GetItem(sku string) (*Item, error) {
+	var item Item
+	err := PgDBConn.Where("SKU = ?", sku).First(&item).Error
+	if err != nil {
+		log.Printf("Failed to get item: %v", err)
+		return nil, err
+	}
+	return &item, nil
+}
+
+// UpdateItem updates an existing item in the database
+func UpdateItem(item *Item) error {
+	err := PgDBConn.Save(item).Error
+	if err != nil {
+		log.Printf("Failed to update item: %v", err)
+		return err
+	}
+	return nil
+}
+
+// DeleteItem removes an item from the database by SKU
+func DeleteItem(sku string) error {
+	err := PgDBConn.Where("SKU = ?", sku).Delete(&Item{}).Error
+	if err != nil {
+		log.Printf("Failed to delete item: %v", err)
+		return err
+	}
+	return nil
+}
+
+// ListItems retrieves all items from the database
+func ListItems() ([]Item, error) {
+	var items []Item
+	err := PgDBConn.Find(&items).Error
+	if err != nil {
+		log.Printf("Failed to list items: %v", err)
+		return nil, err
+	}
+	return items, nil
+}
+func (t *Item) GetItemBySKU() (Item, error) {
+	var recoveredItem Item
+	err := PgDBConn.Where("SKU = ?", t.SKU).First(&recoveredItem).Error
+	return recoveredItem, err
+}
+func InsertItem(t *Item) error {
+
+	if err := PgDBConn.Create(t).Error; err != nil {
+		log.Fatal("failed to create TodoPG:", err)
+		return err
+	}
+	return nil
+
 }

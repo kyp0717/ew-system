@@ -53,6 +53,7 @@ func (t *TodoPG) GetAllTodos() ([]TodoPG, error) {
 	}
 	return todos, nil
 }
+
 func (t *TodoPG) GetTodoById() (TodoPG, error) {
 	var recoveredTodo TodoPG
 	err := PgDBConn.Where("created_by = ? AND id = ?", t.CreatedBy, t.ID).First(&recoveredTodo).Error

@@ -10,7 +10,7 @@ templ Navbar(fromProtected bool, username string) {
 		<div class="navbar-end">
 			if fromProtected {
 				<div class="flex items-center gap-2">
-					<a hx-swap="transition:true" class="badge badge-warning p-4 hover:scale-[1.1]" href="/todo/inventory">
+					<a hx-swap="transition:true" class="badge badge-warning p-4 hover:scale-[1.1]" href="/inventory/inventorylist">
 						Inventory
 					</a>
 					<a hx-swap="transition:true" class="badge badge-success p-4 hover:scale-[1.1]" href="/todo/product">
@@ -20,7 +20,7 @@ templ Navbar(fromProtected bool, username string) {
 				<div class="flex items-center gap-2">
 					<span class="text-xl">{ username }</span>
 				</div>
-				<a hx-swap="transition:true" class="btn btn-ghost text-lg" href="/todo/list">
+				<a hx-swap="transition:true" class="btn btn-ghost text-lg" href="/inventory/inventorylist">
 					Tasks
 				</a>
 				<button

@@ -34,20 +34,20 @@ func Navbar(fromProtected bool, username string) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		if fromProtected {
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"flex items-center gap-2\"><a hx-swap=\"transition:true\" class=\"badge badge-warning p-4 hover:scale-[1.1]\" href=\"/todo/inventory\">Inventory</a> <span class=\"text-xl\">")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"flex items-center gap-2\"><a hx-swap=\"transition:true\" class=\"badge badge-warning p-4 hover:scale-[1.1]\" href=\"/inventory/inventorylist\">Inventory</a> <a hx-swap=\"transition:true\" class=\"badge badge-success p-4 hover:scale-[1.1]\" href=\"/todo/product\">Product</a></div><div class=\"flex items-center gap-2\"><span class=\"text-xl\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var2 string
 			templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(username)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/navbar_partial.templ`, Line: 17, Col: 37}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/navbar_partial.templ`, Line: 21, Col: 37}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</span></div><a hx-swap=\"transition:true\" class=\"btn btn-ghost text-lg\" href=\"/todo/list\">Tasks</a> <button hx-swap=\"transition:true\" hx-post=\"/todo/logout\" hx-confirm=\"Are you sure you want to log out?\" onClick=\"this.addEventListener(&#39;htmx:confirm&#39;, (e) =&gt; {\r\n\t\t\t\t\t\te.preventDefault()\r\n\t\t\t\t\t\tSwal.fire({\r\n\t\t\t\t\t\t\ttitle: &#39;Do you want to perform this action?&#39;,\r\n\t\t\t\t\t\t\ttext: `${e.detail.question}`,\r\n\t\t\t\t\t\t\ticon: &#39;warning&#39;,\r\n\t\t\t\t\t\t\tbackground: &#39;#1D232A&#39;,\r\n\t\t\t\t\t\t\tcolor: &#39;#A6ADBA&#39;,\r\n\t\t\t\t\t\t\tshowCancelButton: true,\r\n\t\t\t\t\t\t\tconfirmButtonColor: &#39;#3085d6&#39;,\r\n\t\t\t\t\t\t\tcancelButtonColor: &#39;#d33&#39;,\r\n\t\t\t\t\t\t\tconfirmButtonText: &#39;Yes&#39;\r\n\t\t\t\t\t\t}).then((result) =&gt; {\r\n\t\t\t\t\t\t\tif(result.isConfirmed) e.detail.issueRequest(true);\r\n\t\t\t\t\t\t})\r\n\t\t\t\t\t})\" hx-target=\"body\" hx-push-url=\"true\" class=\"btn btn-ghost text-lg\">Logout</button>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</span></div><a hx-swap=\"transition:true\" class=\"btn btn-ghost text-lg\" href=\"/inventory/inventorylist\">Tasks</a> <button hx-swap=\"transition:true\" hx-post=\"/todo/logout\" hx-confirm=\"Are you sure you want to log out?\" onClick=\"this.addEventListener(&#39;htmx:confirm&#39;, (e) =&gt; {\r\n\t\t\t\t\t\te.preventDefault()\r\n\t\t\t\t\t\tSwal.fire({\r\n\t\t\t\t\t\t\ttitle: &#39;Do you want to perform this action?&#39;,\r\n\t\t\t\t\t\t\ttext: `${e.detail.question}`,\r\n\t\t\t\t\t\t\ticon: &#39;warning&#39;,\r\n\t\t\t\t\t\t\tbackground: &#39;#1D232A&#39;,\r\n\t\t\t\t\t\t\tcolor: &#39;#A6ADBA&#39;,\r\n\t\t\t\t\t\t\tshowCancelButton: true,\r\n\t\t\t\t\t\t\tconfirmButtonColor: &#39;#3085d6&#39;,\r\n\t\t\t\t\t\t\tcancelButtonColor: &#39;#d33&#39;,\r\n\t\t\t\t\t\t\tconfirmButtonText: &#39;Yes&#39;\r\n\t\t\t\t\t\t}).then((result) =&gt; {\r\n\t\t\t\t\t\t\tif(result.isConfirmed) e.detail.issueRequest(true);\r\n\t\t\t\t\t\t})\r\n\t\t\t\t\t})\" hx-target=\"body\" hx-push-url=\"true\" class=\"btn btn-ghost text-lg\">Logout</button>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
