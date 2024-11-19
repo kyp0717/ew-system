@@ -2,14 +2,12 @@ package item_views
 
 import (
 	"fmt"
-//	"strconv"
-
 	"github.com/kyp0717/ew-system/controllers"
-	"github.com/kyp0717/ew-system/views"
 	"github.com/gofiber/fiber/v2"
+	"github.com/kyp0717/ew-system/views"
 )
 
-templ ListItemIndex(items []controllers.Item) {
+templ ListItemIndex(items []controllers.ProcessedItem, fieldNames []string) {
     <div class="max-w-2xl mx-auto">
         <div class="flex justify-between max-w-2xl mx-auto border-b border-b-slate-600 mb-8 pb-2">
             <h1 class="text-2xl font-bold text-center">
@@ -24,58 +22,43 @@ templ ListItemIndex(items []controllers.Item) {
         <table class="table w-full">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Quantity</th>
                     <th>Actions</th>
+                    for _, field := range fieldNames {
+                        <th>{ field }</th>
+                    }
                 </tr>
             </thead>
             <tbody>
                 for _, item := range items {
                     <tr>
-                        <th>{ item.SKU }</th>
-                        <td>{ item.ItemName }</td>
-                        <td>{ item.Description }</td>
                         <td class="flex justify-center gap-2">
                             <a
                                 hx-swap="transition:true"
-                                href={ templ.URL(fmt.Sprintf("/inventory/edit/%d", item.SKU)) }
+                                href={ templ.SafeURL(fmt.Sprintf("/inventory/edit/%s", item.Values[0])) }
                                 class="badge badge-primary p-3 hover:scale-[1.1]"
                             >
                                 Edit
                             </a>
                             <button
                                 hx-swap="transition:true"
-                                hx-delete={ fmt.Sprintf("/inventory/delete/%d", item.SKU) }
-                                hx-confirm={ fmt.Sprintf("Are you sure you want to delete the item with ID #%d?", item.SKU) }
-                                onClick="this.addEventListener('htmx:confirm', (e) => {
-                                    e.preventDefault()
-                                    Swal.fire({
-                                        title: 'Do you want to perform this action?',
-                                        text: `${e.detail.question}`,
-                                        icon: 'warning',
-                                        background: '#1D232A',
-                                        color: '#A6ADBA',
-                                        showCancelButton: true,
-                                        confirmButtonColor: '#3085d6',
-                                        cancelButtonColor: '#d33',
-                                        confirmButtonText: 'Yes'
-                                    }).then((result) => {
-                                        if(result.isConfirmed) e.detail.issueRequest(true);
-                                    })
-                                })"
-                                hx-target="body"
+                                hx-delete={ fmt.Sprintf("/inventory/delete/%s", item.Values[0]) }
+                                hx-confirm={ fmt.Sprintf("Are you sure you want to delete the item with SKU #%s?", item.Values[0]) }
                                 class="badge badge-error p-3 hover:scale-[1.1]"
                             >
                                 Delete
                             </button>
                         </td>
+                        for _, value := range item.Values {
+                            <td>{ value }</td>
+                        }
                     </tr>
                 }
             </tbody>
         </table>
     </div>
-} 
+}
+
+
 templ ListItem(
 	page string,
 	fromProtected, isError bool,

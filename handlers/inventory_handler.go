@@ -9,6 +9,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/adaptor"
 	"github.com/kyp0717/ew-system/controllers"
+	"github.com/kyp0717/ew-system/handlers/utility"
 	"github.com/kyp0717/ew-system/views/item_views"
 	"github.com/sujit-baniya/flash"
 )
@@ -17,25 +18,26 @@ import (
 func HandleInventoryList(c *fiber.Ctx) error {
 	fromProtected := c.Locals(FROM_PROTECTED).(bool)
 
+	// Step 1: Fetch items from the database
 	var items []controllers.Item
-
-	// Fetch all items without filtering by user
 	err := controllers.PgDBConn.Find(&items).Error
 	if err != nil {
-		// Handle specific PostgreSQL error cases
+		// Handle database errors
 		if strings.Contains(err.Error(), "does not exist") ||
 			strings.Contains(err.Error(), "could not connect to server") {
-			return fiber.NewError(
-				fiber.StatusServiceUnavailable,
-				"database temporarily out of service",
-			)
+			return fiber.NewError(fiber.StatusServiceUnavailable, "database temporarily out of service")
 		}
-		// General error handling
 		return fiber.NewError(fiber.StatusInternalServerError, fmt.Sprintf("something went wrong: %s", err))
 	}
 
-	// Process the items for rendering
-	iindex := item_views.ListItemIndex(items)
+	// Step 2: Extract field names dynamically
+	fieldNames := utility.GetFieldNames(controllers.Item{})
+
+	// Step 3: Convert items to ProcessedItem for rendering
+	processedItems := utility.MapToProcessedItems(items)
+
+	// Step 4: Render the inventory list template
+	iindex := item_views.ListItemIndex(processedItems, fieldNames)
 	ilist := item_views.ListItem(
 		" | Inventory List",
 		fromProtected,
@@ -45,8 +47,9 @@ func HandleInventoryList(c *fiber.Ctx) error {
 		iindex,
 	)
 
+	// Step 5: Send the rendered template as the response
+	//return c.SendString(templ.Render(ilist))
 	handler := adaptor.HTTPHandler(templ.Handler(ilist))
-
 	return handler(c)
 }
 
@@ -167,9 +170,9 @@ func HandleInventoryEdit(c *fiber.Ctx) error {
 		return flash.WithSuccess(c, fm).Redirect("/inventory/list")
 	}
 
-	uindex := item_views.UpdateItemIndex(recoveredItem, tzone)
+	uindex := item_views.UpdateItemIndex(*recoveredItem, tzone)
 	update := item_views.UpdateItem(
-		fmt.Sprintf(" | Edit Item #%d", recoveredItem.SKU),
+		fmt.Sprintf(" | Edit Item #%d", itemSKU),
 		fromProtected,
 		false,
 		flash.Get(c),

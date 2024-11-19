@@ -60,6 +60,10 @@ func Setup(app *fiber.App) {
 	/* Views protected with session middleware */
 	inventoryApp := app.Group("/inventory", AuthMiddleware)
 	inventoryApp.Get("/inventorylist", HandleInventoryList)
+	inventoryApp.Post("/create", HandleInventoryCreate)
+	inventoryApp.Get("/edit/:id", HandleInventoryEdit)
+	inventoryApp.Post("/edit/:id", HandleInventoryEdit)
+	inventoryApp.Delete("/delete/:id", HandleInventoryDelete)
 
 	/* ↓ Not Found Management - Fallback Page ↓ */
 	app.Get("/*", flagsMiddleware, func(c *fiber.Ctx) error {

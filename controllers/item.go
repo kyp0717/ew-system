@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"reflect"
 	"strconv"
 	"time"
 
@@ -45,6 +46,24 @@ type Item struct {
 	Active          string          `json:"Active" gorm:"column:Active;;type:text;size:1;null"`
 	CreatedBy       string          `json:"CreatedBy" gorm:"column:CreatedBy;type:text;size:20;null"`
 	CreatedAt       time.Time       `gorm:"autoCreateTime" json:"created_at"`
+}
+
+// ProcessedItem is used to pass data to the templ view
+type ProcessedItem struct {
+	Values []string
+}
+
+// GetFieldNames extracts field names from the Item struct
+func GetFieldNames(item interface{}) []string {
+	var fieldNames []string
+	t := reflect.TypeOf(item)
+	if t.Kind() == reflect.Ptr {
+		t = t.Elem()
+	}
+	for i := 0; i < t.NumField(); i++ {
+		fieldNames = append(fieldNames, t.Field(i).Name)
+	}
+	return fieldNames
 }
 
 func LoadItemTable() error {
@@ -227,6 +246,11 @@ func GetItem(sku string) (*Item, error) {
 	return &item, nil
 }
 
+// Use this in place of GetItemBySKU:
+func (t *Item) GetItemBySKU() (*Item, error) {
+	return GetItem(t.SKU)
+}
+
 // UpdateItem updates an existing item in the database
 func UpdateItem(item *Item) error {
 	err := PgDBConn.Save(item).Error
@@ -247,21 +271,19 @@ func DeleteItem(sku string) error {
 	return nil
 }
 
-// ListItems retrieves all items from the database
-func ListItems() ([]Item, error) {
+// ListItems retrieves all items from the database and dynamically generates field names and values
+func (t *Item) GetAllItems() ([]Item, error) {
 	var items []Item
+
+	// Fetch all todos, ordered by created_at in descending order
 	err := PgDBConn.Find(&items).Error
+
 	if err != nil {
-		log.Printf("Failed to list items: %v", err)
 		return nil, err
 	}
 	return items, nil
 }
-func (t *Item) GetItemBySKU() (Item, error) {
-	var recoveredItem Item
-	err := PgDBConn.Where("SKU = ?", t.SKU).First(&recoveredItem).Error
-	return recoveredItem, err
-}
+
 func InsertItem(t *Item) error {
 
 	if err := PgDBConn.Create(t).Error; err != nil {
