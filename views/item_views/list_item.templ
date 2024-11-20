@@ -1,16 +1,15 @@
 package item_views
 
 import (
-	"fmt"
 	"github.com/kyp0717/ew-system/controllers"
 	"github.com/gofiber/fiber/v2"
 	"github.com/kyp0717/ew-system/views"
 )
 
 templ ListItemIndex(items []controllers.ProcessedItem, fieldNames []string) {
-    <div class="max-w-2xl mx-auto">
-        <div class="flex justify-between max-w-2xl mx-auto border-b border-b-slate-600 mb-8 pb-2">
-            <h1 class="text-2xl font-bold text-center">
+    <div class="max-w-2xl">
+        <div class="flex justify-between max-w-2xl border-b border-b-slate-600 mb-8 pb-2">
+            <h1 class="text-2xl font-bold">
                 Inventory List
             </h1>
             <div class="flex gap-2">
@@ -22,7 +21,6 @@ templ ListItemIndex(items []controllers.ProcessedItem, fieldNames []string) {
         <table class="table w-full">
             <thead>
                 <tr>
-                    <th>Actions</th>
                     for _, field := range fieldNames {
                         <th>{ field }</th>
                     }
@@ -31,23 +29,6 @@ templ ListItemIndex(items []controllers.ProcessedItem, fieldNames []string) {
             <tbody>
                 for _, item := range items {
                     <tr>
-                        <td class="flex justify-center gap-2">
-                            <a
-                                hx-swap="transition:true"
-                                href={ templ.SafeURL(fmt.Sprintf("/inventory/edit/%s", item.Values[0])) }
-                                class="badge badge-primary p-3 hover:scale-[1.1]"
-                            >
-                                Edit
-                            </a>
-                            <button
-                                hx-swap="transition:true"
-                                hx-delete={ fmt.Sprintf("/inventory/delete/%s", item.Values[0]) }
-                                hx-confirm={ fmt.Sprintf("Are you sure you want to delete the item with SKU #%s?", item.Values[0]) }
-                                class="badge badge-error p-3 hover:scale-[1.1]"
-                            >
-                                Delete
-                            </button>
-                        </td>
                         for _, value := range item.Values {
                             <td>{ value }</td>
                         }
@@ -57,6 +38,7 @@ templ ListItemIndex(items []controllers.ProcessedItem, fieldNames []string) {
         </table>
     </div>
 }
+
 
 
 templ ListItem(
