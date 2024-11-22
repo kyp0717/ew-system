@@ -2,11 +2,13 @@ package controllers
 
 import (
 	"encoding/csv"
+	"errors"
 	"log"
 	"os"
 	"time"
 
 	"golang.org/x/crypto/bcrypt"
+	"gorm.io/gorm"
 )
 
 type User struct {
@@ -14,6 +16,11 @@ type User struct {
 	Email    string `gorm:"column:email;type:varchar(50);unique;not null" json:"email"`
 	Username string `gorm:"column:username;type:varchar(20);unique;not null" json:"username"`
 	Password string `gorm:"column:password;type:varchar(100);not null" json:"password"`
+}
+
+// TableName sets the default table name for the Item struct
+func (User) TableName() string {
+	return "user" // Replace with your actual table name
 }
 
 func (t *User) GetAllUsers() ([]User, error) {
@@ -81,17 +88,23 @@ func CreateUser(user *User) error {
 func GetUserById(id string) (User, error) {
 	var user User
 
-	err := PgDBConn.First(&user, "id = ?", id).Error
+	err := PgDBConn.Debug().Where("id = ?", id).First(&user).Error
 	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			log.Printf("No user found with ID: %s", id)
+			return User{}, nil // Return an empty user if not found
+		}
+		log.Printf("Error querying user by ID: %v", err)
 		return User{}, err
 	}
+
 	return user, nil
 }
 
 func CheckEmail(email string) (User, error) {
 	var user User
 
-	err := PgDBConn.Where("email = ?", email).First(&user).Error
+	err := PgDBConn.Debug().Where("email = ?", email).First(&user).Error
 	if err != nil {
 		return User{}, err
 	}

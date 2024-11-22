@@ -48,6 +48,11 @@ type Item struct {
 	CreatedAt       time.Time       `gorm:"autoCreateTime" json:"created_at"`
 }
 
+// TableName sets the default table name for the Item struct
+func (Item) TableName() string {
+	return "item" // Replace with your actual table name
+}
+
 // ProcessedItem is used to pass data to the templ view
 type ProcessedItem struct {
 	Values []string
@@ -250,20 +255,33 @@ func CreateItem(item *Item) error {
 	return nil
 }
 
-// GetItem retrieves an item by SKU
-func GetItem(sku string) (*Item, error) {
+// GetItemBySKU fetches item details from the database using the SKU
+func GetItemBySKU(sku string) (*Item, error) {
 	var item Item
-	err := PgDBConn.Where("SKU = ?", sku).First(&item).Error
+
+	// Use explicit quoting for the SKU column
+	err := PgDBConn.Debug().Where(`"SKU" = ?`, sku).First(&item).Error
 	if err != nil {
-		log.Printf("Failed to get item: %v", err)
+		log.Printf("Failed to fetch item with SKU '%s': %v", sku, err)
 		return nil, err
 	}
+
 	return &item, nil
 }
 
-// Use this in place of GetItemBySKU:
-func (t *Item) GetItemBySKU() (*Item, error) {
-	return GetItem(t.SKU)
+// GetItemDetailsBySKU fetches detailed item information from the database
+func GetItemDetailsBySKU(sku string) (map[string]interface{}, error) {
+	item, err := GetItemBySKU(sku)
+	if err != nil {
+		return nil, err
+	}
+
+	// Construct the details map dynamically from the item
+	return map[string]interface{}{
+		"name":        item.ItemName,    // Assuming `Name` is a field in `Item`
+		"price":       item.Price,       // Assuming `Price` is a field in `Item`
+		"description": item.Description, // Assuming `Description` is a field in `Item`
+	}, nil
 }
 
 // UpdateItem updates an existing item in the database

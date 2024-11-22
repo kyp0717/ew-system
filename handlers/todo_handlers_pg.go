@@ -23,7 +23,7 @@ func HandleViewListPG(c *fiber.Ctx) error {
 	var todos []controllers.TodoPG
 
 	// Fetch all todos created by the user
-	err := controllers.PgDBConn.Where("created_by = ?", userID).Find(&todos).Error
+	err := controllers.PgDBConn.Debug().Where("created_by = ?", userID).Find(&todos).Error
 	if err != nil {
 		// Handle specific PostgreSQL error cases (such as table or connection issues)
 		if strings.Contains(err.Error(), "does not exist") ||

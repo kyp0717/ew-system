@@ -1,0 +1,24 @@
+package item_views
+import (
+	"fmt"
+)
+
+templ SKUItemDetails(itemMap map[string]interface{}) {
+    <section class="item-details mx-auto w-4/5 p-6 shadow-lg rounded-lg bg-white">
+        <h1 class="text-2xl font-bold mb-4">Item Details</h1>
+        <form id="item-details-form" class="grid grid-cols-2 gap-6">
+            for fieldName, fieldValue := range itemMap {
+                <div class="field-group flex flex-col">
+                    <label class="font-bold mb-1">{ fieldName }</label>
+                    <input 
+                        id={ fieldName } 
+                        type="text" 
+                        value={ fmt.Sprintf("%v", fieldValue) } 
+                        class="readonly-input border border-gray-300 rounded p-2 w-full text-gray-700 bg-gray-100" 
+                        readonly
+                    />
+                </div>
+            }
+        </form>
+    </section>
+}

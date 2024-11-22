@@ -74,3 +74,17 @@ func MapToProcessedItems(items []controllers.Item) []controllers.ProcessedItem {
 
 	return processed
 }
+
+// ConvertStructToMap converts a struct to a map of field names and values
+func ConvertStructToMap(item interface{}) map[string]interface{} {
+	result := make(map[string]interface{})
+	v := reflect.ValueOf(item)
+	t := reflect.TypeOf(item)
+
+	for i := 0; i < v.NumField(); i++ {
+		field := t.Field(i)
+		value := v.Field(i).Interface()
+		result[field.Name] = value
+	}
+	return result
+}

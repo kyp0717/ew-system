@@ -3,6 +3,7 @@ package handlers
 import (
 	"errors"
 	"fmt"
+	"log"
 	"strings"
 
 	"github.com/a-h/templ"
@@ -42,26 +43,21 @@ func HandleViewLogin(c *fiber.Ctx) error {
 	handler := adaptor.HTTPHandler(templ.Handler(login))
 
 	if c.Method() == "POST" {
-		// obtaining the time zone from the POST request of the login form
 		tzone := ""
 		if len(c.GetReqHeaders()["X-Timezone"]) != 0 {
 			tzone = c.GetReqHeaders()["X-Timezone"][0]
-			// fmt.Println("Tzone:", tzone)
 		}
 
 		var (
 			user controllers.User
 			err  error
 		)
-		fm := fiber.Map{
-			"type": "error",
-		}
+		fm := fiber.Map{"type": "error"}
 
-		// notice: in production you should not inform the user
-		// with detailed messages about login failures
+		// Fetch user by email
 		if user, err = controllers.CheckEmail(c.FormValue("email")); err != nil {
-			if strings.Contains(err.Error(), "connection refused") ||
-				strings.Contains(err.Error(), "connection reset by peer") {
+			log.Printf("Failed to fetch user by email: %s, error: %v", c.FormValue("email"), err)
+			if strings.Contains(err.Error(), "connection refused") || strings.Contains(err.Error(), "connection reset by peer") {
 				return fiber.NewError(
 					fiber.StatusServiceUnavailable,
 					"database temporarily out of service",
@@ -71,23 +67,25 @@ func HandleViewLogin(c *fiber.Ctx) error {
 			return flash.WithError(c, fm).Redirect("/login")
 		}
 
-		err = bcrypt.CompareHashAndPassword(
+		log.Printf("Fetched user: %+v", user)
+
+		// Verify password
+		if err := bcrypt.CompareHashAndPassword(
 			[]byte(user.Password),
 			[]byte(c.FormValue("password")),
-		)
-		if err != nil {
+		); err != nil {
 			fm["message"] = "Incorrect password"
-
 			return flash.WithError(c, fm).Redirect("/login")
 		}
 
+		// Set session
 		session, err := store.Get(c)
 		if err != nil {
 			fm["message"] = fmt.Sprintf("something went wrong: %s", err)
-
 			return flash.WithError(c, fm).Redirect("/login")
 		}
 
+		log.Printf("Setting session: AUTH_KEY=true, USER_ID=%d, TZONE_KEY=%s", user.ID, tzone)
 		session.Set(AUTH_KEY, true)
 		session.Set(USER_ID, user.ID)
 		session.Set(TZONE_KEY, tzone)
@@ -95,18 +93,16 @@ func HandleViewLogin(c *fiber.Ctx) error {
 		err = session.Save()
 		if err != nil {
 			fm["message"] = fmt.Sprintf("something went wrong: %s", err)
-
 			return flash.WithError(c, fm).Redirect("/login")
 		}
+
+		log.Printf("Session before redirect: %+v", session)
+		log.Printf("AUTH_KEY: %v, USER_ID: %v", session.Get(AUTH_KEY), session.Get(USER_ID))
 
 		fm = fiber.Map{
 			"type":    "success",
 			"message": "You have successfully logged in!!",
 		}
-
-		fmt.Printf("Session before redirect: %+v\n", session)
-		fmt.Printf("AUTH_KEY: %v\n", session.Get(AUTH_KEY))
-		fmt.Printf("USER_ID: %v\n", session.Get(USER_ID))
 
 		return flash.WithSuccess(c, fm).Redirect("/todo/listpg")
 	}

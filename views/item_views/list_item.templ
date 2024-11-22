@@ -19,8 +19,14 @@ templ ListItemIndex(items []controllers.ProcessedItem, fieldNames []string) {
             <tbody>
                 for _, item := range items {
                     <tr>
-                        for _, value := range item.Values {
-                            <td>{ value }</td>
+                        for index, value := range item.Values {
+                            <td>
+                                if fieldNames[index] == "SKU" {
+                                    <a href={templ.SafeURL("/items/" + value)} class="sku-link">{ value }</a>
+                                } else {
+                                    { value }
+                                }
+                            </td>
                         }
                     </tr>
                 }
@@ -28,7 +34,6 @@ templ ListItemIndex(items []controllers.ProcessedItem, fieldNames []string) {
         </table>
     </div>
 }
-
 
 
 templ ListItem(

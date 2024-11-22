@@ -226,22 +226,13 @@ table tr:nth-child(odd) {
     font-size: 14px; /* Adjust font size */
 }
 /* Link styling for clickable SKU */
-a.sku-link {
+.sku-link {
     color: #007bff;
     text-decoration: none;
 }
 
-a.sku-link:hover {
+.sku-link:hover {
     text-decoration: underline;
-}
-    /* Link styling for clickable SKU */
-a.sku-link {
-      color: #007bff;
-      text-decoration: none;
-}
-
-a.sku-link:hover {
-      text-decoration: underline;
 }
 
   /* Default color for active (green) */
@@ -334,7 +325,18 @@ color: green;
 .color-variable.inactive {
 color: red;
 }
+.readonly-input {
+    background-color: #f7f7f7;
+    cursor: not-allowed;
+}
 
+.edit-icon {
+    font-size: 1.25rem;
+}
+
+.edit-icon:hover {
+    color: #0056b3;
+}
 
 
 

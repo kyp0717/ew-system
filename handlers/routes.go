@@ -10,6 +10,7 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/adaptor"
 	"github.com/gofiber/fiber/v2/middleware/session"
 	"github.com/gofiber/storage/memory"
+	"github.com/kyp0717/ew-system/controllers"
 	"github.com/kyp0717/ew-system/views"
 	"github.com/sujit-baniya/flash"
 )
@@ -36,8 +37,7 @@ func Setup(app *fiber.App) {
 	/* Sessions Config */
 	store = session.New(session.Config{
 		CookieHTTPOnly: true,
-		// CookieSecure: true, // for https
-		Expiration: time.Hour * 1,
+		Expiration:     time.Hour * 1,
 	})
 
 	/* Views */
@@ -65,9 +65,25 @@ func Setup(app *fiber.App) {
 	inventoryApp.Post("/edit/:id", HandleInventoryEdit)
 	inventoryApp.Delete("/delete/:id", HandleInventoryDelete)
 
+	/* SKU Item Details Group */
+	itemsApp := app.Group("/items")
+	itemsApp.Get("/:sku", HandleInventoryDetails)
+	itemsApp.Post("/save", func(c *fiber.Ctx) error {
+		var item controllers.Item
+		if err := c.BodyParser(&item); err != nil {
+			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Invalid data"})
+		}
+
+		// Save item to the database
+		if err := controllers.UpdateItem(&item); err != nil {
+			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Could not save changes"})
+		}
+
+		return c.JSON(fiber.Map{"success": true, "message": "Item updated successfully"})
+	})
+
 	/* ↓ Not Found Management - Fallback Page ↓ */
 	app.Get("/*", flagsMiddleware, func(c *fiber.Ctx) error {
-
 		return fiber.NewError(
 			fiber.StatusNotFound,
 			"error 404: not found",

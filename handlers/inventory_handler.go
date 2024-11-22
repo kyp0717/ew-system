@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"fmt"
+	"log"
 	"strconv"
 	"strings"
 
@@ -20,21 +21,20 @@ func HandleInventoryList(c *fiber.Ctx) error {
 
 	// Step 1: Fetch items from the database
 	var items []controllers.Item
-	err := controllers.PgDBConn.Find(&items).Error
+	err := controllers.PgDBConn.Debug().Find(&items).Error
 	if err != nil {
-		// Handle database errors
-		if strings.Contains(err.Error(), "does not exist") ||
-			strings.Contains(err.Error(), "could not connect to server") {
-			return fiber.NewError(fiber.StatusServiceUnavailable, "database temporarily out of service")
-		}
+		log.Printf("Database error: %v", err)
 		return fiber.NewError(fiber.StatusInternalServerError, fmt.Sprintf("something went wrong: %s", err))
 	}
+	log.Printf("Fetched items: %+v", items)
 
 	// Step 2: Extract field names dynamically
 	fieldNames := utility.GetFieldNames(controllers.Item{})
+	log.Printf("Field names: %+v", fieldNames)
 
 	// Step 3: Convert items to ProcessedItem for rendering
 	processedItems := utility.MapToProcessedItems(items)
+	log.Printf("Processed items: %+v", processedItems)
 
 	// Step 4: Render the inventory list template
 	iindex := item_views.ListItemIndex(processedItems, fieldNames)
@@ -48,7 +48,6 @@ func HandleInventoryList(c *fiber.Ctx) error {
 	)
 
 	// Step 5: Send the rendered template as the response
-	//return c.SendString(templ.Render(ilist))
 	handler := adaptor.HTTPHandler(templ.Handler(ilist))
 	return handler(c)
 }
@@ -119,7 +118,7 @@ func HandleInventoryEdit(c *fiber.Ctx) error {
 
 	fm := fiber.Map{"type": "error"}
 
-	recoveredItem, err := item.GetItemBySKU()
+	recoveredItem, err := controllers.GetItemBySKU(item.SKU)
 
 	if err != nil {
 		if strings.Contains(err.Error(), "no such table") ||
@@ -218,4 +217,38 @@ func HandleInventoryDelete(c *fiber.Ctx) error {
 	}
 
 	return flash.WithSuccess(c, fm).Redirect("/inventory/list", fiber.StatusSeeOther)
+}
+
+func HandleInventoryDetails(c *fiber.Ctx) error {
+	sku := c.Params("sku")
+
+	// Fetch item details
+	itemDetails, err := controllers.GetItemDetailsBySKU(sku)
+	if err != nil {
+		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
+			"error": "Item not found",
+		})
+	}
+
+	// Render the page with item details
+	return c.Render("itemDetailsPage", fiber.Map{
+		"sku":         sku,
+		"itemDetails": itemDetails,
+	})
+}
+func HandleSKUItemDetails(c *fiber.Ctx) error {
+	// Fetch the item from the database
+	sku := c.Params("sku")
+	item, err := controllers.GetItemBySKU(sku)
+	if err != nil {
+		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": "Item not found"})
+	}
+
+	// Convert the struct to a map
+	itemMap := utility.ConvertStructToMap(item)
+
+	// Render the Templ page with the map
+	return c.Render("sku_item.templ", fiber.Map{
+		"itemMap": itemMap,
+	})
 }

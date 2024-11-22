@@ -15,6 +15,11 @@ type TodoPG struct {
 	CreatedAt   time.Time `gorm:"autoCreateTime" json:"created_at"`        // Add this field
 }
 
+// TableName sets the default table name for the TodoPG struct
+func (TodoPG) TableName() string {
+	return "todo_pg" // Replace with your actual table name
+}
+
 func (t *TodoPG) CreateTodo() (TodoPG, error) {
 
 	// Example: Create a new Todo
