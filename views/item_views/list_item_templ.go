@@ -35,7 +35,7 @@ func ListItemIndex(items []controllers.ProcessedItem, fieldNames []string) templ
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"max-w-2xl\"><div class=\"flex justify-between max-w-2xl border-b border-b-slate-600 mb-8 pb-2\"><h1 class=\"text-2xl font-bold\">Inventory List</h1><div class=\"flex gap-2\"><a hx-swap=\"transition:true\" class=\"badge badge-info p-4 hover:scale-[1.1]\" href=\"/inventory/create\">New</a></div></div><table class=\"table w-full\"><thead><tr>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div><table class=\"table w-full\"><thead class=\"field-names\"><tr>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -47,7 +47,7 @@ func ListItemIndex(items []controllers.ProcessedItem, fieldNames []string) templ
 			var templ_7745c5c3_Var2 string
 			templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(field)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/item_views/list_item.templ`, Line: 25, Col: 35}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/item_views/list_item.templ`, Line: 15, Col: 35}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 			if templ_7745c5c3_Err != nil {
@@ -75,7 +75,7 @@ func ListItemIndex(items []controllers.ProcessedItem, fieldNames []string) templ
 				var templ_7745c5c3_Var3 string
 				templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(value)
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/item_views/list_item.templ`, Line: 33, Col: 39}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/item_views/list_item.templ`, Line: 23, Col: 39}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 				if templ_7745c5c3_Err != nil {

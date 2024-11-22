@@ -68,10 +68,7 @@ body {
     margin-right: 40px; /* Adjust this value to control the amount of space */
 }
 .logo {
-    top: 0;
-    left: 0;
-    width: 100px;
-    height: auto;
+    color: #2F4F4F;
 }
   
 .logo-container {
@@ -80,17 +77,32 @@ body {
     margin-bottom: 20px; /* Add some space below the logo */
 }
 /* Logo Container for company name and navbar */
+
 .navbar-container {
-    position: fixed; /* Keeps the navbar fixed at the top */
+	display: flex;
+	width: 100%;
+	align-items: center;
     top: 0;
     left: 0;
-    background-color: whitesmoke;
+    width: 100%;
+    background-color: whitesmoke;  
 }
-
+.navbar-menu {
+	justify-content: center;
+	white-space: nowrap; /* Prevent wrapping */
+    color: #A0522D; /* Optional: Change color if needed */  
+    font-size: auto; /* Increase icon size */
+}
+.navbar-end {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	white-space: nowrap;
+}
 .navbar-background {
     position: relative; /* Or absolute depending on the design */
     background-color: whitesmoke;
-  }
+}
   
   
 .search-container {
@@ -103,17 +115,7 @@ body {
     background-color: #d9cbb5; /* Earthy beige background */
 }
 
-   /* Optionally, you can explicitly set the height if needed */
-.navbar-background, .navbar-container, .search-container{
-    display: flex;      /* To align content horizontally */
-    max-height: 50px; /* Example height, adjust as necessary */
-    justify-content: space-between;
-    box-sizing: border-box; 
-    padding: 8px;
-    width: 100%;
-    align-items: center;
-    justify-content: space-between;
-}
+
 
 /* Container for center-aligned navbar */
 .navbar-links {
@@ -182,7 +184,22 @@ body {
 table {
     width: 100%;
     border-collapse: collapse;
-    font-weight: normal; /* Set font weight to normal */
+    font-family: 'Roboto', Arial, sans-serif; /* Choose your preferred font */
+    font-size: 14px; /* Adjust size for readability */
+    color: #333; /* Set a readable text color */
+}
+th {
+    font-weight: bold;
+    background-color: #f4f4f4; /* Header background for contrast */
+}
+
+tr {
+    font-weight: normal;
+    text-align: left;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9; /* Zebra striping for readability */
 }
 
 table tr:nth-child(even) {
@@ -192,17 +209,22 @@ table tr:nth-child(even) {
 table tr:nth-child(odd) {
     background-color: #ffffff; /* White or default for odd rows */
 }
-th, td , tr {
-    padding: 10px;
-    border: 1px solid #ddd;
-    text-align: left;
-    font-weight: normal;
+
+
+.field-names {
+    background-color: #f4f4f4; /* Subtle background for the header */
+    color: #333; /* Dark text for contrast */
+    font-family: 'Roboto', Arial, sans-serif; /* Match your table font */
+    font-weight: bold; /* Make headers stand out */
+    text-align: left; /* Align text to the left */
+    border-bottom: 2px solid #ddd; /* Add a border for separation */
 }
 
-th {
-    background-color: #f2f2f2;
+.field-names th {
+    padding: 10px 15px; /* Add padding for spacing */
+    text-transform: capitalize; /* Capitalize headers if needed */
+    font-size: 14px; /* Adjust font size */
 }
-
 /* Link styling for clickable SKU */
 a.sku-link {
     color: #007bff;
@@ -360,4 +382,5 @@ pointer-events: none;
 .space20 {
     margin-right: 80px; /* Adjust this value to control the amount of space */
 }
+
 

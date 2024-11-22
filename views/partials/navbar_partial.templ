@@ -1,28 +1,33 @@
 package partials
 
 templ Navbar(fromProtected bool, username string) {
-	<nav class="navbar bg-primary text-primary-content fixed top-0 z-10">
-		<div class="navbar-start">
+	<nav class="navbar-container flex items-center justify-between">
+		<div class="logo">
 			<a hx-swap="transition:true" class="btn btn-ghost text-xl" href="/">
-				Todo List
+				East West Furniture
 			</a>
 		</div>
-		<div class="navbar-end">
-			if fromProtected {
-				<div class="flex items-center gap-2">
-					<a hx-swap="transition:true" class="badge badge-warning p-4 hover:scale-[1.1]" href="/inventory/inventorylist">
-						Inventory
-					</a>
-					<a hx-swap="transition:true" class="badge badge-success p-4 hover:scale-[1.1]" href="/todo/product">
-						Product
-					</a>
-				</div>
-				<div class="flex items-center gap-2">
-					<span class="text-xl">{ username }</span>
-				</div>
-				<a hx-swap="transition:true" class="btn btn-ghost text-lg" href="/inventory/inventorylist">
-					Tasks
+
+		if fromProtected {
+			<div class="navbar-menu flex-1 flex justify-center">
+				<a hx-swap="transition:true" class="p-4 hover:scale-[1.1]" href="/inventory/inventorylist">
+					Inventory
 				</a>
+				<a hx-swap="transition:true" class="p-4 hover:scale-[1.1]" href="/todo/product">
+					Product
+				</a>
+				<a hx-swap="transition:true" class="p-4 hover:scale-[1.1]" href="/todo/product">
+					Invoice
+				</a>
+				<a hx-swap="transition:true" class="p-4 hover:scale-[1.1]" href="/todo/product">
+					Shipment
+				</a>
+				<a hx-swap="transition:true" class="p-4 hover:scale-[1.1]" href="/todo/product">
+					Customer
+				</a>
+			</div>
+			<div class="navbar-end flex items-center">
+				<span class="text-xl px-4">{ username }</span>
 				<button
 					hx-swap="transition:true"
 					hx-post="/todo/logout"
@@ -49,14 +54,16 @@ templ Navbar(fromProtected bool, username string) {
 				>
 					Logout
 				</button>
-			} else {
-				<a hx-swap="transition:true" class="btn btn-ghost text-lg" href="/register">
+			</div>
+		} else {
+			<div class="justify-end flex items-center">
+				<a hx-swap="transition:true" class="btn btn-ghost text-lg px-4" href="/register">
 					Register
 				</a>
-				<a hx-swap="transition:true" class="btn btn-ghost text-lg" href="/login">
+				<a hx-swap="transition:true" class="btn btn-ghost text-lg px-4" href="/login">
 					Login
 				</a>
-			}
-		</div>
+			</div>
+		}
 	</nav>
 }
