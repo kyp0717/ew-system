@@ -10,7 +10,6 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/adaptor"
 	"github.com/gofiber/fiber/v2/middleware/session"
 	"github.com/gofiber/storage/memory"
-	"github.com/kyp0717/ew-system/controllers"
 	"github.com/kyp0717/ew-system/views"
 	"github.com/sujit-baniya/flash"
 )
@@ -67,20 +66,8 @@ func Setup(app *fiber.App) {
 
 	/* SKU Item Details Group */
 	itemsApp := app.Group("/items")
-	itemsApp.Get("/:sku", HandleInventoryDetails)
-	itemsApp.Post("/save", func(c *fiber.Ctx) error {
-		var item controllers.Item
-		if err := c.BodyParser(&item); err != nil {
-			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Invalid data"})
-		}
-
-		// Save item to the database
-		if err := controllers.UpdateItem(&item); err != nil {
-			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Could not save changes"})
-		}
-
-		return c.JSON(fiber.Map{"success": true, "message": "Item updated successfully"})
-	})
+	itemsApp.Get("/:sku", HandleItemDetails)
+	itemsApp.Post("/save", HandleItemSave)
 
 	/* ↓ Not Found Management - Fallback Page ↓ */
 	app.Get("/*", flagsMiddleware, func(c *fiber.Ctx) error {

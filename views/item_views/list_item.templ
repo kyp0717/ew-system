@@ -22,7 +22,7 @@ templ ListItemIndex(items []controllers.ProcessedItem, fieldNames []string) {
                         for index, value := range item.Values {
                             <td>
                                 if fieldNames[index] == "SKU" {
-                                    <a href={templ.SafeURL("/items/" + value)} class="sku-link">{ value }</a>
+                                    <a href={ templ.SafeURL("/items/" + value) } class="sku-link">{ value }</a>
                                 } else {
                                     { value }
                                 }

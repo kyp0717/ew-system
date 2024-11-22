@@ -89,7 +89,7 @@ func ListItemIndex(items []controllers.ProcessedItem, fieldNames []string) templ
 					var templ_7745c5c3_Var4 string
 					templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(value)
 					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/item_views/list_item.templ`, Line: 25, Col: 103}
+						return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/item_views/list_item.templ`, Line: 25, Col: 105}
 					}
 					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 					if templ_7745c5c3_Err != nil {

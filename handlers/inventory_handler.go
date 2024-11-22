@@ -30,11 +30,11 @@ func HandleInventoryList(c *fiber.Ctx) error {
 
 	// Step 2: Extract field names dynamically
 	fieldNames := utility.GetFieldNames(controllers.Item{})
-	log.Printf("Field names: %+v", fieldNames)
+	//log.Printf("Field names: %+v", fieldNames)
 
 	// Step 3: Convert items to ProcessedItem for rendering
 	processedItems := utility.MapToProcessedItems(items)
-	log.Printf("Processed items: %+v", processedItems)
+	//log.Printf("Processed items: %+v", processedItems)
 
 	// Step 4: Render the inventory list template
 	iindex := item_views.ListItemIndex(processedItems, fieldNames)
@@ -234,21 +234,5 @@ func HandleInventoryDetails(c *fiber.Ctx) error {
 	return c.Render("itemDetailsPage", fiber.Map{
 		"sku":         sku,
 		"itemDetails": itemDetails,
-	})
-}
-func HandleSKUItemDetails(c *fiber.Ctx) error {
-	// Fetch the item from the database
-	sku := c.Params("sku")
-	item, err := controllers.GetItemBySKU(sku)
-	if err != nil {
-		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": "Item not found"})
-	}
-
-	// Convert the struct to a map
-	itemMap := utility.ConvertStructToMap(item)
-
-	// Render the Templ page with the map
-	return c.Render("sku_item.templ", fiber.Map{
-		"itemMap": itemMap,
 	})
 }

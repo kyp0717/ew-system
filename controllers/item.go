@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"encoding/csv"
+	"errors"
 	"fmt"
 	"log"
 	"os"
@@ -10,6 +11,7 @@ import (
 	"time"
 
 	"github.com/shopspring/decimal"
+	"gorm.io/gorm"
 )
 
 type Item struct {
@@ -43,7 +45,7 @@ type Item struct {
 	PiecesContainer int             `json:"PiecesContainer" gorm:"column:PiecesContainer;null"`
 	Supplier        string          `json:"Supplier" gorm:"column:Supplier;type:text;null"`
 	ShippingCost    decimal.Decimal `json:"ShippingCost" gorm:"column:ShippingCost;type:decimal(10,2);null"`
-	Active          string          `json:"Active" gorm:"column:Active;;type:text;size:1;null"`
+	Active          string          `json:"Active" gorm:"column:Active;type:char(1);null"`
 	CreatedBy       string          `json:"CreatedBy" gorm:"column:CreatedBy;type:text;size:20;null"`
 	CreatedAt       time.Time       `gorm:"autoCreateTime" json:"created_at"`
 }
@@ -257,13 +259,38 @@ func CreateItem(item *Item) error {
 
 // GetItemBySKU fetches item details from the database using the SKU
 func GetItemBySKU(sku string) (*Item, error) {
-	var item Item
+	if sku == "" {
+		return nil, errors.New("SKU cannot be empty")
+	}
 
-	// Use explicit quoting for the SKU column
-	err := PgDBConn.Debug().Where(`"SKU" = ?`, sku).First(&item).Error
+	var item Item
+	err := PgDBConn.Debug().
+		Where(`"SKU" = ?`, sku).
+		First(&item).
+		Error
+
 	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			log.Printf("Item with SKU '%s' not found", sku)
+			return nil, fmt.Errorf("item not found for SKU '%s'", sku)
+		}
 		log.Printf("Failed to fetch item with SKU '%s': %v", sku, err)
-		return nil, err
+		return nil, fmt.Errorf("database error for SKU '%s': %w", sku, err)
+	}
+
+	// Log the fetched item for debugging
+	log.Printf("Fetched item: %+v", item)
+
+	// Handle Active field safely
+	isActive := false // Default to false
+	if item.Active != "" {
+		isActive = item.Active == "Y"
+	}
+	log.Printf("Item '%s' active status: %v", sku, isActive)
+
+	// Check for nil or empty Description
+	if item.Description == "" {
+		log.Printf("Item '%s' has no description", sku)
 	}
 
 	return &item, nil
@@ -276,11 +303,10 @@ func GetItemDetailsBySKU(sku string) (map[string]interface{}, error) {
 		return nil, err
 	}
 
-	// Construct the details map dynamically from the item
 	return map[string]interface{}{
-		"name":        item.ItemName,    // Assuming `Name` is a field in `Item`
-		"price":       item.Price,       // Assuming `Price` is a field in `Item`
-		"description": item.Description, // Assuming `Description` is a field in `Item`
+		"name":        item.ItemName,
+		"price":       item.Price,
+		"description": item.Description,
 	}, nil
 }
 
@@ -325,4 +351,55 @@ func InsertItem(t *Item) error {
 	}
 	return nil
 
+}
+
+// ProcessItemForView processes a single Item struct for rendering
+func ProcessItemForView(item Item) map[string]interface{} {
+	processed := make(map[string]interface{})
+
+	// Format date fields
+	var availableDate string
+	if !item.AvailableDate.IsZero() {
+		availableDate = item.AvailableDate.Format("2006-01-02")
+	} else {
+		availableDate = "N/A"
+	}
+
+	createdAt := item.CreatedAt.Format("2006-01-02")
+
+	// Add fields to the processed map
+	processed["SKU"] = item.SKU
+	processed["ItemName"] = item.ItemName
+	processed["UPC"] = item.UPC
+	processed["Type"] = item.Type
+	processed["Category"] = item.Category
+	processed["Description"] = item.Description
+	processed["Inventory"] = fmt.Sprintf("%d", item.Inventory)
+	processed["QtyPerBox"] = fmt.Sprintf("%d", item.QtyPerBox)
+	processed["Cost"] = item.Cost.String()
+	processed["Price"] = item.Price.String()
+	processed["Price5"] = item.Price5.String()
+	processed["Price7"] = item.Price7.String()
+	processed["Price10"] = item.Price10.String()
+	processed["Price15"] = item.Price15.String()
+	processed["Price19"] = item.Price19.String()
+	processed["ItemDimension"] = item.ItemDimension
+	processed["Length"] = fmt.Sprintf("%d", item.Length)
+	processed["Width"] = fmt.Sprintf("%d", item.Width)
+	processed["Height"] = fmt.Sprintf("%d", item.Height)
+	processed["BoxDimension"] = item.BoxDimension
+	processed["BoxLength"] = fmt.Sprintf("%d", item.BoxLength)
+	processed["BoxWidth"] = fmt.Sprintf("%d", item.BoxWidth)
+	processed["BoxHeight"] = fmt.Sprintf("%d", item.BoxHeight)
+	processed["BoxWeight"] = fmt.Sprintf("%d", item.BoxWeight)
+	processed["AvailableDate"] = availableDate
+	processed["ShippingMethod"] = item.ShippingMethod
+	processed["PiecesContainer"] = fmt.Sprintf("%d", item.PiecesContainer)
+	processed["Supplier"] = item.Supplier
+	processed["ShippingCost"] = item.ShippingCost.String()
+	processed["Active"] = item.Active
+	processed["CreatedBy"] = item.CreatedBy
+	processed["CreatedAt"] = createdAt
+
+	return processed
 }

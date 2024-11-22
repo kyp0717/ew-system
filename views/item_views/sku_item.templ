@@ -1,9 +1,11 @@
 package item_views
 import (
 	"fmt"
+	"github.com/gofiber/fiber/v2"
+	"github.com/kyp0717/ew-system/views"
 )
 
-templ SKUItemDetails(itemMap map[string]interface{}) {
+templ ItemDetails(itemMap map[string]interface{}) {
     <section class="item-details mx-auto w-4/5 p-6 shadow-lg rounded-lg bg-white">
         <h1 class="text-2xl font-bold mb-4">Item Details</h1>
         <form id="item-details-form" class="grid grid-cols-2 gap-6">
@@ -21,4 +23,15 @@ templ SKUItemDetails(itemMap map[string]interface{}) {
             }
         </form>
     </section>
+}
+templ ListItemBySKU(
+	page string,
+	fromProtected, isError bool,
+	msg fiber.Map,
+	username string,
+	cmp templ.Component,
+) {
+	@views.Layout(page, fromProtected, isError, msg, username) {
+		@cmp
+	}
 }
