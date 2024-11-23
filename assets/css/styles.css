@@ -345,8 +345,34 @@ color: red;
     border-radius: 3px;
     font-size: 14px;
 }
+.price-input-field {
+    border: 1px solid #d1d5db; /* Matches border-gray-300 */
+    border-radius: 0.25rem; /* Matches rounded */
+    padding: 0.5rem; /* Matches p-2 */
+    color: #374151; /* Matches text-gray-700 */
+    background-color: #fafafa;
+    width: 8ch; /* Matches input-8ch */
+}
 
+.border-input-field {
+    border: 1px solid #d1d5db; /* Matches border-gray-300 */
+    border-radius: 0.25rem; /* Matches rounded */
+    padding: 0.5rem; /* Matches p-2 */
+    color: #374151; /* Matches text-gray-700 */
+    background-color: #fafafa;
+}
 
+.items-description {
+    display: flex;
+    flex-wrap: nowrap; /* Prevent internal wrapping */
+    gap: 1rem; /* Space between label and textarea */
+    width: 100%; /* Ensure full-row layout */
+}
+
+.field-group {
+    display: block;
+    width: 100%; /* Ensures full-width alignment if needed */
+}
 
 .Char5-input {
 width: 5ch; /* Set width to hold exactly 22 characters */

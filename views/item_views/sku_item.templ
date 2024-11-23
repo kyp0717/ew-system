@@ -3,27 +3,214 @@ import (
 	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"github.com/kyp0717/ew-system/views"
+	"time"
 )
 
 templ ItemDetails(itemMap map[string]interface{}) {
     <section class="item-details mx-auto w-4/5 p-6 shadow-lg rounded-lg bg-white">
-        <h1 class="text-2xl font-bold mb-4">Item Details</h1>
-        <form id="item-details-form" class="grid grid-cols-2 gap-6">
-            for fieldName, fieldValue := range itemMap {
-                <div class="field-group flex flex-col">
-                    <label class="font-bold mb-1">{ fieldName }</label>
-                    <input 
-                        id={ fieldName } 
-                        type="text" 
-                        value={ fmt.Sprintf("%v", fieldValue) } 
-                        class="readonly-input border border-gray-300 rounded p-2 w-full text-gray-700 bg-gray-100" 
-                        readonly
-                    />
-                </div>
-            }
+
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <h1 class="text-2xl font-bold">Item Details:</h1>
+                <p class={
+                    func() string {
+                        if fmt.Sprintf("%v", itemMap["Active"]) == "Y" {
+                            return "font-bold text-green-500"
+                        }
+                        return "font-bold text-red-500"
+                    }()
+                }>
+                    {
+                        func() string {
+                            if fmt.Sprintf("%v", itemMap["Active"]) == "Y" {
+                                return "Active"
+                            }
+                            return "Inactive"
+                        }()
+                    }
+                </p>
+            </div>
+
+            <div class="navbar-end gap-4 justify-end">
+                <button type="button" class="px-4 py-2 text-white rounded bg-green-600 hover:bg-green-500">
+                    Update
+                </button>
+                <button type="button" class="px-4 py-2 text-white rounded bg-green-600 hover:bg-green-500">
+                    Cancel
+                </button>
+            </div>
+        </div>
+
+        <form id="item-details-form" class="flex flex-wrap gap-6">
+            <div class="field-group flex flex-row items-center gap-2">
+                <label class="font-bold mb-1">SKU</label>
+                <input id="SKU" type="text" value={ fmt.Sprintf("%v", itemMap["SKU"]) } 
+                class="border-input-field" style="width: 12ch;" />
+
+                <label class="font-bold mb-1">Item Type</label>
+                <input id="ItemName" type="text" value={ fmt.Sprintf("%v", itemMap["ItemName"]) } 
+                class="border-input-field" style="width: 50ch;" />
+            </div>
+
+            <div class="field-group flex flex-row items-center gap-2">
+                <label class="font-bold mb-1">UPC</label>
+                <input id="UPC" type="text" value={ fmt.Sprintf("%v", itemMap["UPC"]) } 
+                class="border-input-field" style="width: 12ch;" />
+
+                <label class="font-bold mb-1">Type</label>
+                <input id="Type" type="text" value={ fmt.Sprintf("%v", itemMap["Type"]) } 
+                class="border-input-field" style="width: 5ch;" />
+
+                <label class="font-bold mb-1">Category</label>
+                <input id="Category" type="text" value={ fmt.Sprintf("%v", itemMap["Category"]) } 
+                class="border-input-field" style="width: 10ch;" />
+            </div>
+
+            <div class="items-description">
+                <label class="font-bold mb-1">Description</label>
+                <textarea id="Description" class="border-input-field" style="width: 80ch;">{ fmt.Sprintf("%v", itemMap["Description"]) }</textarea>
+            </div>
+
+            <div class="field-group flex flex-row items-center gap-2">
+                <label class="font-bold mb-1">Inventory</label>
+                <input id="Inventory" type="number" value={ fmt.Sprintf("%v", itemMap["Inventory"]) } 
+                class="border-input-field" style="width: 8ch;" />
+
+                <label class="font-bold mb-1">Qty Per Box</label>
+                <input id="QtyPerBox" type="number" value={ fmt.Sprintf("%v", itemMap["QtyPerBox"]) } 
+                class="border-input-field" style="width: 8ch;" />
+
+                <label class="font-bold mb-1">Cost</label>
+                <input id="Cost" type="text" value={ fmt.Sprintf("%v", itemMap["Cost"]) } 
+                class="price-input-field" />
+            </div>
+
+            <div class="field-group flex flex-row items-center gap-2">
+                <label class="font-bold mb-1">Price</label>
+                <input id="Price" type="text" value={ fmt.Sprintf("%v", itemMap["Price"]) } class="price-input-field" />
+
+                <label class="font-bold mb-1">Price 5</label>
+                <input id="Price5" type="text" value={ fmt.Sprintf("%v", itemMap["Price5"]) } class="price-input-field" />
+
+                <label class="font-bold mb-1">Price 7</label>
+                <input id="Price7" type="text" value={ fmt.Sprintf("%v", itemMap["Price7"]) } class="price-input-field" />
+
+                <label class="font-bold mb-1">Price 10</label>
+                <input id="Price10" type="text" value={ fmt.Sprintf("%v", itemMap["Price10"]) } class="price-input-field" />
+
+                <label class="font-bold mb-1">Price 15</label>
+                <input id="Price15" type="text" value={ fmt.Sprintf("%v", itemMap["Price15"]) } class="price-input-field" />
+
+                <label class="font-bold mb-1">Price 19</label>
+                <input id="Price19" type="text" value={ fmt.Sprintf("%v", itemMap["Price19"]) } class="price-input-field" />
+            </div>
+
+            <div class="field-group flex flex-row items-center gap-2">
+                <label class="font-bold mb-1">Item Dimension</label>
+                <input id="ItemDimension" type="text" value={ fmt.Sprintf("%v", itemMap["ItemDimension"]) } 
+                class="border-input-field" style="width: 20ch;" />
+
+                <label class="font-bold mb-1">Length</label>
+                <input id="Length" type="number" value={ fmt.Sprintf("%v", itemMap["Length"]) } 
+                class="border-input-field" style="width: 8ch;" />
+
+                <label class="font-bold mb-1">Width</label>
+                <input id="Width" type="number" value={ fmt.Sprintf("%v", itemMap["Width"]) } 
+                class="border-input-field" style="width: 8ch;" />
+
+                <label class="font-bold mb-1">Height</label>
+                <input id="Height" type="number" value={ fmt.Sprintf("%v", itemMap["Height"]) } 
+                class="border-input-field" style="width: 8ch;" />
+            </div>
+            <div class="field-group flex flex-row items-center gap-2">
+                <label class="font-bold mb-1">Box Dimension</label>
+                <input id="BoxDimension" type="text" value={ fmt.Sprintf("%v", itemMap["BoxDimension"]) } 
+                    class="border-input-field" style="width: 20ch;" />
+
+                <label class="font-bold mb-1">Box Length</label>
+                <input id="BoxLength" type="number" value={ fmt.Sprintf("%v", itemMap["BoxLength"]) } 
+                class="border-input-field" style="width: 8ch;" />
+
+                <label class="font-bold mb-1">Box Width</label>
+                <input id="BoxWidth" type="number" value={ fmt.Sprintf("%v", itemMap["BoxWidth"]) } 
+                class="border-input-field" style="width: 8ch;" />
+
+                <label class="font-bold mb-1">Box Height</label>
+                <input id="BoxHeight" type="number" value={ fmt.Sprintf("%v", itemMap["BoxHeight"]) } 
+                class="border-input-field" style="width: 8ch;" />
+
+                <label class="font-bold mb-1">Box Weight</label>
+                <input id="BoxWeight" type="number" value={ fmt.Sprintf("%v", itemMap["BoxWeight"]) } 
+                class="border-input-field" style="width: 8ch;" />
+            </div>
+
+            <div class="field-group flex flex-row items-center gap-2">
+                <label class="font-bold mb-1">Available Date</label>
+                <input id="AvailableDate" type="date" 
+                    value={
+                        func() string {
+                            if date, ok := itemMap["AvailableDate"].(time.Time); ok {
+                                return date.Format("2006-01-02")
+                            }
+                            if dateStr, ok := itemMap["AvailableDate"].(string); ok {
+                                return dateStr
+                            }
+                            return ""
+                        }()
+                    } 
+                    class="border-input-field" 
+                />
+
+                <label class="font-bold mb-1">Shipping Method</label>
+                <input id="ShippingMethod" type="text" value={ fmt.Sprintf("%v", itemMap["ShippingMethod"]) } 
+                class="border-input-field" style="width: 10ch;" />
+
+                <label class="font-bold mb-1">Pieces Per Container</label>
+                <input id="PiecesContainer" type="number" value={ fmt.Sprintf("%v", itemMap["PiecesContainer"]) } 
+                class="border-input-field" style="width: 8ch;" />
+
+                <label class="font-bold mb-1">Supplier</label>
+                <input id="Supplier" type="text" value={ fmt.Sprintf("%v", itemMap["Supplier"]) } 
+                class="border-input-field" style="width: 10ch;" />
+
+                <label class="font-bold mb-1">Shipping Cost</label>
+                <input id="ShippingCost" type="text" value={ fmt.Sprintf("%v", itemMap["ShippingCost"]) } 
+                class="price-input-field" />
+            </div>
+
+            <div class="field-group flex flex-row items-center gap-2">
+                <label class="font-bold mb-1">Active</label>
+                <input id="Active" type="text" value={ fmt.Sprintf("%v", itemMap["Active"]) } 
+                class="border-input-field" style="width: 5ch;"  />
+
+                <label class="font-bold mb-1">Created By</label>
+                <input id="CreatedBy" type="text" value={ fmt.Sprintf("%v", itemMap["CreatedBy"]) } 
+                class="border-input-field" style="width: 10ch;"  />
+
+                <label class="font-bold mb-1">Created At</label>
+                <input id="CreatedAt" type="datetime-local" 
+                    value={
+                        func() string {
+                            if createdAt, ok := itemMap["CreatedAt"].(time.Time); ok {
+                                loc, _ := time.LoadLocation("America/Chicago") // Example: Central Time
+                                adjustedDate := createdAt.In(loc)
+                                return adjustedDate.Format("2006-01-02 15:04:05")
+                            }
+                            if createdAtStr, ok := itemMap["CreatedAt"].(string); ok {
+                                return createdAtStr
+                            }
+                            return ""
+                        }()
+                    } 
+                    class="border-input-field" readonly 
+                />
+            </div>
         </form>
     </section>
 }
+
+
+
 templ ListItemBySKU(
 	page string,
 	fromProtected, isError bool,
