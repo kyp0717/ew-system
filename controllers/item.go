@@ -312,10 +312,9 @@ func GetItemDetailsBySKU(sku string) (map[string]interface{}, error) {
 
 // UpdateItem updates an existing item in the database
 func UpdateItem(item *Item) error {
-	err := PgDBConn.Save(item).Error
-	if err != nil {
-		log.Printf("Failed to update item: %v", err)
-		return err
+	result := PgDBConn.Model(&Item{}).Where("SKU = ?", item.SKU).Updates(item)
+	if result.Error != nil {
+		return result.Error
 	}
 	return nil
 }

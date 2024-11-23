@@ -338,7 +338,13 @@ color: red;
     color: #0056b3;
 }
 
-
+.editable-input {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 14px;
+}
 
 
 

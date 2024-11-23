@@ -67,7 +67,8 @@ func Setup(app *fiber.App) {
 	/* SKU Item Details Group */
 	itemsApp := app.Group("/items")
 	itemsApp.Get("/:sku", HandleItemDetails)
-	itemsApp.Post("/save", HandleItemSave)
+	itemsApp.Post("/save-items", HandleSaveItems)
+	itemsApp.Post("/update-item", HandleUpdateItem)
 
 	/* ↓ Not Found Management - Fallback Page ↓ */
 	app.Get("/*", flagsMiddleware, func(c *fiber.Ctx) error {
