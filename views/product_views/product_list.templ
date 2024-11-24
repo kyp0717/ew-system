@@ -1,0 +1,55 @@
+package product_views
+
+import (
+	"github.com/kyp0717/ew-system/controllers"
+	"github.com/gofiber/fiber/v2"
+	"github.com/kyp0717/ew-system/views"
+)
+
+templ ListProductIndex(products []controllers.ProcessedProduct, fieldNames []string) {
+    <div>
+        <table class="table w-full">
+            <thead class="field-names">
+                <tr>
+                    for _, field := range fieldNames {
+                        <th>{ field }</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                for _, product := range products {
+                    <tr>
+                        for index, value := range product.Values {
+                            <td>
+                                if fieldNames[index] == "SKU" {
+                                    <a 
+                                        href={ templ.SafeURL("/products/" + value) } 
+                                        class="sku-link" 
+                                        target="_blank" 
+                                        rel="noopener noreferrer">
+                                        { value }
+                                    </a>
+                                } else {
+                                    { value }
+                                }
+                            </td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+
+templ ListProduct(
+    page string,
+    fromProtected, isError bool,
+    msg fiber.Map,
+    username string,
+    cmp templ.Component,
+) {
+    @views.Layout(page, fromProtected, isError, msg, username) {
+        @cmp
+    }
+}

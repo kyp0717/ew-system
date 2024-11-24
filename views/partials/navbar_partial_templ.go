@@ -34,7 +34,7 @@ func Navbar(fromProtected bool, username string) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		if fromProtected {
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"navbar-menu flex-1 flex justify-center\"><a hx-swap=\"transition:true\" class=\"p-4 hover:scale-[1.1]\" href=\"/inventory/inventorylist\">Inventory</a> <a hx-swap=\"transition:true\" class=\"p-4 hover:scale-[1.1]\" href=\"/todo/product\">Product</a> <a hx-swap=\"transition:true\" class=\"p-4 hover:scale-[1.1]\" href=\"/todo/product\">Invoice</a> <a hx-swap=\"transition:true\" class=\"p-4 hover:scale-[1.1]\" href=\"/todo/product\">Shipment</a> <a hx-swap=\"transition:true\" class=\"p-4 hover:scale-[1.1]\" href=\"/todo/product\">Customer</a></div><div class=\"navbar-end flex items-center\"><span class=\"text-xl px-4\">")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"navbar-menu flex-1 flex justify-center\"><a hx-swap=\"transition:true\" class=\"p-4 hover:scale-[1.1]\" href=\"/inventory/inventorylist\">Inventory</a> <a hx-swap=\"transition:true\" class=\"p-4 hover:scale-[1.1]\" href=\"/products/productlist\">Product</a> <a hx-swap=\"transition:true\" class=\"p-4 hover:scale-[1.1]\" href=\"/invoices/invoicelist\">Invoice</a> <a hx-swap=\"transition:true\" class=\"p-4 hover:scale-[1.1]\" href=\"/shipments/shipmentlist\">Shipment</a> <a hx-swap=\"transition:true\" class=\"p-4 hover:scale-[1.1]\" href=\"/customers/customerlist\">Customer</a></div><div class=\"navbar-end flex items-center\"><span class=\"text-xl px-4\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

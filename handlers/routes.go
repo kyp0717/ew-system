@@ -70,6 +70,10 @@ func Setup(app *fiber.App) {
 	itemsApp.Post("/save-items", HandleSaveItems)
 	itemsApp.Post("/update-item", HandleUpdateItem)
 
+	/* Product Group */
+	productsApp := app.Group("/products")
+	productsApp.Get("/productlist", HandleProductList)
+
 	/* ↓ Not Found Management - Fallback Page ↓ */
 	app.Get("/*", flagsMiddleware, func(c *fiber.Ctx) error {
 		return fiber.NewError(

@@ -89,6 +89,7 @@ func HandleViewLogin(c *fiber.Ctx) error {
 		session.Set(AUTH_KEY, true)
 		session.Set(USER_ID, user.ID)
 		session.Set(TZONE_KEY, tzone)
+		session.Set("username", user.Username) // Store the username in the session
 
 		err = session.Save()
 		if err != nil {

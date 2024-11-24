@@ -2,6 +2,7 @@ package utility
 
 import (
 	"fmt"
+	"log"
 	"reflect" // Ensure the time package is imported
 
 	"github.com/kyp0717/ew-system/controllers"
@@ -72,6 +73,73 @@ func MapToProcessedItems(items []controllers.Item) []controllers.ProcessedItem {
 		})
 	}
 
+	return processed
+}
+
+// MapToProcessProducts converts Product data to ProcessedProduct for templated rendering
+func MapToProcessProducts(products []controllers.Product) []controllers.ProcessedProduct {
+	processed := []controllers.ProcessedProduct{}
+
+	for _, product := range products {
+		// Safely format CreateDate
+		createDate := ""
+		if !product.CreateDate.IsZero() {
+			createDate = product.CreateDate.Format("2006-01-02")
+		}
+
+		// Safeguard against zero-value integers
+		formatInt := func(value int) string {
+			if value == 0 {
+				return "0"
+			}
+			return fmt.Sprintf("%d", value)
+		}
+
+		// Append processed product
+		processed = append(processed, controllers.ProcessedProduct{
+			Values: []string{
+				product.SKU,                   // SKU
+				product.Category,              // Category
+				product.Group,                 // Group
+				product.ProductName,           // Product Name
+				createDate,                    // Create Date
+				formatInt(product.TotalBoxes), // Total Boxes
+
+				product.SKU1,              // SKU_1
+				formatInt(product.Box1),   // Box_1
+				formatInt(product.Piece1), // Piece_1
+
+				product.SKU2,              // SKU_2
+				formatInt(product.Box2),   // Box_2
+				formatInt(product.Piece2), // Piece_2
+
+				product.SKU3,              // SKU_3
+				formatInt(product.Box3),   // Box_3
+				formatInt(product.Piece3), // Piece_3
+
+				product.SKU4,              // SKU_4
+				formatInt(product.Box4),   // Box_4
+				formatInt(product.Piece4), // Piece_4
+
+				product.SKU5,              // SKU_5
+				formatInt(product.Box5),   // Box_5
+				formatInt(product.Piece5), // Piece_5
+
+				product.SKU6,              // SKU_6
+				formatInt(product.Box6),   // Box_6
+				formatInt(product.Piece6), // Piece_6
+
+				product.SKU7,              // SKU_7
+				formatInt(product.Box7),   // Box_7
+				formatInt(product.Piece7), // Piece_7
+
+				product.Active,                         // Active Status
+				product.CreatedBy,                      // Created By
+				product.CreatedAt.Format("2006-01-02"), // Created At (formatted as string)
+			},
+		})
+	}
+	log.Printf("utility.MapToProcessProducts: return ProcessedProduct")
 	return processed
 }
 
