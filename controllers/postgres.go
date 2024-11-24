@@ -26,9 +26,11 @@ func PgConnectDB() {
 
 	fmt.Println("Starting connection with Postgres Db")
 
-	// Open the database connection
+	// Open the database connection with custom naming strategy
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{
-		NamingStrategy: schema.NamingStrategy{},
+		NamingStrategy: schema.NamingStrategy{
+			SingularTable: true, // Disable pluralization of table names
+		},
 	})
 
 	if err != nil {
@@ -40,10 +42,34 @@ func PgConnectDB() {
 	// Set the global connection variable
 	PgDBConn = db
 
-	// Run database migrations
-	err = db.AutoMigrate(&User{}, &TodoPG{}, &Item{})
-	if err != nil {
-		log.Fatalf("Data migration failed: %v", err)
+	// List of models to migrate
+	models := []interface{}{&User{}, &Item{}, &Product{}}
+
+	// Iterate over models and run migrations
+	for _, model := range models {
+
+		if !db.Migrator().HasTable(model) {
+			err = db.AutoMigrate(model)
+			if err != nil {
+				log.Fatalf("Data migration for %T failed: %v", model, err)
+			}
+
+			// Check the model type and load corresponding data
+			switch model.(type) {
+			case *User:
+				LoadUserTable()
+			case *Item:
+				LoadItemTable()
+			case *Product:
+				LoadProductTable()
+			default:
+				fmt.Printf("No data loader defined for %T.\n", model)
+			}
+
+			fmt.Printf("Table for %T migrated and data loaded successfully.\n", model)
+		} else {
+			fmt.Printf("Table for %T already exists. Skipping migration and data load.\n", model)
+		}
 	}
 
 	fmt.Println("Data migration complete.")

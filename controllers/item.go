@@ -279,14 +279,14 @@ func GetItemBySKU(sku string) (*Item, error) {
 	}
 
 	// Log the fetched item for debugging
-	log.Printf("Fetched item: %+v", item)
+	//log.Printf("Fetched item: %+v", item)
 
 	// Handle Active field safely
-	isActive := false // Default to false
-	if item.Active != "" {
-		isActive = item.Active == "Y"
-	}
-	log.Printf("Item '%s' active status: %v", sku, isActive)
+	// isActive := false // Default to false
+	// if item.Active != "" {
+	// 	isActive = item.Active == "Y"
+	// }
+	//log.Printf("Item '%s' active status: %v", sku, isActive)
 
 	// Check for nil or empty Description
 	if item.Description == "" {
@@ -349,7 +349,6 @@ func InsertItem(t *Item) error {
 		return err
 	}
 	return nil
-
 }
 
 // ProcessItemForView processes a single Item struct for rendering

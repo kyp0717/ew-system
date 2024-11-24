@@ -26,7 +26,7 @@ func HandleInventoryList(c *fiber.Ctx) error {
 		log.Printf("Database error: %v", err)
 		return fiber.NewError(fiber.StatusInternalServerError, fmt.Sprintf("something went wrong: %s", err))
 	}
-	log.Printf("Fetched items: %+v", items)
+	//log.Printf("Fetched items: %+v", items)
 
 	// Step 2: Extract field names dynamically
 	fieldNames := utility.GetFieldNames(controllers.Item{})
@@ -191,7 +191,7 @@ func HandleInventoryDelete(c *fiber.Ctx) error {
 
 	item := new(controllers.Item)
 	item.SKU = strconv.FormatUint(itemSKU, 10)
-	item.CreatedBy = c.Locals("username").(string)
+	//item.CreatedBy = c.Locals("username").(string)
 
 	fm := fiber.Map{"type": "error"}
 
