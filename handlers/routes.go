@@ -73,7 +73,7 @@ func Setup(app *fiber.App) {
 	itemsApp.Post("/logout", HandleLogout)
 
 	/* Product Group */
-	productsApp := app.Group("/products")
+	productsApp := app.Group("/products", AuthMiddleware)
 	productsApp.Get("/productlist", HandleProductList)
 	productsApp.Post("/logout", HandleLogout)
 
