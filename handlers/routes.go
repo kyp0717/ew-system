@@ -63,16 +63,19 @@ func Setup(app *fiber.App) {
 	inventoryApp.Get("/edit/:id", HandleInventoryEdit)
 	inventoryApp.Post("/edit/:id", HandleInventoryEdit)
 	inventoryApp.Delete("/delete/:id", HandleInventoryDelete)
+	inventoryApp.Post("/logout", HandleLogout)
 
 	/* SKU Item Details Group */
 	itemsApp := app.Group("/items")
 	itemsApp.Get("/:sku", HandleItemDetails)
 	itemsApp.Post("/save-items", HandleSaveItems)
 	itemsApp.Post("/update-item", HandleUpdateItem)
+	itemsApp.Post("/logout", HandleLogout)
 
 	/* Product Group */
 	productsApp := app.Group("/products")
 	productsApp.Get("/productlist", HandleProductList)
+	productsApp.Post("/logout", HandleLogout)
 
 	/* ↓ Not Found Management - Fallback Page ↓ */
 	app.Get("/*", flagsMiddleware, func(c *fiber.Ctx) error {

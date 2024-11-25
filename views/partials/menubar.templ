@@ -1,0 +1,43 @@
+package partials
+
+templ Menubar(fromProtected bool, username string) {
+	<nav class="navbar-container flex items-center justify-between">
+		<!-- Logo Section -->
+		<div class="logo">
+			<a class="btn btn-ghost text-xl" href="/">
+				East West Furniture
+			</a>
+		</div>
+
+		<!-- Menu Section -->
+		<div class="navbar-menu flex-1 flex justify-center">
+			<a class="p-4 hover:scale-[1.1]" href="/inventory/inventorylist">Inventory</a>
+			<a class="p-4 hover:scale-[1.1]" href="/products/productlist">Product</a>
+			<a class="p-4 hover:scale-[1.1]" href="/invoices/invoicelist">Invoice</a>
+			<a class="p-4 hover:scale-[1.1]" href="/shipments/shipmentlist">Shipment</a>
+			<a class="p-4 hover:scale-[1.1]" href="/customers/customerlist">Customer</a>
+		</div>
+
+		<!-- User Section -->
+		<div class="navbar-end flex items-center">
+			<!-- Username Display -->
+			// <span class="text-xl px-4">
+			// 	{{if username != ""}}
+			// 		{username}
+			// 	{{else}}
+			// 		Guest
+			// 	{{end}}
+			// </span>
+
+			<!-- Logout Button -->
+			<button
+				hx-swap="transition:true"
+				hx-post="/inventory/logout"
+				hx-confirm="Are you sure you want to log out?"
+				class="btn btn-ghost text-lg"
+			>
+				Logout
+			</button>
+		</div>
+	</nav>
+}

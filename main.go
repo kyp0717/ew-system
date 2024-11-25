@@ -30,5 +30,5 @@ func main() {
 
 	handlers.Setup(app)
 
-	log.Fatal(app.Listen(":3001"))
+	log.Fatal(app.Listen(":3000"))
 }

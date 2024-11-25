@@ -29,12 +29,8 @@ func Navbar(fromProtected bool, username string) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<nav class=\"navbar-container flex items-center justify-between\"><div class=\"logo\"><a hx-swap=\"transition:true\" class=\"btn btn-ghost text-xl\" href=\"/\">East West Furniture</a></div>")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
 		if fromProtected {
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"navbar-menu flex-1 flex justify-center\"><a hx-swap=\"transition:true\" class=\"p-4 hover:scale-[1.1]\" href=\"/inventory/inventorylist\">Inventory</a> <a hx-swap=\"transition:true\" class=\"p-4 hover:scale-[1.1]\" href=\"/products/productlist\">Product</a> <a hx-swap=\"transition:true\" class=\"p-4 hover:scale-[1.1]\" href=\"/invoices/invoicelist\">Invoice</a> <a hx-swap=\"transition:true\" class=\"p-4 hover:scale-[1.1]\" href=\"/shipments/shipmentlist\">Shipment</a> <a hx-swap=\"transition:true\" class=\"p-4 hover:scale-[1.1]\" href=\"/customers/customerlist\">Customer</a></div><div class=\"navbar-end flex items-center\"><span class=\"text-xl px-4\">")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<nav class=\"navbar-container flex items-center justify-between\"><div class=\"logo\"><a hx-swap=\"transition:true\" class=\"btn btn-ghost text-xl\" href=\"/\"><img src=\"/img/EastWestLogo.png\" class=\"h-16 w-auto\"></a></div><div class=\"navbar-menu flex-1 flex justify-center\"><a hx-swap=\"transition:true\" class=\"p-4 hover:scale-[1.1]\" href=\"/inventory/inventorylist\">Inventory</a> <a hx-swap=\"transition:true\" class=\"p-4 hover:scale-[1.1]\" href=\"/products/productlist\">Product</a> <a hx-swap=\"transition:true\" class=\"p-4 hover:scale-[1.1]\" href=\"/invoices/invoicelist\">Invoice</a> <a hx-swap=\"transition:true\" class=\"p-4 hover:scale-[1.1]\" href=\"/shipments/shipmentlist\">Shipment</a> <a hx-swap=\"transition:true\" class=\"p-4 hover:scale-[1.1]\" href=\"/customers/customerlist\">Customer</a></div><div class=\"navbar-end flex items-center\"><span class=\"text-xl px-4\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -47,19 +43,10 @@ func Navbar(fromProtected bool, username string) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</span> <button hx-swap=\"transition:true\" hx-post=\"/todo/logout\" hx-confirm=\"Are you sure you want to log out?\" onClick=\"this.addEventListener(&#39;htmx:confirm&#39;, (e) =&gt; {\r\n\t\t\t\t\t\te.preventDefault()\r\n\t\t\t\t\t\tSwal.fire({\r\n\t\t\t\t\t\t\ttitle: &#39;Do you want to perform this action?&#39;,\r\n\t\t\t\t\t\t\ttext: `${e.detail.question}`,\r\n\t\t\t\t\t\t\ticon: &#39;warning&#39;,\r\n\t\t\t\t\t\t\tbackground: &#39;#1D232A&#39;,\r\n\t\t\t\t\t\t\tcolor: &#39;#A6ADBA&#39;,\r\n\t\t\t\t\t\t\tshowCancelButton: true,\r\n\t\t\t\t\t\t\tconfirmButtonColor: &#39;#3085d6&#39;,\r\n\t\t\t\t\t\t\tcancelButtonColor: &#39;#d33&#39;,\r\n\t\t\t\t\t\t\tconfirmButtonText: &#39;Yes&#39;\r\n\t\t\t\t\t\t}).then((result) =&gt; {\r\n\t\t\t\t\t\t\tif(result.isConfirmed) e.detail.issueRequest(true);\r\n\t\t\t\t\t\t})\r\n\t\t\t\t\t})\" hx-target=\"body\" hx-push-url=\"true\" class=\"btn btn-ghost text-lg\">Logout</button></div>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</span> <button hx-swap=\"transition:true\" hx-post=\"/inventory/logout\" hx-confirm=\"Are you sure you want to log out?\" onClick=\"this.addEventListener(&#39;htmx:confirm&#39;, (e) =&gt; {\r\n\t\t\t\t\t\te.preventDefault()\r\n\t\t\t\t\t\tSwal.fire({\r\n\t\t\t\t\t\t\ttitle: &#39;Do you want to perform this action?&#39;,\r\n\t\t\t\t\t\t\ttext: `${e.detail.question}`,\r\n\t\t\t\t\t\t\ticon: &#39;warning&#39;,\r\n\t\t\t\t\t\t\tbackground: &#39;#1D232A&#39;,\r\n\t\t\t\t\t\t\tcolor: &#39;#A6ADBA&#39;,\r\n\t\t\t\t\t\t\tshowCancelButton: true,\r\n\t\t\t\t\t\t\tconfirmButtonColor: &#39;#3085d6&#39;,\r\n\t\t\t\t\t\t\tcancelButtonColor: &#39;#d33&#39;,\r\n\t\t\t\t\t\t\tconfirmButtonText: &#39;Yes&#39;\r\n\t\t\t\t\t\t}).then((result) =&gt; {\r\n\t\t\t\t\t\t\tif(result.isConfirmed) e.detail.issueRequest(true);\r\n\t\t\t\t\t\t})\r\n\t\t\t\t\t})\" hx-target=\"body\" hx-push-url=\"true\" class=\"btn btn-ghost text-lg\">Logout</button></div></nav>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-		} else {
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"justify-end flex items-center\"><a hx-swap=\"transition:true\" class=\"btn btn-ghost text-lg px-4\" href=\"/register\">Register</a> <a hx-swap=\"transition:true\" class=\"btn btn-ghost text-lg px-4\" href=\"/login\">Login</a></div>")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</nav>")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
 		}
 		return templ_7745c5c3_Err
 	})

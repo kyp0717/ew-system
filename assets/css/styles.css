@@ -2,6 +2,7 @@
 
 body {
     font-family: "Kanit", sans-serif;
+    background-color: white;
 }
 
 @keyframes fade-in {

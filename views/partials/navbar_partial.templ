@@ -1,14 +1,14 @@
 package partials
 
 templ Navbar(fromProtected bool, username string) {
-	<nav class="navbar-container flex items-center justify-between">
-		<div class="logo">
-			<a hx-swap="transition:true" class="btn btn-ghost text-xl" href="/">
-				East West Furniture
-			</a>
-		</div>
+	if fromProtected {
+		<nav class="navbar-container flex items-center justify-between">
+			<div class="logo">
+				<a hx-swap="transition:true" class="btn btn-ghost text-xl" href="/">
+					<img src="/img/EastWestLogo.png" class="h-16 w-auto">
+				</a>
+			</div>
 
-		if fromProtected {
 			<div class="navbar-menu flex-1 flex justify-center">
 				<a hx-swap="transition:true" class="p-4 hover:scale-[1.1]" href="/inventory/inventorylist">
 					Inventory
@@ -30,7 +30,7 @@ templ Navbar(fromProtected bool, username string) {
 				<span class="text-xl px-4">{ username }</span>
 				<button
 					hx-swap="transition:true"
-					hx-post="/todo/logout"
+					hx-post="/inventory/logout"
 					hx-confirm="Are you sure you want to log out?"
 					onClick="this.addEventListener('htmx:confirm', (e) => {
 						e.preventDefault()
@@ -55,15 +55,6 @@ templ Navbar(fromProtected bool, username string) {
 					Logout
 				</button>
 			</div>
-		} else {
-			<div class="justify-end flex items-center">
-				<a hx-swap="transition:true" class="btn btn-ghost text-lg px-4" href="/register">
-					Register
-				</a>
-				<a hx-swap="transition:true" class="btn btn-ghost text-lg px-4" href="/login">
-					Login
-				</a>
-			</div>
-		}
-	</nav>
+		</nav>
+	} 
 }

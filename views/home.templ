@@ -3,11 +3,15 @@ package views
 import "github.com/gofiber/fiber/v2"
 
 templ HomeIndex(fromProtected bool) {
-	<section class="mx-auto w-fit flex flex-col gap-8 text-center">
-		<h1 class="text-5xl font-bold">Welcome to East West Furniture</h1>
+	<section class="mx-auto max-w-screen-lg max-h-screen flex flex-col gap-8 text-center bg-white py-8">
+		<div class="flex justify-center items-center gap-8">
+			<img src="/img/EastWestLogo.png" class="h-16 w-auto" alt="East West Logo">
+			<h1 class="text-5xl font-bold">Welcome to East West Furniture</h1>
+			<img src="/img/EastWestByLuxe.png" class="h-16 w-auto" alt="East West by Luxe">
+		</div>
 
 		if !fromProtected {
-			<hr class="my-4 w-4/5 mx-auto opacity-25"/>
+			<hr class="navbar-background "/>
 			<p class="text-base font-thin">You have an account?</p>
 			<footer class="flex gap-4 justify-center">
 				<a
