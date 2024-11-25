@@ -31,7 +31,8 @@ templ ListProductIndex(products []controllers.ProcessedProduct, fieldNames []str
                         <td>
                             <button 
                                 class="icon-link" style="width: 5ch;"
-                                onclick="toggleDetails('product-{ product.Values[0] }')">
+                                data-product-id={ product.Values[0] }
+            onclick="toggleDetails(this.getAttribute('data-product-id'))">
                                 <i class="fas fa-eye"></i>
                             </button>
                         </td>
@@ -50,10 +51,10 @@ templ ListProductIndex(products []controllers.ProcessedProduct, fieldNames []str
                         <td style="text-align: left; width: 10ch;">{ product.Values[1] }</td>
                         <td style="width: 10ch;">{ product.Values[2] }</td>
                         <td style="width: 50ch;">{ product.Values[3] }</td>
-                        <td style="width: 12ch;">{ product.Values[4] }</td>
+                        <td style="width: 10ch;">{ product.Values[4] }</td>
                         <td style="width: 5ch;">{ product.Values[5] }</td>
                         <td style="width: 10ch;">{ product.Values[28] }</td>
-                        <td style="width: 12ch;">{ product.Values[29] }</td>
+                        <td style="width: 10ch;">{ product.Values[29] }</td>
                         <td>
                             if product.Values[27] == "Y" {
                                 <span style="color: green; font-weight: bold;">Active</span>
@@ -65,7 +66,7 @@ templ ListProductIndex(products []controllers.ProcessedProduct, fieldNames []str
                         </td>
                     </tr>
                     <!-- Collapsible Row -->
-                    <tr id="product-{ product.Values[0] }" class="hidden-row">
+                    <tr id={ product.Values[0] } class="hidden-row">
                         <td colspan="7">
                             <table class="table w-full">
                                 <thead>
