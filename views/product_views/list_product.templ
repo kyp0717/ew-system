@@ -11,13 +11,17 @@ templ ListProductIndex(products []controllers.ProcessedProduct, fieldNames []str
         <table class="table w-full">
             <thead class="field-names">
                 <tr>
-                    <th> </th> <!-- Empty column for the Eye Icon -->
-                    <th>{ fieldNames[0] }</th>
-                    <th>{ fieldNames[1] }</th>
-                    <th>{ fieldNames[2] }</th>
-                    <th>{ fieldNames[3] }</th>
-                    <th>{ fieldNames[4] }</th>
-                    <th>{ fieldNames[5] }</th>
+                    <th style="width: 5ch;"> </th> <!-- Empty column for the Eye Icon -->
+                    <th style="width: 20ch;">{ fieldNames[0] }</th>
+                    <th style="width: 10ch;">{ fieldNames[1] }</th>
+                    <th style="width: 10ch;">{ fieldNames[2] }</th>
+                    <th style="width: 50ch;">{ fieldNames[3] }</th>
+                    <th style="width: 12ch;">{ fieldNames[4] }</th>
+                    <th style="width: 5ch;">{ fieldNames[5] }</th>
+
+                    <th style="width: 10ch;">{ fieldNames[28] }</th>
+                    <th style="width: 12ch;">{ fieldNames[29] }</th>
+                    <th style="width: 8ch;"> </th>
                 </tr>
             </thead>
             <tbody>
@@ -25,39 +29,88 @@ templ ListProductIndex(products []controllers.ProcessedProduct, fieldNames []str
                     <tr>
                         <!-- Eye Icon -->
                         <td>
-                            <a href="/products/{ product.Values[0] }" 
-                               class="icon-link" 
-                               target="_blank" 
-                               rel="noopener noreferrer">
+                            <button 
+                                class="icon-link" style="width: 5ch;"
+                                onclick="toggleDetails('product-{ product.Values[0] }')">
                                 <i class="fas fa-eye"></i>
-                            </a>
+                            </button>
                         </td>
                         <!-- SKU Column -->
                         <td>
                             if fieldNames[0] == "SKU" {
                                 <a href="/products/{ product.Values[0] }" 
-                                    class="sku-link" 
+                                    class="sku-link" style="width: 20ch;"
                                     target="_blank" 
                                     rel="noopener noreferrer">
-                                    { product.Values[0] }
+                                    { product.Values[0]} <!-- Safe truncation -->
                                 </a>
-                            } else {
-                                { product.Values[0] }
-                            }
+                            } 
                         </td>
                         <!-- Remaining Columns -->
-                        <td>{ product.Values[1] }</td>
-                        <td>{ product.Values[2] }</td>
-                        <td>{ product.Values[3] }</td>
-                        <td>{ product.Values[4] }</td>
-                        <td>{ product.Values[5] }</td>
+                        <td style="text-align: left; width: 10ch;">{ product.Values[1] }</td>
+                        <td style="width: 10ch;">{ product.Values[2] }</td>
+                        <td style="width: 50ch;">{ product.Values[3] }</td>
+                        <td style="width: 12ch;">{ product.Values[4] }</td>
+                        <td style="width: 5ch;">{ product.Values[5] }</td>
+                        <td style="width: 10ch;">{ product.Values[28] }</td>
+                        <td style="width: 12ch;">{ product.Values[29] }</td>
+                        <td>
+                            if product.Values[27] == "Y" {
+                                <span style="color: green; font-weight: bold;">Active</span>
+                            } else if product.Values[27] == "N" {
+                                <span style="color: red; font-weight: bold;">Inactive</span>
+                            } else {
+                                <span>Unknown</span> <!-- Optional fallback for unexpected values -->
+                            }
+                        </td>
+                    </tr>
+                    <!-- Collapsible Row -->
+                    <tr id="product-{ product.Values[0] }" class="hidden-row">
+                        <td colspan="7">
+                            <table class="table w-full">
+                                <thead>
+                                    <tr>
+                                        for j, field := range fieldNames {
+                                            if j >= 6 {
+                                                <th>{ field }</th>
+                                            }
+                                        }
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        for j, value := range product.Values {
+                                            if j >= 6 {
+                                                <td>{ value }</td>
+                                            }
+                                        }
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
                     </tr>
                 }
             </tbody>
         </table>
     </div>
-}
 
+    <script>
+        function toggleDetails(rowId) {
+            const row = document.getElementById(rowId);
+            if (row.classList.contains('hidden-row')) {
+                row.classList.remove('hidden-row');
+            } else {
+                row.classList.add('hidden-row');
+            }
+        }
+    </script>
+
+    <style>
+        .hidden-row {
+            display: none;
+        }
+    </style>
+}
 
 
 templ ListProduct(

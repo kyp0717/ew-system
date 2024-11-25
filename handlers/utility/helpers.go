@@ -21,6 +21,13 @@ func GetFieldNames(item interface{}) []string {
 	return fieldNames
 }
 
+func Truncate(s string, maxLength int) string {
+	if len(s) > maxLength {
+		return s[:maxLength]
+	}
+	return s
+}
+
 // MapToProcessedItems converts items to ProcessedItem for templ rendering
 func MapToProcessedItems(items []controllers.Item) []controllers.ProcessedItem {
 	processed := []controllers.ProcessedItem{}

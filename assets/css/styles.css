@@ -282,6 +282,12 @@ table tr:nth-child(odd) {
 .collapsible-content.show {
     display: flex;
 }
+
+.hidden-row {
+    display: none;
+}
+
+
 .arrow {
     font-size: 18px;
 }
