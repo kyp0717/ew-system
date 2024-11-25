@@ -1,0 +1,73 @@
+package product_views
+
+import (
+	"github.com/kyp0717/ew-system/controllers"
+	"github.com/gofiber/fiber/v2"
+	"github.com/kyp0717/ew-system/views"
+)
+
+templ ListProductIndex(products []controllers.ProcessedProduct, fieldNames []string) {
+    <div>
+        <table class="table w-full">
+            <thead class="field-names">
+                <tr>
+                    <th> </th> <!-- Empty column for the Eye Icon -->
+                    <th>{ fieldNames[0] }</th>
+                    <th>{ fieldNames[1] }</th>
+                    <th>{ fieldNames[2] }</th>
+                    <th>{ fieldNames[3] }</th>
+                    <th>{ fieldNames[4] }</th>
+                    <th>{ fieldNames[5] }</th>
+                </tr>
+            </thead>
+            <tbody>
+                for _, product := range products {
+                    <tr>
+                        <!-- Eye Icon -->
+                        <td>
+                            <a href="/products/{ product.Values[0] }" 
+                               class="icon-link" 
+                               target="_blank" 
+                               rel="noopener noreferrer">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                        </td>
+                        <!-- SKU Column -->
+                        <td>
+                            if fieldNames[0] == "SKU" {
+                                <a href="/products/{ product.Values[0] }" 
+                                    class="sku-link" 
+                                    target="_blank" 
+                                    rel="noopener noreferrer">
+                                    { product.Values[0] }
+                                </a>
+                            } else {
+                                { product.Values[0] }
+                            }
+                        </td>
+                        <!-- Remaining Columns -->
+                        <td>{ product.Values[1] }</td>
+                        <td>{ product.Values[2] }</td>
+                        <td>{ product.Values[3] }</td>
+                        <td>{ product.Values[4] }</td>
+                        <td>{ product.Values[5] }</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+
+
+templ ListProduct(
+    page string,
+    fromProtected, isError bool,
+    msg fiber.Map,
+    username string,
+    cmp templ.Component,
+) {
+    @views.Layout(page, fromProtected, isError, msg, username) {
+        @cmp
+    }
+}

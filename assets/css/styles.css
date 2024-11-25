@@ -317,6 +317,20 @@ font-weight: bold; /* Bolder icon */
 color: red; /* Optional: Change color if needed */   
 }
 
+.icon-link {
+    margin-right: 8px; /* Space between icon and SKU */
+    color: #007bff; /* Link color */
+    text-decoration: none;
+}
+
+.icon-link:hover {
+    color: #0056b3; /* Hover effect */
+}
+
+.sku-link {
+    color: inherit; /* Inherit text color */
+    text-decoration: none;
+}
 /* Default color for active (green) */
 .color-variable {
 color: green;

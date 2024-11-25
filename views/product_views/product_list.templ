@@ -6,7 +6,7 @@ import (
 	"github.com/kyp0717/ew-system/views"
 )
 
-templ ListProductIndex(products []controllers.ProcessedProduct, fieldNames []string) {
+templ ListProductIndex2(products []controllers.ProcessedProduct, fieldNames []string) {
     <div>
         <table class="table w-full">
             <thead class="field-names">
@@ -42,7 +42,7 @@ templ ListProductIndex(products []controllers.ProcessedProduct, fieldNames []str
 }
 
 
-templ ListProduct(
+templ ListProduct2(
     page string,
     fromProtected, isError bool,
     msg fiber.Map,
