@@ -46,15 +46,15 @@ func Setup(app *fiber.App) {
 	app.Get("/register", flagsMiddleware, HandleViewRegister)
 	app.Post("/register", flagsMiddleware, HandleViewRegister)
 
-	/* Views protected with session middleware */
-	todoApp := app.Group("/todo", AuthMiddleware)
-	todoApp.Get("/listpg", HandleViewListPG)
-	todoApp.Get("/create", HandleViewCreatePagePG)
-	todoApp.Post("/create", HandleViewCreatePagePG)
-	todoApp.Get("/edit/:id", HandleViewEditPagePG)
-	todoApp.Post("/edit/:id", HandleViewEditPagePG)
-	todoApp.Delete("/delete/:id", HandleDeleteTodoPG)
-	todoApp.Post("/logout", HandleLogout)
+	// /* Views protected with session middleware */
+	// todoApp := app.Group("/todo", AuthMiddleware)
+	// todoApp.Get("/listpg", HandleViewListPG)
+	// todoApp.Get("/create", HandleViewCreatePagePG)
+	// todoApp.Post("/create", HandleViewCreatePagePG)
+	// todoApp.Get("/edit/:id", HandleViewEditPagePG)
+	// todoApp.Post("/edit/:id", HandleViewEditPagePG)
+	// todoApp.Delete("/delete/:id", HandleDeleteTodoPG)
+	// todoApp.Post("/logout", HandleLogout)
 
 	/* Views protected with session middleware */
 	inventoryApp := app.Group("/inventory", AuthMiddleware)

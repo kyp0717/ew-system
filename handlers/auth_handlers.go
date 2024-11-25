@@ -105,7 +105,9 @@ func HandleViewLogin(c *fiber.Ctx) error {
 			"message": "You have successfully logged in!!",
 		}
 
-		return flash.WithSuccess(c, fm).Redirect("/todo/listpg")
+		//return flash.WithSuccess(c, fm).Redirect("/todo/listpg")
+		// Redirect to the homepage instead of /todo/listpg
+		return flash.WithSuccess(c, fm).Redirect("/")
 	}
 
 	return handler(c)
