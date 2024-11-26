@@ -67,10 +67,7 @@ templ ProductDetails(productMap map[string]interface{}) {
                 <label class="font-bold mb-1">Total Boxes</label>
                 <input id="TotalBoxes" type="number" value={ fmt.Sprintf("%v", productMap["TotalBoxes"]) } 
                 class="border-input-field" style="width: 10ch;" />
-            </div>
 
-
-            <div class="field-group flex flex-row items-center gap-2">
                 <label class="font-bold mb-1">Created By</label>
                 <input id="CreatedBy" type="text" value={ fmt.Sprintf("%v", productMap["CreatedBy"]) } 
                 class="border-input-field" style="width: 20ch;" readonly />
@@ -90,6 +87,103 @@ templ ProductDetails(productMap map[string]interface{}) {
                     } 
                     class="border-input-field" readonly 
                 />
+            </div>
+            <!-- Generate 7 folders for 7 sets of the fields for the product details -->
+            <div class="flex flex-col gap-4">
+                if productMap["SKU_1"] != "" && productMap["SKU_1"] != "0" && productMap["SKU_1"] != " " {  
+                    <div class="field-group flex flex-row items-center gap-2">
+                        <label class="font-bold mb-1">SKU</label>
+                        <input id="SKU_1" type="text" value={ fmt.Sprintf("%v", productMap["SKU_1"]) } 
+                        class="border-input-field" style="width: 20ch;" readonly />
+
+                        <label class="font-bold mb-1">Box</label>
+                        <input id="Box_1" type="text" value={ fmt.Sprintf("%v", productMap["Box_1"]) } 
+                        class="border-input-field" style="width: 5ch;" />
+
+                        <label class="font-bold mb-1">Piece</label>
+                        <input id="Piece_1" type="text" value={ fmt.Sprintf("%v", productMap["Piece_1"]) } 
+                        class="border-input-field" style="width: 5ch;" />
+                    </div>
+                }
+
+                if productMap["SKU_2"] != "" && productMap["SKU_2"] != "0" && productMap["SKU_2"] != " " {
+                    <div class="field-group flex flex-row items-center gap-2">
+                        <label class="font-bold mb-1">SKU</label>
+                        <input id="SKU_2" type="text" value={ fmt.Sprintf("%v", productMap["SKU_2"]) }  
+                        class="border-input-field" style="width: 20ch;" readonly />
+
+                        <label class="font-bold mb-1">Box</label>
+                        <input id="Box_2" type="text" value={ fmt.Sprintf("%v", productMap["Box_2"]) }  
+                        class="border-input-field" style="width: 10ch;" />
+
+                        <label class="font-bold mb-1">Piece</label>
+                        <input id="Piece_2" type="text" value={ fmt.Sprintf("%v", productMap["Piece_2"]) }  
+                        class="border-input-field" style="width: 10ch;" />
+                    </div>
+                }
+
+                if fmt.Sprintf("%v", productMap["SKU_3"]) != "" && fmt.Sprintf("%v", productMap["SKU_3"]) != "0" && fmt.Sprintf("%v", productMap["SKU_3"]) != " " {
+                    <div class="field-group flex flex-row items-center gap-2">
+                        <label class="font-bold mb-1">SKU</label>
+                        <input id="SKU_3" type="text" value={ fmt.Sprintf("%v", productMap["SKU_3"]) }  class="border-input-field" style="width: 20ch;" readonly />
+                        <label class="font-bold mb-1">Box</label>
+                        <input id="Box_3" type="text" value={ fmt.Sprintf("%v", productMap["Box_3"]) }  class="border-input-field" style="width: 10ch;" />
+                        <label class="font-bold mb-1">Piece</label>
+                        <input id="Piece_3" type="text" value={ fmt.Sprintf("%v", productMap["Piece_3"]) }  class="border-input-field" style="width: 10ch;" />
+                    </div>
+                }
+
+                if fmt.Sprintf("%v", productMap["SKU_4"]) != "" && fmt.Sprintf("%v", productMap["SKU_4"]) != "0" && fmt.Sprintf("%v", productMap["SKU_4"]) != " " {
+                    <div class="field-group flex flex-row items-center gap-2">
+                        <label class="font-bold mb-1">SKU</label>
+                    <input id="SKU_4" type="text" value={ fmt.Sprintf("%v", productMap["SKU_4"]) }  class="border-input-field" style="width: 20ch;" readonly />
+
+                    <label class="font-bold mb-1">Box</label>
+                    <input id="Box_4" type="text" value={ fmt.Sprintf("%v", productMap["Box_4"]) } class="border-input-field" style="width: 10ch;" />
+
+                    <label class="font-bold mb-1">Piece</label>
+                        <input id="Piece_4" type="text" value={ fmt.Sprintf("%v", productMap["Piece_4"]) }  class="border-input-field" style="width: 10ch;" />
+                    </div>
+                }
+
+                if fmt.Sprintf("%v", productMap["SKU_5"]) != "" && fmt.Sprintf("%v", productMap["SKU_5"]) != "0" && fmt.Sprintf("%v", productMap["SKU_5"]) != " " {
+                    <div class="field-group flex flex-row items-center gap-2">
+                    <label class="font-bold mb-1">SKU</label>
+                    <input id="SKU_5" type="text" value={ fmt.Sprintf("%v", productMap["SKU_5"]) }  class="border-input-field" style="width: 20ch;" readonly />
+
+                    <label class="font-bold mb-1">Box</label>
+                    <input id="Box_5" type="text" value={ fmt.Sprintf("%v", productMap["Box_5"]) }  class="border-input-field" style="width: 10ch;" />
+
+                    <label class="font-bold mb-1">Piece</label>
+                        <input id="Piece_5" type="text" value={ fmt.Sprintf("%v", productMap["Piece_5"]) }  class="border-input-field" style="width: 10ch;" />
+                    </div>
+                }
+
+                if fmt.Sprintf("%v", productMap["SKU_6"]) != "" && fmt.Sprintf("%v", productMap["SKU_6"]) != "0" && fmt.Sprintf("%v", productMap["SKU_6"]) != " " {
+                    <div class="field-group flex flex-row items-center gap-2">
+                    <label class="font-bold mb-1">SKU</label>
+                    <input id="SKU_6" type="text" value={ fmt.Sprintf("%v", productMap["SKU_6"]) }  class="border-input-field" style="width: 20ch;" readonly />
+
+                    <label class="font-bold mb-1">Box</label>
+                    <input id="Box_6" type="text" value={ fmt.Sprintf("%v", productMap["Box_6"]) }  class="border-input-field" style="width: 10ch;" />
+
+                    <label class="font-bold mb-1">Piece</label>
+                    <input id="Piece_6" type="text" value={ fmt.Sprintf("%v", productMap["Piece_6"]) }  class="border-input-field" style="width: 10ch;" />
+                    </div>
+                }
+
+                if fmt.Sprintf("%v", productMap["SKU_7"]) != "" && fmt.Sprintf("%v", productMap["SKU_7"]) != "0" && fmt.Sprintf("%v", productMap["SKU_7"]) != " " {
+                    <div class="field-group flex flex-row items-center gap-2">
+                        <label class="font-bold mb-1">SKU</label>
+                    <input id="SKU_7" type="text" value={ fmt.Sprintf("%v", productMap["SKU_7"]) }  class="border-input-field" style="width: 20ch;" readonly />
+
+                    <label class="font-bold mb-1">Box</label>
+                    <input id="Box_7" type="text" value={ fmt.Sprintf("%v", productMap["Box_7"]) }  class="border-input-field" style="width: 10ch;" />
+
+                    <label class="font-bold mb-1">Piece</label>
+                    <input id="Piece_7" type="text" value={ fmt.Sprintf("%v", productMap["Piece_7"]) }  class="border-input-field" style="width: 10ch;" />
+                    </div>
+                }
             </div>
         </form>
     </section>
