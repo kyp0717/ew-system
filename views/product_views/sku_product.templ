@@ -1,0 +1,108 @@
+package product_views
+
+import (
+	"fmt"
+	"github.com/gofiber/fiber/v2"
+	"github.com/kyp0717/ew-system/views"
+	"time"
+)
+
+templ ProductDetails(productMap map[string]interface{}) {
+    <section class="product-details mx-auto w-4/5 p-6 shadow-lg rounded-lg bg-white">
+
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <h1 class="text-2xl font-bold">Product Details:</h1>
+                <p class={
+                    func() string {
+                        if fmt.Sprintf("%v", productMap["Active"]) == "Y" {
+                            return "font-bold text-green-500"
+                        }
+                        return "font-bold text-red-500"
+                    }()
+                }>
+                    {
+                        func() string {
+                            if fmt.Sprintf("%v", productMap["Active"]) == "Y" {
+                                return "Active"
+                            }
+                            return "Inactive"
+                        }()
+                    }
+                </p>
+            </div>
+
+            <div class="navbar-end gap-4 justify-end">
+                <button type="button" class="px-4 py-2 text-white rounded bg-green-600 hover:bg-green-500">
+                    Update
+                </button>
+                <button type="button" class="px-4 py-2 text-white rounded bg-red-600 hover:bg-red-500">
+                    Cancel
+                </button>
+            </div>
+        </div>
+
+        <form id="product-details-form" class="flex flex-wrap gap-6">
+            <div class="field-group flex flex-row items-center gap-2">
+                <label class="font-bold mb-1">SKU</label>
+                <input id="SKU" type="text" value={ fmt.Sprintf("%v", productMap["SKU"]) } 
+                class="border-input-field" style="width: 20ch;" readonly />
+
+                <label class="font-bold mb-1">Product Name</label>
+                <input id="ProductName" type="text" value={ fmt.Sprintf("%v", productMap["ProductName"]) } 
+                class="border-input-field" style="width: 50ch;" />
+            </div>
+
+            <div class="field-group flex flex-row items-center gap-2">
+                <label class="font-bold mb-1">Category</label>
+                <input id="Category" type="text" value={ fmt.Sprintf("%v", productMap["Category"]) } 
+                class="border-input-field" style="width: 20ch;" />
+
+                <label class="font-bold mb-1">Group</label>
+                <input id="Group" type="text" value={ fmt.Sprintf("%v", productMap["Group"]) } 
+                class="border-input-field" style="width: 20ch;" />
+            </div>
+
+            <div class="field-group flex flex-row items-center gap-2">
+                <label class="font-bold mb-1">Total Boxes</label>
+                <input id="TotalBoxes" type="number" value={ fmt.Sprintf("%v", productMap["TotalBoxes"]) } 
+                class="border-input-field" style="width: 10ch;" />
+            </div>
+
+
+            <div class="field-group flex flex-row items-center gap-2">
+                <label class="font-bold mb-1">Created By</label>
+                <input id="CreatedBy" type="text" value={ fmt.Sprintf("%v", productMap["CreatedBy"]) } 
+                class="border-input-field" style="width: 20ch;" readonly />
+
+                <label class="font-bold mb-1">Created At</label>
+                <input id="CreatedAt" type="datetime-local" 
+                    value={
+                        func() string {
+                            if createdAt, ok := productMap["CreatedAt"].(time.Time); ok {
+                                return createdAt.Format("2006-01-02T15:04:05")
+                            }
+                            if createdAtStr, ok := productMap["CreatedAt"].(string); ok {
+                                return createdAtStr
+                            }
+                            return ""
+                        }()
+                    } 
+                    class="border-input-field" readonly 
+                />
+            </div>
+        </form>
+    </section>
+}
+
+templ ListProductBySKU(
+	page string,
+	fromProtected, isError bool,
+	msg fiber.Map,
+	username string,
+	cmp templ.Component,
+) {
+	@views.Layout(page, fromProtected, isError, msg, username) {
+		@cmp
+	}
+}

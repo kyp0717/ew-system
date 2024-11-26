@@ -77,6 +77,13 @@ func Setup(app *fiber.App) {
 	productsApp.Get("/productlist", HandleProductList)
 	productsApp.Post("/logout", HandleLogout)
 
+	/* SKU Product Details Group */
+	productGroupApp := app.Group("/product_group")
+	productGroupApp.Get("/:sku", HandleProductDetails)
+	productGroupApp.Post("/save-products", HandleSaveProducts)
+	productGroupApp.Post("/update-product", HandleUpdateProduct)
+	productGroupApp.Post("/logout", HandleLogout)
+
 	/* ↓ Not Found Management - Fallback Page ↓ */
 	app.Get("/*", flagsMiddleware, func(c *fiber.Ctx) error {
 		return fiber.NewError(

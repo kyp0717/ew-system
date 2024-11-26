@@ -150,6 +150,77 @@ func MapToProcessProducts(products []controllers.Product) []controllers.Processe
 	return processed
 }
 
+func ConvertProductGroupToMap(product *controllers.Product) map[string]interface{} {
+	productMap := map[string]interface{}{
+		"SKU":         product.SKU,
+		"ProductName": product.ProductName,
+		"Category":    product.Category,
+		"Group":       product.Group,
+		"TotalBoxes":  product.TotalBoxes,
+		"Active":      product.Active,
+		"CreatedBy":   product.CreatedBy,
+		"CreatedAt":   product.CreatedAt.Format("2006-01-02 15:04:05"),
+	}
+
+	// Include SKU, Box, and Piece fields for up to 7 sets
+	for i := 1; i <= 7; i++ {
+		productMap[fmt.Sprintf("SKU_%d", i)] = getFieldValue(product, fmt.Sprintf("SKU_%d", i))
+		productMap[fmt.Sprintf("Box_%d", i)] = getFieldValue(product, fmt.Sprintf("Box_%d", i))
+		productMap[fmt.Sprintf("Piece_%d", i)] = getFieldValue(product, fmt.Sprintf("Piece_%d", i))
+	}
+
+	return productMap
+}
+
+// Helper function to retrieve the appropriate value by field name
+func getFieldValue(product *controllers.Product, field string) interface{} {
+	switch field {
+	case "SKU_1":
+		return product.SKU1
+	case "SKU_2":
+		return product.SKU2
+	case "SKU_3":
+		return product.SKU3
+	case "SKU_4":
+		return product.SKU4
+	case "SKU_5":
+		return product.SKU5
+	case "SKU_6":
+		return product.SKU6
+	case "SKU_7":
+		return product.SKU7
+	case "Box_1":
+		return product.Box1
+	case "Box_2":
+		return product.Box2
+	case "Box_3":
+		return product.Box3
+	case "Box_4":
+		return product.Box4
+	case "Box_5":
+		return product.Box5
+	case "Box_6":
+		return product.Box6
+	case "Box_7":
+		return product.Box7
+	case "Piece_1":
+		return product.Piece1
+	case "Piece_2":
+		return product.Piece2
+	case "Piece_3":
+		return product.Piece3
+	case "Piece_4":
+		return product.Piece4
+	case "Piece_5":
+		return product.Piece5
+	case "Piece_6":
+		return product.Piece6
+	case "Piece_7":
+		return product.Piece7
+	}
+	return nil
+}
+
 // ConvertStructToMap converts a struct to a map of field names and values
 func ConvertStructToMap(item interface{}) map[string]interface{} {
 	result := make(map[string]interface{})

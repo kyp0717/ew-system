@@ -148,3 +148,71 @@ func LoadProductTable() error {
 
 	return nil
 }
+
+// GetProductBySKU fetches a Product from the database using its SKU.
+func GetProductBySKU(sku string) (*Product, error) {
+	var product Product
+	result := PgDBConn.Where("SKU = ?", sku).First(&product)
+	if result.Error != nil {
+		return nil, result.Error
+	}
+	return &product, nil
+}
+
+// Helper function to retrieve SKU, Box, and Piece fields from a product by field number.
+func (p *Product) GetFieldValue(field string, index int) interface{} {
+	switch field {
+	case "SKU":
+		switch index {
+		case 1:
+			return p.SKU1
+		case 2:
+			return p.SKU2
+		case 3:
+			return p.SKU3
+		case 4:
+			return p.SKU4
+		case 5:
+			return p.SKU5
+		case 6:
+			return p.SKU6
+		case 7:
+			return p.SKU7
+		}
+	case "Box":
+		switch index {
+		case 1:
+			return p.Box1
+		case 2:
+			return p.Box2
+		case 3:
+			return p.Box3
+		case 4:
+			return p.Box4
+		case 5:
+			return p.Box5
+		case 6:
+			return p.Box6
+		case 7:
+			return p.Box7
+		}
+	case "Piece":
+		switch index {
+		case 1:
+			return p.Piece1
+		case 2:
+			return p.Piece2
+		case 3:
+			return p.Piece3
+		case 4:
+			return p.Piece4
+		case 5:
+			return p.Piece5
+		case 6:
+			return p.Piece6
+		case 7:
+			return p.Piece7
+		}
+	}
+	return nil
+}

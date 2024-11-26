@@ -46,7 +46,7 @@ templ ListProductIndex(products []controllers.ProcessedProduct, fieldNames []str
                         <!-- SKU Column -->
                         <td>
                             if fieldNames[0] == "SKU" {
-                                <a href="/products/{ product.Values[0] }" 
+                                <a href={ templ.SafeURL("/product_group/" + product.Values[0]) } 
                                     class="sku-link" style="width: 20ch;"
                                     target="_blank" 
                                     rel="noopener noreferrer">
