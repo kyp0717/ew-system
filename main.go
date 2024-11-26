@@ -24,11 +24,15 @@ func main() {
 		ErrorHandler: handlers.CustomErrorHandler,
 	})
 
+	// Serve files from the "./assets" directory at the root URL "/"
 	app.Static("/", "./assets")
+
+	// Serve files from the "./static" directory at the "/static" URL path
+	app.Static("/static", "./static")
 
 	app.Use(logger.New())
 
 	handlers.Setup(app)
 
-	log.Fatal(app.Listen(":3003"))
+	log.Fatal(app.Listen(":3004"))
 }

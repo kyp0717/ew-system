@@ -438,4 +438,41 @@ pointer-events: none;
     margin-right: 80px; /* Adjust this value to control the amount of space */
 }
 
-
+.tabs {
+    display: flex;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+.tab {
+    background-color: #f1f1f1;
+    border-radius: 5px 5px 0 0;
+    width: 100%; /* Ensure tabs span the width of their container */
+    font-size: 10px;
+    cursor: pointer;
+    min-width: 200px; /* Ensures each tab has enough space for content */
+    white-space: nowrap; /* Prevents wrapping of long words */
+    padding: 12px 16px; /* Increase padding for better spacing */
+    text-align: top; /* Centers the text within the tab */
+    flex-grow: 1; /* Allows tabs to grow and take available space equally */
+}
+.tab.active {
+    background-color: #C2B280;
+    border-bottom: 1px solid #2F4F4F;
+    font-size: 12px;
+    font-weight: bold;
+    color: #000000;
+    text-align: top;
+}
+.tab-content {
+    display: none;
+    border: 1px solid #f1f1f1;
+    padding: 20px;
+    border-radius: 0 5px 5px 5px;
+    background-color: #ffffff;
+}
+.tab-content.active {
+    display: block;
+}
+.tab-content-container {
+    width: 100%; /* Ensure tab content spans the full width */
+}
