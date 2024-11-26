@@ -13,11 +13,12 @@ templ ListProductIndex(products []controllers.ProcessedProduct, fieldNames []str
                 <tr>
                     <th style="width: 5ch;"> </th> <!-- Empty column for the Eye Icon -->
                     <th style="width: 20ch;">{ fieldNames[0] }</th>
+                    <th style="width: 5ch;">{ "Total Box" }</th>
                     <th style="width: 10ch;">{ fieldNames[1] }</th>
                     <th style="width: 10ch;">{ fieldNames[2] }</th>
                     <th style="width: 50ch;">{ fieldNames[3] }</th>
                     <th style="width: 12ch;">{ fieldNames[4] }</th>
-                    <th style="width: 5ch;">{ fieldNames[5] }</th>
+
 
                     <th style="width: 10ch;">{ fieldNames[28] }</th>
                     <th style="width: 12ch;">{ fieldNames[29] }</th>
@@ -32,7 +33,7 @@ templ ListProductIndex(products []controllers.ProcessedProduct, fieldNames []str
                             <button 
                                 class="icon-link" style="width: 5ch;"
                                 data-product-id={ product.Values[0] }
-            onclick="toggleDetails(this.getAttribute('data-product-id'))">
+                                onclick="toggleDetails(this.getAttribute('data-product-id'))">
                                 <i class="fas fa-eye"></i>
                             </button>
                         </td>
@@ -48,11 +49,12 @@ templ ListProductIndex(products []controllers.ProcessedProduct, fieldNames []str
                             } 
                         </td>
                         <!-- Remaining Columns -->
+                        <td style="width: 5ch;">{ product.Values[5] }</td>
                         <td style="text-align: left; width: 10ch;">{ product.Values[1] }</td>
                         <td style="width: 10ch;">{ product.Values[2] }</td>
                         <td style="width: 50ch;">{ product.Values[3] }</td>
                         <td style="width: 10ch;">{ product.Values[4] }</td>
-                        <td style="width: 5ch;">{ product.Values[5] }</td>
+
                         <td style="width: 10ch;">{ product.Values[28] }</td>
                         <td style="width: 10ch;">{ product.Values[29] }</td>
                         <td>
@@ -67,25 +69,74 @@ templ ListProductIndex(products []controllers.ProcessedProduct, fieldNames []str
                     </tr>
                     <!-- Collapsible Row -->
                     <tr id={ product.Values[0] } class="hidden-row">
-                        <td colspan="7">
-                            <table class="table w-full">
+                        <td colspan="4">
+                            <table class="table w-auto mx-auto table-auto">
                                 <thead>
                                     <tr>
-                                        for j, field := range fieldNames {
-                                            if j >= 6 {
-                                                <th>{ field }</th>
-                                            }
-                                        }
+                                        <th style="width: 5ch;"> </th> <!-- Empty column for the Eye Icon -->
+                                        <th style="width: 20ch;">SKU</th>
+                                        <th style="width: 5ch;">Box</th>
+                                        <th style="width: 5ch;">Piece</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        for j, value := range product.Values {
-                                            if j >= 6 {
-                                                <td>{ value }</td>
-                                            }
-                                        }
-                                    </tr>
+                                    <!-- Manually iterate through the 7 sets of SKU, Box, and Piece -->
+                                    if len(product.Values) > 6 && product.Values[6] != "" && product.Values[6] != "0" && product.Values[6] != " " {
+                                        <tr>
+                                            <td style="width: 5ch;"> </td>
+                                            <td style="width: 20ch;">{ product.Values[6] }</td>
+                                            <td style="width: 5ch;">{ product.Values[7] }</td>
+                                            <td style="width: 5ch;">{ product.Values[8] }</td>
+                                        </tr>
+                                    }
+                                    if len(product.Values) > 9 && product.Values[9] != "" && product.Values[9] != "0" && product.Values[9] != " " {
+                                        <tr>
+                                            <td style="width: 5ch;"> </td>
+                                            <td style="width: 20ch;">{ product.Values[9] }</td>
+                                            <td style="width: 5ch;">{ product.Values[10] }</td>
+                                            <td style="width: 5ch;">{ product.Values[11] }</td>
+                                        </tr>
+                                    }
+                                    if len(product.Values) > 12 && product.Values[12] != "" && product.Values[12] != "0" && product.Values[12] != " " {
+                                        <tr>
+                                            <td style="width: 5ch;"> </td>
+                                            <td style="width: 20ch;">{ product.Values[12] }</td>
+                                            <td style="width: 5ch;">{ product.Values[13] }</td>
+                                            <td style="width: 5ch;">{ product.Values[14] }</td>
+                                        </tr>
+                                    }
+                                    if len(product.Values) > 15 && product.Values[15] != "" && product.Values[15] != "0" && product.Values[15] != " " {
+                                        <tr>
+                                            <td style="width: 5ch;"> </td>
+                                            <td style="width: 20ch;">{ product.Values[15] }</td>
+                                            <td style="width: 5ch;">{ product.Values[16] }</td>
+                                            <td style="width: 5ch;">{ product.Values[17] }</td>
+                                        </tr>
+                                    }
+                                    if len(product.Values) > 18 && product.Values[18] != "" && product.Values[18] != "0" && product.Values[18] != " " {
+                                        <tr>
+                                            <td style="width: 5ch;"> </td>
+                                            <td style="width: 20ch;">{ product.Values[18] }</td>
+                                            <td style="width: 5ch;">{ product.Values[19] }</td>
+                                            <td style="width: 5ch;">{ product.Values[20] }</td>
+                                        </tr>
+                                    }
+                                    if len(product.Values) > 21 && product.Values[21] != "" && product.Values[21] != "0" && product.Values[21] != " "   {
+                                        <tr>
+                                            <td style="width: 5ch;"> </td>
+                                            <td style="width: 20ch;">{ product.Values[21] }</td>
+                                            <td style="width: 5ch;">{ product.Values[22] }</td>
+                                            <td style="width: 5ch;">{ product.Values[23] }</td>
+                                        </tr>
+                                    }
+                                    if len(product.Values) > 24 && product.Values[24] != "" && product.Values[24] != "0" && product.Values[24] != " " {
+                                        <tr>
+                                            <td style="width: 5ch;"> </td>
+                                            <td style="width: 20ch;">{ product.Values[24] }</td>
+                                            <td style="width: 5ch;">{ product.Values[25] }</td>
+                                            <td style="width: 5ch;">{ product.Values[26] }</td>
+                                        </tr>
+                                    }
                                 </tbody>
                             </table>
                         </td>
