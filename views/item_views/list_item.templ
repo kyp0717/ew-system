@@ -6,7 +6,7 @@ import (
 	"github.com/kyp0717/ew-system/views"
 )
 
-templ ListItemIndex(items []controllers.ProcessedItem, fieldNames []string) {
+templ ListItemIndex(items []controllers.ProcessedItem, fieldNames []string, pageNumber int, pageSize int, totalItems int) {
     <div>
         <table class="table w-full">
             <thead class="field-names">
@@ -17,6 +17,7 @@ templ ListItemIndex(items []controllers.ProcessedItem, fieldNames []string) {
                 </tr>
             </thead>
             <tbody>
+                // Iterate over the provided items
                 for _, item := range items {
                     <tr>
                         for index, value := range item.Values {
@@ -24,7 +25,7 @@ templ ListItemIndex(items []controllers.ProcessedItem, fieldNames []string) {
                                 if fieldNames[index] == "SKU" {
                                     <a 
                                         href={ templ.SafeURL("/items/" + value) } 
-                                        class="sku-link" 
+                                        class="sku-link" style="width: 20ch;"
                                         target="_blank" 
                                         rel="noopener noreferrer">
                                         { value }
@@ -38,18 +39,40 @@ templ ListItemIndex(items []controllers.ProcessedItem, fieldNames []string) {
                 }
             </tbody>
         </table>
+
+        // Pagination controls
+        <div class="pagination-controls flex justify-center mt-4 gap-4">
+            if pageNumber > 1 {
+                <button
+                    hx-get="/inventory?page={ pageNumber - 1 }&pageSize={ pageSize }"
+                    class="btn btn-primary"
+                >
+                    Previous
+                </button>
+            }
+            if pageNumber*pageSize < totalItems {
+                <button
+                    hx-get="/inventory?page={ pageNumber + 1 }&pageSize={ pageSize }"
+                    class="btn btn-primary"
+                >
+                    Next
+                </button>
+            }
+        </div>
     </div>
 }
 
 
 templ ListItem(
-	page string,
-	fromProtected, isError bool,
-	msg fiber.Map,
-	username string,
-	cmp templ.Component,
+    page string,
+    fromProtected bool,
+    isError bool,
+    msg fiber.Map,
+    username string,
+    cmp templ.Component,
+    searchBarArgs controllers.SearchBarArgs,
 ) {
-	@views.Layout(page, fromProtected, isError, msg, username) {
-		@cmp
-	}
+    @views.Layout(page, fromProtected, isError, msg, username, searchBarArgs) {
+        @cmp
+    }
 }

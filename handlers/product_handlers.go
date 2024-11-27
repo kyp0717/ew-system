@@ -75,6 +75,7 @@ func HandleProductList(c *fiber.Ctx) error {
 		msg,
 		username, // Pass the username retrieved from the session
 		pindex,
+		controllers.SearchBarArgs{},
 	)
 
 	// Step 10: Adapt and send the rendered template as the response

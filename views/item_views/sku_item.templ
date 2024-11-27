@@ -4,6 +4,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/kyp0717/ew-system/views"
 	"time"
+	"github.com/kyp0717/ew-system/controllers"
 )
 
 templ ItemDetails(itemMap map[string]interface{}) {
@@ -217,8 +218,9 @@ templ ListItemBySKU(
 	msg fiber.Map,
 	username string,
 	cmp templ.Component,
+	searchBarArgs controllers.SearchBarArgs,
 ) {
-	@views.Layout(page, fromProtected, isError, msg, username) {
+	@views.Layout(page, fromProtected, isError, msg, username, searchBarArgs) {
 		@cmp
 	}
 }

@@ -1,6 +1,9 @@
 package views
 
-import "github.com/gofiber/fiber/v2"
+import (
+	"github.com/gofiber/fiber/v2"
+	"github.com/kyp0717/ew-system/controllers"
+)
 
 templ HomeIndex(fromProtected bool) {
 	<section class="mx-auto max-w-screen-lg max-h-screen flex flex-col gap-8 text-center bg-white py-8">
@@ -35,11 +38,15 @@ templ HomeIndex(fromProtected bool) {
 
 templ Home(
 	page string,
-	fromProtected, 
+	fromProtected bool,
 	isError bool,
 	msg fiber.Map,
-	cmp templ.Component,) {
-	@Layout(page, fromProtected, isError, msg, "") {
+	cmp templ.Component,
+	searchBarArgs controllers.SearchBarArgs,
+) {
+	// Ensure the `Layout` template is called correctly. Since this is in the `views` package,
+	// you should be able to call it as `Layout(...)` directly.
+	@Layout(page, fromProtected, isError, msg, "", searchBarArgs) {
 		@cmp
 	}
 }

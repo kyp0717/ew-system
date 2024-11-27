@@ -26,18 +26,45 @@ func HandleInventoryList(c *fiber.Ctx) error {
 		log.Printf("Database error: %v", err)
 		return fiber.NewError(fiber.StatusInternalServerError, fmt.Sprintf("something went wrong: %s", err))
 	}
-	//log.Printf("Fetched items: %+v", items)
 
 	// Step 2: Extract field names dynamically
 	fieldNames := utility.GetFieldNames(controllers.Item{})
-	//log.Printf("Field names: %+v", fieldNames)
 
 	// Step 3: Convert items to ProcessedItem for rendering
 	processedItems := utility.MapToProcessedItems(items)
-	//log.Printf("Processed items: %+v", processedItems)
 
-	// Step 4: Render the inventory list template
-	iindex := item_views.ListItemIndex(processedItems, fieldNames)
+	// Step 4: Pagination parameters
+	pageNumber, err := strconv.Atoi(c.Query("page", "1")) // Default to page 1
+	if err != nil || pageNumber < 1 {
+		pageNumber = 1
+	}
+	pageSize, err := strconv.Atoi(c.Query("pageSize", "10")) // Default page size is 10
+	if err != nil || pageSize < 1 {
+		pageSize = 10
+	}
+
+	// Calculate the start and end indices for pagination
+	start := (pageNumber - 1) * pageSize
+	if start >= len(processedItems) {
+		start = len(processedItems)
+	}
+	end := start + pageSize
+	if end > len(processedItems) {
+		end = len(processedItems)
+	}
+
+	// Slice the processedItems to only include the items for the current page
+	paginatedItems := processedItems[start:end]
+
+	// Step 5: Populate the SearchBarArgs with inventory-specific data
+	fromMenu := "inventory"
+	searchBarArgs := utility.ProcessedSearchBarArgs(fromMenu, items)
+
+	// Debugging: Log the search bar arguments to confirm FromMenu is set
+	log.Printf("SearchBarArgs after ProcessedSearchBarArgs: %+v", searchBarArgs)
+
+	// Step 6: Render the inventory list template with paginated items
+	iindex := item_views.ListItemIndex(paginatedItems, fieldNames, pageNumber, pageSize, len(processedItems))
 	ilist := item_views.ListItem(
 		" | Inventory List",
 		fromProtected,
@@ -45,9 +72,10 @@ func HandleInventoryList(c *fiber.Ctx) error {
 		flash.Get(c),
 		c.Locals("username").(string),
 		iindex,
+		searchBarArgs,
 	)
 
-	// Step 5: Send the rendered template as the response
+	// Step 7: Send the rendered template as the response
 	handler := adaptor.HTTPHandler(templ.Handler(ilist))
 	return handler(c)
 }
@@ -96,6 +124,7 @@ func HandleInventoryCreate(c *fiber.Ctx) error {
 		flash.Get(c),
 		c.Locals("username").(string),
 		cindex,
+		controllers.SearchBarArgs{},
 	)
 
 	handler := adaptor.HTTPHandler(templ.Handler(create))
@@ -177,6 +206,7 @@ func HandleInventoryEdit(c *fiber.Ctx) error {
 		flash.Get(c),
 		c.Locals("username").(string),
 		uindex,
+		controllers.SearchBarArgs{},
 	)
 
 	handler := adaptor.HTTPHandler(templ.Handler(update))

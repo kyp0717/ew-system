@@ -2,7 +2,7 @@ package item_views
 
 import (
 	"github.com/gofiber/fiber/v2"
-
+	"github.com/kyp0717/ew-system/controllers"
 	"github.com/kyp0717/ew-system/views"
 )
 
@@ -50,8 +50,9 @@ templ CreateItem(
 	msg fiber.Map,
 	username string,
 	cmp templ.Component,
+	searchBarArgs controllers.SearchBarArgs,
 ) {
-	@views.Layout(page, fromProtected, isError, msg, username) {
+	@views.Layout(page, fromProtected, isError, msg, username, searchBarArgs) {
 		@cmp
 	}
 }

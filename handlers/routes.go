@@ -10,6 +10,7 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/adaptor"
 	"github.com/gofiber/fiber/v2/middleware/session"
 	"github.com/gofiber/storage/memory"
+	"github.com/kyp0717/ew-system/controllers"
 	"github.com/kyp0717/ew-system/views"
 	"github.com/sujit-baniya/flash"
 )
@@ -127,7 +128,7 @@ func CustomErrorHandler(c *fiber.Ctx, err error) error {
 	pageTitle := fmt.Sprintf(" | Error %d", code)
 
 	errorPage := views.Home(
-		pageTitle, fromProtected, true, flash.Get(c), errorIndex,
+		pageTitle, fromProtected, true, flash.Get(c), errorIndex, controllers.SearchBarArgs{},
 	)
 
 	handler := adaptor.HTTPHandler(templ.Handler(errorPage))

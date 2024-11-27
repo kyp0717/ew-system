@@ -234,3 +234,74 @@ func ConvertStructToMap(item interface{}) map[string]interface{} {
 	}
 	return result
 }
+
+// MapToProcessedItems converts items to ProcessedItem for templ rendering
+func ProcessedSearchBarArgs(fromMenu string, items interface{}) controllers.SearchBarArgs {
+	var searchBarArgs controllers.SearchBarArgs
+
+	// Debugging: Log the search bar arguments
+	log.Printf("func ProcessedSearchBarArgs ... SearchBarArgs: %+v", searchBarArgs)
+
+	// Set FromMenu directly to avoid any missing value issues
+	searchBarArgs.FromMenu = fromMenu
+
+	// Create a map to track unique names
+	uniqueNames := make(map[string]bool)      // Initialize uniqueNames map
+	uniqueCategories := make(map[string]bool) // Initialize uniqueCategories map
+
+	switch fromMenu {
+	case "inventory":
+		itemList, ok := items.([]controllers.Item)
+		if !ok {
+			// Log a message and return empty SearchBarArgs if type assertion fails
+			log.Println("Failed type assertion for items as []Item for inventory")
+			return controllers.SearchBarArgs{}
+		}
+
+		// Extract SKUs, Names, and Categories from items
+		for _, item := range itemList {
+			searchBarArgs.SKUs = append(searchBarArgs.SKUs, item.SKU)
+			// Add only unique names to the list
+			if _, exists := uniqueNames[item.ItemName]; !exists {
+				uniqueNames[item.ItemName] = true
+				searchBarArgs.Names = append(searchBarArgs.Names, item.ItemName)
+			}
+
+			// Add only unique categories to the Category slice
+			if _, exists := uniqueCategories[item.Category]; !exists {
+				uniqueCategories[item.Category] = true
+				searchBarArgs.Category = append(searchBarArgs.Category, item.Category)
+			}
+		}
+
+		// Add additional static values
+		searchBarArgs.KeyValue = []float64{0.0, 0.0}
+		searchBarArgs.KeyString = []string{"SI", "CO"}
+
+	case "product":
+		productList, ok := items.([]controllers.Product)
+		if !ok {
+			// Log a message and return empty SearchBarArgs if type assertion fails
+			log.Println("Failed type assertion for items as []Product for product")
+			return controllers.SearchBarArgs{}
+		}
+
+		// Extract SKUs, Names, and Categories from products
+		for _, product := range productList {
+			searchBarArgs.SKUs = append(searchBarArgs.SKUs, product.SKU)
+			searchBarArgs.Names = append(searchBarArgs.Names, product.ProductName)
+			searchBarArgs.Category = append(searchBarArgs.Category, product.Category)
+		}
+
+		// Add additional static values
+		searchBarArgs.KeyValue = []float64{1.0, 0.0}
+		searchBarArgs.KeyString = []string{"S", "O"}
+
+	default:
+		// Log a message for unhandled `fromMenu` values
+		log.Println("Unhandled fromMenu value:", fromMenu)
+		return controllers.SearchBarArgs{}
+	}
+
+	return searchBarArgs
+}

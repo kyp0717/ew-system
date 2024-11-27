@@ -24,7 +24,7 @@ func HandleViewHome(c *fiber.Ctx) error {
 	fromProtected := c.Locals(FROM_PROTECTED).(bool)
 
 	hindex := views.HomeIndex(fromProtected)
-	home := views.Home("", fromProtected, false, flash.Get(c), hindex)
+	home := views.Home("", fromProtected, false, flash.Get(c), hindex, controllers.SearchBarArgs{})
 
 	handler := adaptor.HTTPHandler(templ.Handler(home))
 
@@ -37,7 +37,7 @@ func HandleViewLogin(c *fiber.Ctx) error {
 
 	lindex := auth_views.LoginIndex(fromProtected)
 	login := auth_views.Login(
-		" | Login", fromProtected, false, flash.Get(c), lindex,
+		" | Login", fromProtected, false, flash.Get(c), lindex, controllers.SearchBarArgs{},
 	)
 
 	handler := adaptor.HTTPHandler(templ.Handler(login))
@@ -119,7 +119,7 @@ func HandleViewRegister(c *fiber.Ctx) error {
 
 	rindex := auth_views.RegisterIndex(fromProtected)
 	register := auth_views.Register(
-		" | Register", fromProtected, false, flash.Get(c), rindex,
+		" | Register", fromProtected, false, flash.Get(c), rindex, controllers.SearchBarArgs{},
 	)
 
 	handler := adaptor.HTTPHandler(templ.Handler(register))
@@ -172,27 +172,27 @@ func AuthMiddleware(c *fiber.Ctx) error {
 	fmt.Printf("Session: %+v\n", session)
 	fmt.Printf("Error: %v\n", err)
 	if err != nil {
-		fm["message"] = "You are not authorized"
+		fm["message"] = "Your session is expired"
 
 		return flash.WithError(c, fm).Redirect("/login")
 	}
 
 	if session.Get(AUTH_KEY) == nil {
-		fm["message"] = "You are not authorized"
+		fm["message"] = "Your session is expired"
 
 		return flash.WithError(c, fm).Redirect("/login")
 	}
 
 	userId := session.Get(USER_ID)
 	if userId == nil {
-		fm["message"] = "You are not authorized"
+		fm["message"] = "Your session is expired"
 
 		return flash.WithError(c, fm).Redirect("/login")
 	}
 
 	user, err := controllers.GetUserById(fmt.Sprint(userId.(uint64)))
 	if err != nil {
-		fm["message"] = "You are not authorized"
+		fm["message"] = "Your session is expired"
 
 		return flash.WithError(c, fm).Redirect("/login")
 	}

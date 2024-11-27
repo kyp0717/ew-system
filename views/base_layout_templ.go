@@ -9,13 +9,18 @@ import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
 import (
-	//"github.com/emarifer/gofiber-templ-htmx/views/partials"
 	"github.com/gofiber/fiber/v2"
+	"github.com/kyp0717/ew-system/controllers"
 	"github.com/kyp0717/ew-system/views/partials"
 )
 
 func Layout(
-	page string, fromProtected, isError bool, msg fiber.Map, username string,
+	page string,
+	fromProtected bool,
+	isError bool,
+	msg fiber.Map,
+	username string,
+	searchBarArgs controllers.SearchBarArgs,
 ) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
@@ -37,14 +42,14 @@ func Layout(
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<!doctype html><html lang=\"en\" data-theme=\"dark\"><head><meta charset=\"UTF-8\"><meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><meta name=\"description\" content=\"Full stack application using Golang&#39;s Fiber framework &amp; Templ templating language with user session management + CRUD to a SQLite database (To Do List) and HTMX in the frontend\"><meta name=\"google\" content=\"notranslate\"><link rel=\"shortcut icon\" href=\"/img/gopher-svgrepo-com.svg\" type=\"image/svg+xml\"><link href=\"https://cdn.jsdelivr.net/npm/daisyui@4.4.10/dist/full.min.css\" rel=\"stylesheet\" type=\"text/css\"><link rel=\"stylesheet\" href=\"https://cdn.xeiaso.net/static/pkg/iosevka/family.css\"><script src=\"https://cdn.tailwindcss.com\"></script><link rel=\"stylesheet\" href=\"/css/styles.css\"><title>Todo List")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<!doctype html><html lang=\"en\" data-theme=\"dark\"><head><meta charset=\"UTF-8\"><meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><meta name=\"description\" content=\"Full stack application using Golang&#39;s Fiber framework &amp; Templ templating language with user session management + CRUD to a SQLite database (To Do List) and HTMX in the frontend\"><meta name=\"google\" content=\"notranslate\"><link rel=\"shortcut icon\" href=\"/img/gopher-svgrepo-com.svg\" type=\"image/svg+xml\"><link href=\"https://cdn.jsdelivr.net/npm/daisyui@4.4.10/dist/full.min.css\" rel=\"stylesheet\" type=\"text/css\"><link rel=\"stylesheet\" href=\"https://cdn.xeiaso.net/static/pkg/iosevka/family.css\"><script src=\"https://cdn.tailwindcss.com\"></script><link rel=\"stylesheet\" href=\"/css/styles.css\"><title>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(page)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/base_layout.templ`, Line: 28, Col: 25}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/base_layout.templ`, Line: 30, Col: 25}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
@@ -60,7 +65,17 @@ func Layout(
 				return templ_7745c5c3_Err
 			}
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</header>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</header><div class=\"search-bar-container\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		if !isError {
+			templ_7745c5c3_Err = partials.SearchBar(searchBarArgs).Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

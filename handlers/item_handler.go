@@ -49,12 +49,13 @@ func HandleItemDetails(c *fiber.Ctx) error {
 	itemDetailsComponent := item_views.ItemDetails(processedItem) // Create the component for the details view
 
 	itemPage := item_views.ListItem(
-		" | Item Details",    // Page title
-		fromProtected,        // Whether the user is authenticated
-		false,                // Not an error page
-		flash.Get(c),         // Optional flash messages
-		username,             // Username for personalization
-		itemDetailsComponent, // The main content (item details component)
+		" | Item Details",           // Page title
+		fromProtected,               // Whether the user is authenticated
+		false,                       // Not an error page
+		flash.Get(c),                // Optional flash messages
+		username,                    // Username for personalization
+		itemDetailsComponent,        // The main content (item details component)
+		controllers.SearchBarArgs{}, // Pass an empty SearchBarArgs
 	)
 
 	// Step 6: Adapt the handler to Fiber

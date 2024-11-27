@@ -56,6 +56,7 @@ func HandleProductDetails(c *fiber.Ctx) error {
 		flash.Get(c),            // Optional flash messages
 		username,                // Username for personalization
 		productDetailsComponent, // The main content (product details component)
+		controllers.SearchBarArgs{},
 	)
 
 	// Step 6: Adapt the handler to Fiber

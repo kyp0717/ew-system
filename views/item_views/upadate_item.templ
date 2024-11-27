@@ -63,8 +63,9 @@ templ UpdateItem(
 	msg fiber.Map,
 	username string,
 	cmp templ.Component,
+	searchBarArgs controllers.SearchBarArgs,
 ) {
-	@views.Layout(page, fromProtected, isError, msg, username) {
+	@views.Layout(page, fromProtected, isError, msg, username, searchBarArgs) {
 		@cmp
 	}
 }

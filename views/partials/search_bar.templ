@@ -1,0 +1,121 @@
+package partials
+
+import "github.com/kyp0717/ew-system/controllers"
+
+templ SearchBar(args controllers.SearchBarArgs) {
+    <nav class="search-container">
+        switch args.FromMenu {
+        case "inventory":
+            <!-- Inventory Search Bar -->
+            <div class="search-field">
+                <input type="text" placeholder="Search by SKU" list="sku-options" />
+                <datalist id="sku-options">
+                    for _, sku := range args.SKUs {
+                        <option value={ sku }></option> 
+                    }
+                </datalist>
+                <button type="button" class="search-button">Search</button>
+            </div>
+
+            <div class="search-field">
+                <input type="text" placeholder="Search by Item Name" list="itemname-options" />
+                <datalist id="itemname-options">
+                    for _, name := range args.Names {
+                        <option value={ name }></option> <!-- Compact option format -->
+                    }
+                </datalist>
+                <button type="button" class="search-button">Search</button>
+            </div>
+
+            <div class="search-field">
+                <input type="text" placeholder="Search by Types" list="type-options" />
+                <datalist id="type-options">
+                    for _, t := range args.KeyString {
+                        if t == "SI" {
+                            <option value="Single">Single</option>
+                        } else if t == "CO" {
+                            <option value="Component">Component</option>
+                        }
+                    }
+                </datalist>
+                <button type="button" class="search-button">Search</button>
+            </div>
+
+            <div class="search-field">
+                <input type="text" placeholder="Search by Category" list="category-options" />
+                <datalist id="category-options">
+                    for _, category := range args.Category {
+                        <option value={ category }></option> <!-- Compact option format -->
+                    }
+                </datalist>
+                <button type="button" class="search-button">Search</button>
+            </div>
+
+        case "products":
+            <!-- Products Search Bar -->
+            <div class="search-field">
+                <input type="text" placeholder="Search by SKU" list="sku-options" />
+                <datalist id="sku-options">
+                    for _, sku := range args.SKUs {
+                        <option value="{ sku }">{ sku }</option> <!-- Compact option format -->
+                    }
+                </datalist>
+                <button type="button" class="search-button">Search</button>
+            </div>
+
+            <div class="search-field">
+                <input type="text" placeholder="Search by Product Name" list="productname-options" />
+                <datalist id="productname-options">
+                    for _, name := range args.Names {
+                        <option value="{ name }">{ name }</option> <!-- Compact option format -->
+                    }
+                </datalist>
+                <button type="button" class="search-button">Search</button>
+            </div>
+
+            <div class="search-field">
+                <select>
+                    <option value="">Select Group</option>
+                    for _, group := range args.Category {
+                        <option value="{ group }">{ group }</option> <!-- Compact option format -->
+                    }
+                </select>
+                <button type="button" class="search-button">Search</button>
+            </div>
+
+            <div class="search-field">
+                <select>
+                    <option value="">Select Category</option>
+                    for _, category := range args.Category {
+                        <option value="{ category }">{ category }</option> <!-- Compact option format -->
+                    }
+                </select>
+                <button type="button" class="search-button">Search</button>
+            </div>
+
+        case "invoices":
+            <!-- Invoices Search Bar -->
+            <div class="search-field">
+                <input type="text" placeholder="Search by Invoice Number" />
+                <button type="button" class="search-button">Search</button>
+            </div>
+
+        case "shipments":
+            <!-- Shipments Search Bar -->
+            <div class="search-field">
+                <input type="text" placeholder="Search by Shipment ID" />
+                <button type="button" class="search-button">Search</button>
+            </div>
+
+        case "customers":
+            <!-- Customers Search Bar -->
+            <div class="search-field">
+                <input type="text" placeholder="Search by Customer Name" />
+                <button type="button" class="search-button">Search</button>
+            </div>
+
+        default:
+            <!-- Default to empty search bar or no search bar -->
+        }
+    </nav>
+}

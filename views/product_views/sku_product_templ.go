@@ -11,6 +11,7 @@ import templruntime "github.com/a-h/templ/runtime"
 import (
 	"fmt"
 	"github.com/gofiber/fiber/v2"
+	"github.com/kyp0717/ew-system/controllers"
 	"github.com/kyp0717/ew-system/views"
 	"time"
 )
@@ -36,16 +37,16 @@ func ProductDetails(productMap map[string]interface{}) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<section class=\"product-details w-full h-screen p-6 shadow-lg rounded-lg bg-white\"><div class=\"flex items-center justify-between\"><div class=\"flex items-center gap-2\"><h1 class=\"text-2xl font-bold\">Product Group Details : </h1>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<section class=\"product-details w-full h-screen p-6 shadow-lg rounded-lg bg-white\"><div class=\"flex items-center justify-between\"><div class=\"flex items-center gap-2\"><h1 class=\"text-2xl \">Product Group Details : </h1>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var2 = []any{
 			func() string {
 				if fmt.Sprintf("%v", productMap["Active"]) == "Y" {
-					return "font-bold text-green-500"
+					return " text-green-500"
 				}
-				return "font-bold text-red-500"
+				return " text-red-500"
 			}()}
 		templ_7745c5c3_Err = templ.RenderCSSItems(ctx, templ_7745c5c3_Buffer, templ_7745c5c3_Var2...)
 		if templ_7745c5c3_Err != nil {
@@ -77,78 +78,78 @@ func ProductDetails(productMap map[string]interface{}) templ.Component {
 				return "Inactive"
 			}())
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 29, Col: 27}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 30, Col: 27}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</p></div><div class=\"navbar-end gap-4 justify-end\"><button type=\"button\" class=\"px-4 py-2 text-white rounded bg-green-600 hover:bg-green-500\">Update</button> <button type=\"button\" class=\"px-4 py-2 text-white rounded bg-red-600 hover:bg-red-500\">Cancel</button></div></div><form id=\"product-details-form\" class=\"flex flex-wrap gap-6\"><div class=\"field-group flex flex-row items-center gap-2\"><label class=\"font-bold mb-1\">SKU</label> <input id=\"SKU\" type=\"text\" value=\"")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</p></div><div class=\"navbar-end gap-4 justify-end\"><button type=\"button\" class=\"px-4 py-2 text-white rounded bg-green-600 hover:bg-green-500\">Update</button> <button type=\"button\" class=\"px-4 py-2 text-white rounded bg-red-600 hover:bg-red-500\">Cancel</button></div></div><form id=\"product-details-form\" class=\"flex flex-wrap gap-6\"><div class=\"field-group flex flex-row items-center gap-2\"><label class=\" mb-1\">SKU</label> <input id=\"SKU\" type=\"text\" value=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var5 string
 		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("%v", productMap["SKU"]))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 47, Col: 88}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 48, Col: 88}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"border-input-field\" style=\"width: 20ch;\" readonly> <label class=\"font-bold mb-1\">Product Name</label> <input id=\"ProductName\" type=\"text\" value=\"")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"border-input-field\" style=\"width: 20ch;\" readonly> <label class=\" mb-1\">Product Name</label> <input id=\"ProductName\" type=\"text\" value=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var6 string
 		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("%v", productMap["ProductName"]))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 51, Col: 104}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 52, Col: 104}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"border-input-field\" style=\"width: 50ch;\"></div><div class=\"field-group flex flex-row items-center gap-2\"><label class=\"font-bold mb-1\">Category</label> <input id=\"Category\" type=\"text\" value=\"")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"border-input-field\" style=\"width: 50ch;\"></div><div class=\"field-group flex flex-row items-center gap-2\"><label class=\" mb-1\">Category</label> <input id=\"Category\" type=\"text\" value=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var7 string
 		templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("%v", productMap["Category"]))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 57, Col: 98}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 58, Col: 98}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"border-input-field\" style=\"width: 10ch;\"> <label class=\"font-bold mb-1\">Group</label> <input id=\"Group\" type=\"text\" value=\"")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"border-input-field\" style=\"width: 10ch;\"> <label class=\" mb-1\">Group</label> <input id=\"Group\" type=\"text\" value=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var8 string
 		templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("%v", productMap["Group"]))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 61, Col: 92}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 62, Col: 92}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"border-input-field\" style=\"width: 5ch;\"> <label class=\"font-bold mb-1\">Created By</label> <input id=\"CreatedBy\" type=\"text\" value=\"")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"border-input-field\" style=\"width: 5ch;\"> <label class=\" mb-1\">Created By</label> <input id=\"CreatedBy\" type=\"text\" value=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var9 string
 		templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("%v", productMap["CreatedBy"]))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 65, Col: 100}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 66, Col: 100}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"border-input-field\" style=\"width: 10ch;\" readonly> <label class=\"font-bold mb-1\">Created At</label> <input id=\"CreatedAt\" type=\"datetime-local\" value=\"")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"border-input-field\" style=\"width: 10ch;\" readonly> <label class=\" mb-1\">Created At</label> <input id=\"CreatedAt\" type=\"datetime-local\" value=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -164,20 +165,20 @@ func ProductDetails(productMap map[string]interface{}) templ.Component {
 				return ""
 			}())
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 79, Col: 27}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 80, Col: 27}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var10))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"border-input-field\" style=\"width: 20ch;\" readonly></div><div class=\"field-group flex flex-row items-center gap-2\"><label class=\"font-bold mb-1\">Total Boxes</label> <input id=\"TotalBoxes\" type=\"number\" value=\"")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"border-input-field\" style=\"width: 20ch;\" readonly></div><div class=\"field-group flex flex-row items-center gap-2\"><label class=\" mb-1\">Total Boxes</label> <input id=\"TotalBoxes\" type=\"number\" value=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var11 string
 		templ_7745c5c3_Var11, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("%v", productMap["TotalBoxes"]))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 87, Col: 104}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 88, Col: 104}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var11))
 		if templ_7745c5c3_Err != nil {
@@ -188,40 +189,40 @@ func ProductDetails(productMap map[string]interface{}) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		if productMap["SKU_1"] != "" && productMap["SKU_1"] != "0" && productMap["SKU_1"] != " " {
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"field-group flex flex-row items-center gap-2\"><label class=\"font-bold mb-1\">SKU</label> <input id=\"SKU_1\" type=\"text\" value=\"")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"field-group flex flex-row items-center gap-2\"><label class=\" mb-1\">SKU</label> <input id=\"SKU_1\" type=\"text\" value=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var12 string
 			templ_7745c5c3_Var12, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("%v", productMap["SKU_1"]))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 96, Col: 104}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 97, Col: 104}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var12))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"border-input-field\" style=\"width: 20ch;\" readonly> <label class=\"font-bold mb-1\">Box</label> <input id=\"Box_1\" type=\"text\" value=\"")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"border-input-field\" style=\"width: 20ch;\" readonly> <label class=\" mb-1\">Box</label> <input id=\"Box_1\" type=\"text\" value=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var13 string
 			templ_7745c5c3_Var13, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("%v", productMap["Box_1"]))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 100, Col: 104}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 101, Col: 104}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var13))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"border-input-field\" style=\"width: 5ch;\"> <label class=\"font-bold mb-1\">Piece</label> <input id=\"Piece_1\" type=\"text\" value=\"")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"border-input-field\" style=\"width: 5ch;\"> <label class=\" mb-1\">Piece</label> <input id=\"Piece_1\" type=\"text\" value=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var14 string
 			templ_7745c5c3_Var14, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("%v", productMap["Piece_1"]))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 104, Col: 108}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 105, Col: 108}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var14))
 			if templ_7745c5c3_Err != nil {
@@ -233,271 +234,271 @@ func ProductDetails(productMap map[string]interface{}) templ.Component {
 			}
 		}
 		if productMap["SKU_2"] != "" && productMap["SKU_2"] != "0" && productMap["SKU_2"] != " " {
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"field-group flex flex-row items-center gap-2\"><label class=\"font-bold mb-1\">SKU</label> <input id=\"SKU_2\" type=\"text\" value=\"")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"field-group flex flex-row items-center gap-2\"><label class=\" mb-1\">SKU</label> <input id=\"SKU_2\" type=\"text\" value=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var15 string
 			templ_7745c5c3_Var15, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("%v", productMap["SKU_2"]))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 112, Col: 104}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 113, Col: 104}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var15))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"border-input-field\" style=\"width: 20ch;\" readonly> <label class=\"font-bold mb-1\">Box</label> <input id=\"Box_2\" type=\"text\" value=\"")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"border-input-field\" style=\"width: 20ch;\" readonly> <label class=\" mb-1\">Box</label> <input id=\"Box_2\" type=\"text\" value=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var16 string
 			templ_7745c5c3_Var16, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("%v", productMap["Box_2"]))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 116, Col: 104}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 117, Col: 104}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var16))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"border-input-field\" style=\"width: 10ch;\"> <label class=\"font-bold mb-1\">Piece</label> <input id=\"Piece_2\" type=\"text\" value=\"")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"border-input-field\" style=\"width: 5ch;\"> <label class=\" mb-1\">Piece</label> <input id=\"Piece_2\" type=\"text\" value=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var17 string
 			templ_7745c5c3_Var17, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("%v", productMap["Piece_2"]))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 120, Col: 108}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 121, Col: 108}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var17))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"border-input-field\" style=\"width: 10ch;\"></div>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"border-input-field\" style=\"width: 5ch;\"></div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 		}
 		if fmt.Sprintf("%v", productMap["SKU_3"]) != "" && fmt.Sprintf("%v", productMap["SKU_3"]) != "0" && fmt.Sprintf("%v", productMap["SKU_3"]) != " " {
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"field-group flex flex-row items-center gap-2\"><label class=\"font-bold mb-1\">SKU</label> <input id=\"SKU_3\" type=\"text\" value=\"")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"field-group flex flex-row items-center gap-2\"><label class=\" mb-1\">SKU</label> <input id=\"SKU_3\" type=\"text\" value=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var18 string
 			templ_7745c5c3_Var18, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("%v", productMap["SKU_3"]))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 128, Col: 104}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 129, Col: 104}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var18))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"border-input-field\" style=\"width: 20ch;\" readonly> <label class=\"font-bold mb-1\">Box</label> <input id=\"Box_3\" type=\"text\" value=\"")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"border-input-field\" style=\"width: 20ch;\" readonly> <label class=\" mb-1\">Box</label> <input id=\"Box_3\" type=\"text\" value=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var19 string
 			templ_7745c5c3_Var19, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("%v", productMap["Box_3"]))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 130, Col: 104}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 132, Col: 104}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var19))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"border-input-field\" style=\"width: 10ch;\"> <label class=\"font-bold mb-1\">Piece</label> <input id=\"Piece_3\" type=\"text\" value=\"")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"border-input-field\" style=\"width: 5ch;\"> <label class=\" mb-1\">Piece</label> <input id=\"Piece_3\" type=\"text\" value=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var20 string
 			templ_7745c5c3_Var20, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("%v", productMap["Piece_3"]))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 132, Col: 108}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 136, Col: 108}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var20))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"border-input-field\" style=\"width: 10ch;\"></div>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"border-input-field\" style=\"width: 5ch;\"></div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 		}
 		if fmt.Sprintf("%v", productMap["SKU_4"]) != "" && fmt.Sprintf("%v", productMap["SKU_4"]) != "0" && fmt.Sprintf("%v", productMap["SKU_4"]) != " " {
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"field-group flex flex-row items-center gap-2\"><label class=\"font-bold mb-1\">SKU</label> <input id=\"SKU_4\" type=\"text\" value=\"")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"field-group flex flex-row items-center gap-2\"><label class=\" mb-1\">SKU</label> <input id=\"SKU_4\" type=\"text\" value=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var21 string
 			templ_7745c5c3_Var21, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("%v", productMap["SKU_4"]))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 139, Col: 100}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 144, Col: 100}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var21))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"border-input-field\" style=\"width: 20ch;\" readonly> <label class=\"font-bold mb-1\">Box</label> <input id=\"Box_4\" type=\"text\" value=\"")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"border-input-field\" style=\"width: 20ch;\" readonly> <label class=\" mb-1\">Box</label> <input id=\"Box_4\" type=\"text\" value=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var22 string
 			templ_7745c5c3_Var22, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("%v", productMap["Box_4"]))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 142, Col: 100}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 148, Col: 104}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var22))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"border-input-field\" style=\"width: 10ch;\"> <label class=\"font-bold mb-1\">Piece</label> <input id=\"Piece_4\" type=\"text\" value=\"")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"border-input-field\" style=\"width: 5ch;\"> <label class=\" mb-1\">Piece</label> <input id=\"Piece_4\" type=\"text\" value=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var23 string
 			templ_7745c5c3_Var23, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("%v", productMap["Piece_4"]))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 145, Col: 104}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 152, Col: 108}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var23))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"border-input-field\" style=\"width: 10ch;\"></div>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"border-input-field\" style=\"width: 5ch;\"></div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 		}
 		if fmt.Sprintf("%v", productMap["SKU_5"]) != "" && fmt.Sprintf("%v", productMap["SKU_5"]) != "0" && fmt.Sprintf("%v", productMap["SKU_5"]) != " " {
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"field-group flex flex-row items-center gap-2\"><label class=\"font-bold mb-1\">SKU</label> <input id=\"SKU_5\" type=\"text\" value=\"")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"field-group flex flex-row items-center gap-2\"><label class=\" mb-1\">SKU</label> <input id=\"SKU_5\" type=\"text\" value=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var24 string
 			templ_7745c5c3_Var24, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("%v", productMap["SKU_5"]))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 152, Col: 100}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 160, Col: 100}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var24))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"border-input-field\" style=\"width: 20ch;\" readonly> <label class=\"font-bold mb-1\">Box</label> <input id=\"Box_5\" type=\"text\" value=\"")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"border-input-field\" style=\"width: 20ch;\" readonly> <label class=\" mb-1\">Box</label> <input id=\"Box_5\" type=\"text\" value=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var25 string
 			templ_7745c5c3_Var25, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("%v", productMap["Box_5"]))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 155, Col: 100}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 163, Col: 100}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var25))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"border-input-field\" style=\"width: 10ch;\"> <label class=\"font-bold mb-1\">Piece</label> <input id=\"Piece_5\" type=\"text\" value=\"")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"border-input-field\" style=\"width: 5ch;\"> <label class=\" mb-1\">Piece</label> <input id=\"Piece_5\" type=\"text\" value=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var26 string
 			templ_7745c5c3_Var26, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("%v", productMap["Piece_5"]))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 158, Col: 108}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 167, Col: 108}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var26))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"border-input-field\" style=\"width: 10ch;\"></div>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"border-input-field\" style=\"width: 5ch;\"></div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 		}
 		if fmt.Sprintf("%v", productMap["SKU_6"]) != "" && fmt.Sprintf("%v", productMap["SKU_6"]) != "0" && fmt.Sprintf("%v", productMap["SKU_6"]) != " " {
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"field-group flex flex-row items-center gap-2\"><label class=\"font-bold mb-1\">SKU</label> <input id=\"SKU_6\" type=\"text\" value=\"")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"field-group flex flex-row items-center gap-2\"><label class=\" mb-1\">SKU</label> <input id=\"SKU_6\" type=\"text\" value=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var27 string
 			templ_7745c5c3_Var27, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("%v", productMap["SKU_6"]))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 165, Col: 100}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 175, Col: 100}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var27))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"border-input-field\" style=\"width: 20ch;\" readonly> <label class=\"font-bold mb-1\">Box</label> <input id=\"Box_6\" type=\"text\" value=\"")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"border-input-field\" style=\"width: 20ch;\" readonly> <label class=\" mb-1\">Box</label> <input id=\"Box_6\" type=\"text\" value=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var28 string
 			templ_7745c5c3_Var28, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("%v", productMap["Box_6"]))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 168, Col: 100}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 178, Col: 100}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var28))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"border-input-field\" style=\"width: 10ch;\"> <label class=\"font-bold mb-1\">Piece</label> <input id=\"Piece_6\" type=\"text\" value=\"")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"border-input-field\" style=\"width: 5ch;\"> <label class=\" mb-1\">Piece</label> <input id=\"Piece_6\" type=\"text\" value=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var29 string
 			templ_7745c5c3_Var29, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("%v", productMap["Piece_6"]))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 171, Col: 104}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 182, Col: 104}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var29))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"border-input-field\" style=\"width: 10ch;\"></div>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"border-input-field\" style=\"width: 5ch;\"></div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 		}
 		if fmt.Sprintf("%v", productMap["SKU_7"]) != "" && fmt.Sprintf("%v", productMap["SKU_7"]) != "0" && fmt.Sprintf("%v", productMap["SKU_7"]) != " " {
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"field-group flex flex-row items-center gap-2\"><label class=\"font-bold mb-1\">SKU</label> <input id=\"SKU_7\" type=\"text\" value=\"")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"field-group flex flex-row items-center gap-2\"><label class=\" mb-1\">SKU</label> <input id=\"SKU_7\" type=\"text\" value=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var30 string
 			templ_7745c5c3_Var30, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("%v", productMap["SKU_7"]))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 178, Col: 100}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 190, Col: 100}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var30))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"border-input-field\" style=\"width: 20ch;\" readonly> <label class=\"font-bold mb-1\">Box</label> <input id=\"Box_7\" type=\"text\" value=\"")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"border-input-field\" style=\"width: 20ch;\" readonly> <label class=\" mb-1\">Box</label> <input id=\"Box_7\" type=\"text\" value=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var31 string
 			templ_7745c5c3_Var31, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("%v", productMap["Box_7"]))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 181, Col: 100}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 193, Col: 100}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var31))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"border-input-field\" style=\"width: 10ch;\"> <label class=\"font-bold mb-1\">Piece</label> <input id=\"Piece_7\" type=\"text\" value=\"")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"border-input-field\" style=\"width: 5ch;\"> <label class=\" mb-1\">Piece</label> <input id=\"Piece_7\" type=\"text\" value=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var32 string
 			templ_7745c5c3_Var32, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("%v", productMap["Piece_7"]))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 184, Col: 104}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 197, Col: 104}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var32))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"border-input-field\" style=\"width: 10ch;\"></div>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"border-input-field\" style=\"width: 5ch;\"></div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -507,14 +508,14 @@ func ProductDetails(productMap map[string]interface{}) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		if fmt.Sprintf("%v", productMap["SKU_1"]) != "" && fmt.Sprintf("%v", productMap["SKU_1"]) != "0" && fmt.Sprintf("%v", productMap["SKU_1"]) != " " {
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"tab px-8 py-3 hover:bg-earthy-background\" onclick=\"openTab(event, &#34;tab1&#34;)\">")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"tab hover:bg-green-700\" onclick=\"openTab(event, &#34;tab1&#34;)\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var33 string
 			templ_7745c5c3_Var33, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("%v", productMap["SKU_1"]))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 196, Col: 93}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 210, Col: 93}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var33))
 			if templ_7745c5c3_Err != nil {
@@ -526,14 +527,14 @@ func ProductDetails(productMap map[string]interface{}) templ.Component {
 			}
 		}
 		if fmt.Sprintf("%v", productMap["SKU_2"]) != "" && fmt.Sprintf("%v", productMap["SKU_2"]) != "0" && fmt.Sprintf("%v", productMap["SKU_2"]) != " " {
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"tab px-8 py-3 hover:bg-earthy-background\" onclick=\"openTab(event, &#34;tab2&#34;)\">")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"tab hover:bg-green-700\" onclick=\"openTab(event, &#34;tab2&#34;)\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var34 string
 			templ_7745c5c3_Var34, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("%v", productMap["SKU_2"]))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 200, Col: 93}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 214, Col: 93}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var34))
 			if templ_7745c5c3_Err != nil {
@@ -545,14 +546,14 @@ func ProductDetails(productMap map[string]interface{}) templ.Component {
 			}
 		}
 		if fmt.Sprintf("%v", productMap["SKU_3"]) != "" && fmt.Sprintf("%v", productMap["SKU_3"]) != "0" && fmt.Sprintf("%v", productMap["SKU_3"]) != " " {
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"tab px-8 py-3 hover:bg-earthy-background\" onclick=\"openTab(event, &#34;tab3&#34;)\">")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"tab hover:bg-green-700\" onclick=\"openTab(event, &#34;tab3&#34;)\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var35 string
 			templ_7745c5c3_Var35, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("%v", productMap["SKU_3"]))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 204, Col: 93}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 218, Col: 93}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var35))
 			if templ_7745c5c3_Err != nil {
@@ -564,14 +565,14 @@ func ProductDetails(productMap map[string]interface{}) templ.Component {
 			}
 		}
 		if fmt.Sprintf("%v", productMap["SKU_4"]) != "" && fmt.Sprintf("%v", productMap["SKU_4"]) != "0" && fmt.Sprintf("%v", productMap["SKU_4"]) != " " {
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"tab px-8 py-3 hover:bg-earthy-background\" onclick=\"openTab(event, &#34;tab4&#34;)\">")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"tab hover:bg-green-700\" onclick=\"openTab(event, &#34;tab4&#34;)\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var36 string
 			templ_7745c5c3_Var36, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("%v", productMap["SKU_4"]))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 208, Col: 93}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 222, Col: 93}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var36))
 			if templ_7745c5c3_Err != nil {
@@ -583,14 +584,14 @@ func ProductDetails(productMap map[string]interface{}) templ.Component {
 			}
 		}
 		if fmt.Sprintf("%v", productMap["SKU_5"]) != "" && fmt.Sprintf("%v", productMap["SKU_5"]) != "0" && fmt.Sprintf("%v", productMap["SKU_5"]) != " " {
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"tab px-8 py-3 hover:bg-earthy-background\" onclick=\"openTab(event, &#34;tab5&#34;)\">")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"tab hover:bg-green-700\" onclick=\"openTab(event, &#34;tab5&#34;)\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var37 string
 			templ_7745c5c3_Var37, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("%v", productMap["SKU_5"]))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 212, Col: 93}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 226, Col: 93}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var37))
 			if templ_7745c5c3_Err != nil {
@@ -602,14 +603,14 @@ func ProductDetails(productMap map[string]interface{}) templ.Component {
 			}
 		}
 		if fmt.Sprintf("%v", productMap["SKU_6"]) != "" && fmt.Sprintf("%v", productMap["SKU_6"]) != "0" && fmt.Sprintf("%v", productMap["SKU_6"]) != " " {
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"tab px-8 py-3 hover:bg-earthy-background\" onclick=\"openTab(event, &#34;tab6&#34;)\">")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"tab hover:bg-green-700\" onclick=\"openTab(event, &#34;tab6&#34;)\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var38 string
 			templ_7745c5c3_Var38, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("%v", productMap["SKU_6"]))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 216, Col: 93}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 230, Col: 93}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var38))
 			if templ_7745c5c3_Err != nil {
@@ -621,14 +622,14 @@ func ProductDetails(productMap map[string]interface{}) templ.Component {
 			}
 		}
 		if fmt.Sprintf("%v", productMap["SKU_7"]) != "" && fmt.Sprintf("%v", productMap["SKU_7"]) != "0" && fmt.Sprintf("%v", productMap["SKU_7"]) != " " {
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"tab px-8 py-3 hover:bg-earthy-background\" onclick=\"openTab(event, &#34;tab7&#34;)\">")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"tab hover:bg-green-700\" onclick=\"openTab(event, &#34;tab7&#34;)\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var39 string
 			templ_7745c5c3_Var39, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("%v", productMap["SKU_7"]))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 220, Col: 97}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/product_views/sku_product.templ`, Line: 234, Col: 97}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var39))
 			if templ_7745c5c3_Err != nil {
@@ -699,6 +700,7 @@ func ListProductBySKU(
 	msg fiber.Map,
 	username string,
 	cmp templ.Component,
+	searchBarArgs controllers.SearchBarArgs,
 ) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
@@ -738,7 +740,7 @@ func ListProductBySKU(
 			}
 			return templ_7745c5c3_Err
 		})
-		templ_7745c5c3_Err = views.Layout(page, fromProtected, isError, msg, username).Render(templ.WithChildren(ctx, templ_7745c5c3_Var41), templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = views.Layout(page, fromProtected, isError, msg, username, searchBarArgs).Render(templ.WithChildren(ctx, templ_7745c5c3_Var41), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
