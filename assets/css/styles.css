@@ -85,7 +85,6 @@ body {
 	align-items: center;
     top: 0;
     left: 0;
-    width: 100%;
     background-color: whitesmoke;  
 }
 .navbar-menu {
@@ -458,53 +457,60 @@ pointer-events: none;
     width: 100%; /* Ensure tab content spans the full width */
 }
 
+
 .search-container {
     display: flex;                    /* Use Flexbox to align children horizontally */
     justify-content: space-evenly;    /* Evenly space the elements across the container */
     align-items: center;              /* Vertically center all elements */
     flex-wrap: nowrap;                /* Ensure all elements are on a single line */
-    gap: 15px;                        /* Set spacing between search fields */
-    margin-top: 20px; 
-    padding: 15px;                    /* Padding inside the container */
+    gap: 5px;                        /* Set spacing between search fields */
+    margin-top: 1px;                 /* Margin to add space from the top */
+    padding: 1px 1px;               /* Padding to fit closely to content */
     border-radius: 8px;               /* Rounded corners for better aesthetics */
     overflow-x: auto;                 /* Allow horizontal scrolling if content is too wide */
-    white-space: nowrap;              /* Prevent the content from wrapping */
-    width: 100%;                      /* Ensure the container takes the full width of its parent */
+    white-space: nowrap;              /* Prevent wrapping of content */
+    width: auto;                      /* Ensure the container takes the full width of its parent */
     box-sizing: border-box;           /* Include padding and border in the element’s width */
+    background-color: #e9e6e2;        /* Keep the original earthy beige background */
 }
 
 .search-field {
     display: flex;
-    align-items: center;
+    align-items: center;              /* Vertically align input/select and button */
     gap: 10px;                        /* Space between input/select and button */
     flex-shrink: 0;                   /* Prevent shrinking to maintain readability */
     white-space: nowrap;              /* Prevent wrapping inside each search field */
 }
 
 input[type="text"], select {
-    flex: 1 1 auto;                   /* Make each input/select take flexible available space */
-    padding: 8px;
+    padding: 5px 5px;                /* Adjust padding for compact fit */
     border: 1px solid #ccc;           /* Add border for visibility */
-    border-radius: 4px;
-    background-color: white;          /* Set the input/select background to white */
-    color: #333;                      /* Set input text color to ensure good contrast */
-    min-width: 150px;                 /* Minimum width to prevent elements from being too small */
+    border-radius: 4px;               /* Rounded corners for input and select fields */
+    background-color: white;          /* Set input/select background to white */
+    color: #333;                      /* Set input text color for contrast */
+    min-width: 180px;                 /* Minimum width to prevent elements from being too small */
+    max-width: 100%;                  /* Allow the input/select fields to expand based on content */
+    width: auto;                      /* Automatically adjust width based on the content */
+    box-sizing: border-box;           /* Include padding and border in the element’s width */
+    transition: width 0.3s;           /* Smooth transition when resizing */
 }
 
 option {
     background-color: white;          /* White background for options in dropdown */
     color: #333;                      /* Ensure text color is visible */
+    width: auto;
 }
 
 .search-button {
-    padding: 8px 12px;
-    color: #8A9A5B;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+    padding: 8px 12px;                /* Padding to make the button fit well */
+    color: #8A9A5B;                   /* Set button text color */
+    border: none;                     /* Remove border for cleaner appearance */
+    border-radius: 4px;               /* Rounded corners to match inputs */
+    cursor: pointer;                  /* Pointer cursor to indicate it's clickable */
     flex-shrink: 0;                   /* Prevent the button from shrinking */
+    height: 36px;                     /* Match button height to input/select */
 }
 
 .search-button:hover {
-    background-color: #8B4513;        /* Darken on hover for effect */
+    background-color: #97765e;        /* Darken background color on hover */
 }

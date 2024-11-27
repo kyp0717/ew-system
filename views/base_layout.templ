@@ -38,12 +38,11 @@ templ Layout(
                 if !isError {
                     @partials.Navbar(fromProtected, username)
                 }
-            </header>
-            <div class="search-bar-container">
+
                 if !isError {
                     @partials.SearchBar(searchBarArgs)
                 }
-            </div>
+            </header>
             <main class={ templ.KV("pt-5", !isError) }>
                 { children... }
                 @partials.FlashMessages(msg)
